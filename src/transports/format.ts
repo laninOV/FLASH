@@ -1,0 +1,291 @@
+import type { PredictionResult } from "../types.js";
+
+const SEPARATOR = "==================";
+
+export function formatShortPredictionMessage(prediction: PredictionResult): string {
+  const names = resolvePlayerNames(prediction);
+  const probs = prediction.modelSummary?.dirt?.modelProbabilities;
+  const novaEdge = prediction.modelSummary?.novaEdge;
+  const showConsensusCheckmarks = hasConsensusCheckmarks(prediction.predictedWinner, novaEdge?.winner);
+  const methodsSummary = computeMethodsAgreement(
+    prediction.predictedWinner,
+    names.playerA,
+    names.playerB,
+    [probs?.logRegP1, probs?.markovP1, probs?.bradleyP1, probs?.pcaP1, novaEdge?.p1],
+  );
+
+  const lines = [
+    ...(showConsensusCheckmarks ? ["✅✅✅"] : []),
+    "TENNIS SIGNAL",
+    SEPARATOR,
+    `${names.playerA} vs ${names.playerB}`,
+    `Link: ${prediction.matchUrl}`,
+    `Date: ${formatDateFromSource(prediction)}`,
+    SEPARATOR,
+    `Logistic: ${formatPercentPair(probs?.logRegP1)}`,
+    `Markov: ${formatPercentPair(probs?.markovP1)}`,
+    `Bradley-Terry: ${formatPercentPair(probs?.bradleyP1)}`,
+    `PCA: ${formatPercentPair(probs?.pcaP1)}`,
+    SEPARATOR,
+    `Winner: ${prediction.predictedWinner}`,
+    `Odds: ${formatWinnerOddComma(prediction, names.playerA, names.playerB)}`,
+    `Methods: ${methodsSummary.methods}`,
+    `Agreement: ${methodsSummary.agreement}`,
+    `Confidence: ${formatConfidence(prediction.confidence)}`,
+    SEPARATOR,
+    `NOVA EDGE: ${formatNovaEdgePair(novaEdge?.p1, novaEdge?.p2)}`,
+    `NOVA PICK: ${formatNovaPick(novaEdge?.winner)}`,
+    SEPARATOR,
+    "SHORT SUMMARY",
+    `HISTORY-5: ${formatMethodSummary(
+      prediction.predictedWinner,
+      formatPercentPair(probs?.finalP1),
+    )}`,
+    `NOVA: ${formatMethodSummary(novaEdge?.winner, formatNovaEdgePair(novaEdge?.p1, novaEdge?.p2))}`,
+    SEPARATOR,
+  ];
+
+  return lines.join("\n");
+}
+
+function hasConsensusCheckmarks(
+  historyWinner: string | undefined,
+  novaWinner: string | undefined,
+): boolean {
+  const a = canonicalWinnerName(historyWinner);
+  const b = canonicalWinnerName(novaWinner);
+  return Boolean(a && b && a === b);
+}
+
+function resolvePlayerNames(prediction: PredictionResult): { playerA: string; playerB: string } {
+  const a = normalizeName(prediction.playerAName);
+  const b = normalizeName(prediction.playerBName);
+  if (a && b) {
+    return { playerA: a, playerB: b };
+  }
+
+  const fallback = parseNamesFromMatchLabel(prediction.matchLabel);
+  return {
+    playerA: a || fallback.playerA || "Player A",
+    playerB: b || fallback.playerB || "Player B",
+  };
+}
+
+function parseNamesFromMatchLabel(label: string | undefined): { playerA?: string; playerB?: string } {
+  const text = String(label || "").trim();
+  if (!text) {
+    return {};
+  }
+  const parts = text.split(/\s+vs\s+/i);
+  if (parts.length !== 2) {
+    return {};
+  }
+  const playerA = normalizeName(parts[0]);
+  const playerB = normalizeName(parts[1]);
+  return {
+    playerA: playerA || undefined,
+    playerB: playerB || undefined,
+  };
+}
+
+function formatDateFromSource(prediction: PredictionResult): string {
+  if (prediction.matchStatus === "live") {
+    return "LIVE";
+  }
+  const parsed = parseScheduledStart(prediction.scheduledStartText);
+  if (!parsed) {
+    return "-";
+  }
+  return (
+    `${pad2(parsed.getUTCDate())}.${pad2(parsed.getUTCMonth() + 1)}.${parsed.getUTCFullYear()} ` +
+    `${pad2(parsed.getUTCHours())}:${pad2(parsed.getUTCMinutes())}`
+  );
+}
+
+function parseScheduledStart(value: string | undefined): Date | undefined {
+  const text = String(value || "").trim();
+  if (!text) {
+    return undefined;
+  }
+
+  const ddmmyyyy = text.match(/^(\d{2})-(\d{2})-(\d{4})\s+(\d{2}):(\d{2})$/);
+  if (ddmmyyyy) {
+    const day = Number(ddmmyyyy[1]);
+    const month = Number(ddmmyyyy[2]);
+    const year = Number(ddmmyyyy[3]);
+    const hour = Number(ddmmyyyy[4]);
+    const minute = Number(ddmmyyyy[5]);
+    return new Date(Date.UTC(year, month - 1, day, hour, minute, 0));
+  }
+
+  const yyyymmdd = text.match(/^(\d{4})-(\d{2})-(\d{2})\s+(\d{2}):(\d{2})$/);
+  if (yyyymmdd) {
+    const year = Number(yyyymmdd[1]);
+    const month = Number(yyyymmdd[2]);
+    const day = Number(yyyymmdd[3]);
+    const hour = Number(yyyymmdd[4]);
+    const minute = Number(yyyymmdd[5]);
+    return new Date(Date.UTC(year, month - 1, day, hour, minute, 0));
+  }
+
+  const dots = text.match(/^(\d{2})[./](\d{2})[./](\d{4})\s+(\d{2}):(\d{2})$/);
+  if (dots) {
+    const day = Number(dots[1]);
+    const month = Number(dots[2]);
+    const year = Number(dots[3]);
+    const hour = Number(dots[4]);
+    const minute = Number(dots[5]);
+    return new Date(Date.UTC(year, month - 1, day, hour, minute, 0));
+  }
+
+  const parsed = new Date(text);
+  if (!Number.isNaN(parsed.getTime())) {
+    return parsed;
+  }
+  return undefined;
+}
+
+function formatPercentPair(p1: number | undefined): string {
+  if (!isFiniteNumber(p1)) {
+    return "- / -";
+  }
+  const a = Math.round(clamp(p1, 0, 100));
+  const b = 100 - a;
+  return `${a}% / ${b}%`;
+}
+
+function formatWinnerOddComma(
+  prediction: PredictionResult,
+  playerAName: string,
+  playerBName: string,
+): string {
+  const odds = prediction.marketOdds;
+  if (!odds) {
+    return "-";
+  }
+
+  const winner = normalizeName(prediction.predictedWinner).toLowerCase();
+  const a = playerAName.toLowerCase();
+  const b = playerBName.toLowerCase();
+
+  if (winner && winner === a && isFiniteNumber(odds.home)) {
+    return formatCommaDecimal(odds.home, 1);
+  }
+  if (winner && winner === b && isFiniteNumber(odds.away)) {
+    return formatCommaDecimal(odds.away, 1);
+  }
+  return "-";
+}
+
+function formatConfidence(confidence: number): string {
+  if (!Number.isFinite(confidence)) {
+    return "-";
+  }
+  return `${formatCommaDecimal(confidence * 100, 1)}%`;
+}
+
+function formatNovaEdgePair(p1: number | undefined, p2: number | undefined): string {
+  if (!isFiniteNumber(p1) || !isFiniteNumber(p2)) {
+    return "- / -";
+  }
+  const left = Math.round(clamp(p1, 0, 100));
+  const right = Math.round(clamp(p2, 0, 100));
+  return `${left}% / ${right}%`;
+}
+
+function formatNovaPick(winner: string | undefined): string {
+  const value = normalizeName(winner);
+  if (!value) {
+    return "-";
+  }
+  return value;
+}
+
+function formatMethodSummary(winner: string | undefined, pair: string): string {
+  const normalizedWinner = normalizeName(winner);
+  const winnerText = normalizedWinner || "-";
+  const pairText = pair && pair !== "- / -" ? pair : "- / -";
+  return `${winnerText} | ${pairText}`;
+}
+
+function computeMethodsAgreement(
+  predictedWinner: string,
+  playerA: string,
+  playerB: string,
+  probabilities: Array<number | undefined>,
+): { methods: number; agreement: string } {
+  const winnerSide = winnerToSide(predictedWinner, playerA, playerB);
+  let methods = 0;
+  let agree = 0;
+
+  for (const value of probabilities) {
+    if (!isFiniteNumber(value)) {
+      continue;
+    }
+    methods += 1;
+    const side = probabilityToSide(value);
+    if (winnerSide && side !== "neutral" && side === winnerSide) {
+      agree += 1;
+    }
+  }
+
+  if (methods === 0) {
+    return { methods: 0, agreement: "-/-" };
+  }
+  return { methods, agreement: `${agree}/${methods}` };
+}
+
+function winnerToSide(
+  predictedWinner: string | undefined,
+  playerA: string,
+  playerB: string,
+): "home" | "away" | undefined {
+  const winner = normalizeName(predictedWinner).toLowerCase();
+  if (!winner) {
+    return undefined;
+  }
+  if (winner === playerA.toLowerCase()) {
+    return "home";
+  }
+  if (winner === playerB.toLowerCase()) {
+    return "away";
+  }
+  return undefined;
+}
+
+function probabilityToSide(p1: number): "home" | "away" | "neutral" {
+  if (p1 > 50) {
+    return "home";
+  }
+  if (p1 < 50) {
+    return "away";
+  }
+  return "neutral";
+}
+
+function formatCommaDecimal(value: number, digits: number): string {
+  if (!Number.isFinite(value)) {
+    return "-";
+  }
+  return value.toFixed(digits).replace(".", ",");
+}
+
+function normalizeName(value: string | undefined): string {
+  return String(value || "").trim();
+}
+
+function canonicalWinnerName(value: string | undefined): string {
+  return normalizeName(value).replace(/\s+/g, " ").toLowerCase();
+}
+
+function clamp(value: number, min: number, max: number): number {
+  return Math.max(min, Math.min(max, value));
+}
+
+function isFiniteNumber(value: number | undefined): value is number {
+  return typeof value === "number" && Number.isFinite(value);
+}
+
+function pad2(value: number): string {
+  return value.toString().padStart(2, "0");
+}

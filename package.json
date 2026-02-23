@@ -1,0 +1,25 @@
+{
+  "name": "nowgoaltennis",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "predict": "npm run build --silent && node dist/src/cli.js",
+    "audit:calc": "npm run build --silent && node dist/src/auditCli.js",
+    "audit:match": "npm run build --silent && node dist/src/auditMatchCli.js",
+    "audit:outcome": "npm run build --silent && node dist/src/auditOutcomeCli.js",
+    "control-bot": "npm run build --silent && node dist/src/controlBotCli.js",
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit",
+    "test": "node --import tsx --test test/**/*.test.ts"
+  },
+  "dependencies": {
+    "playwright": "^1.51.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.4",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  }
+}
