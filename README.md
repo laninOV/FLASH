@@ -131,11 +131,27 @@ export TG_SEND_MAX_RPM="18" # optional
 
 ### 3. Run install script (one-time)
 
-Run from the project root:
+Root-only server (project in `/root/FLASH`):
 
 ```bash
+cd /root/FLASH
+bash scripts/server/install_ubuntu_systemd.sh
+```
+
+Regular user + `sudo` (best practice):
+
+```bash
+cd ~/FLASH
 sudo -E bash scripts/server/install_ubuntu_systemd.sh
 ```
+
+If you are already inside `scripts/server`, use:
+
+```bash
+bash ./install_ubuntu_systemd.sh
+```
+
+(`bash scripts/server/install_ubuntu_systemd.sh` from `scripts/server` is the wrong relative path.)
 
 What it does:
 - installs Node.js 22 (NodeSource)
@@ -145,7 +161,7 @@ What it does:
 - creates `/etc/flash-control-bot.env` (if missing), using your exported `TG_*` variables
 - installs and enables `flash-control-bot.service`
 
-If you forget `sudo -E`, the script will create a template env file and warn you.
+If you run from a non-root user and forget `sudo -E`, the script will create a template env file and warn you.
 
 ### 4. Fill Telegram secrets (only if you skipped exports / forgot `sudo -E`)
 
@@ -169,7 +185,24 @@ Then restart:
 sudo systemctl restart flash-control-bot
 ```
 
+If you are already in a root shell, `sudo` is not required:
+
+```bash
+systemctl restart flash-control-bot
+```
+
 ### 5. Operations (status / logs / restart)
+
+Root shell:
+
+```bash
+systemctl status flash-control-bot
+journalctl -u flash-control-bot -f
+systemctl restart flash-control-bot
+systemctl stop flash-control-bot
+```
+
+Regular user:
 
 ```bash
 sudo systemctl status flash-control-bot
@@ -180,9 +213,17 @@ sudo systemctl stop flash-control-bot
 
 ### 6. Update project on server (after code changes)
 
-From the project root:
+Root-only server:
 
 ```bash
+cd /root/FLASH
+bash scripts/server/update_and_restart.sh
+```
+
+Regular user:
+
+```bash
+cd ~/FLASH
 bash scripts/server/update_and_restart.sh
 ```
 

@@ -25,11 +25,30 @@ resolve_app_dir() {
   [[ -f "$APP_DIR/package.json" ]] || die "APP_DIR does not look like project root: $APP_DIR"
 }
 
+run_systemctl() {
+  if [[ "${EUID}" -eq 0 ]]; then
+    systemctl "$@"
+  else
+    sudo systemctl "$@"
+  fi
+}
+
+run_journalctl() {
+  if [[ "${EUID}" -eq 0 ]]; then
+    journalctl "$@"
+  else
+    sudo journalctl "$@"
+  fi
+}
+
 main() {
   resolve_app_dir
   local pw_path="${PLAYWRIGHT_BROWSERS_PATH:-$APP_DIR/.ms-playwright}"
+  local current_user
+  current_user="$(whoami 2>/dev/null || printf 'unknown')"
 
   cd "$APP_DIR"
+  log "USER=$current_user ($( [[ "${EUID}" -eq 0 ]] && printf 'root mode' || printf 'non-root mode' ))"
   log "APP_DIR=$APP_DIR"
   log "PLAYWRIGHT_BROWSERS_PATH=$pw_path"
 
@@ -43,13 +62,13 @@ main() {
   npm run build
 
   log "Restarting systemd service: $SERVICE_NAME"
-  sudo systemctl restart "$SERVICE_NAME"
+  run_systemctl restart "$SERVICE_NAME"
 
   log "Service status (short)"
-  sudo systemctl --no-pager --full status "$SERVICE_NAME" | sed -n '1,20p'
+  run_systemctl --no-pager --full status "$SERVICE_NAME" | sed -n '1,20p'
 
   log "Recent logs"
-  sudo journalctl -u "$SERVICE_NAME" -n 50 --no-pager
+  run_journalctl -u "$SERVICE_NAME" -n 50 --no-pager
 }
 
 main "$@"

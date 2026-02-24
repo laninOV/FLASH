@@ -4,6 +4,7 @@ set -euo pipefail
 SERVICE_NAME="flash-control-bot"
 ENV_FILE="/etc/${SERVICE_NAME}.env"
 UNIT_FILE="/etc/systemd/system/${SERVICE_NAME}.service"
+ROOT_MODE_ENABLED="0"
 
 log() {
   printf '[flash-install] %s\n' "$*"
@@ -37,13 +38,22 @@ resolve_app_dir() {
 }
 
 resolve_run_user() {
-  RUN_USER="${RUN_USER:-${SUDO_USER:-}}"
-  if [[ -z "$RUN_USER" ]]; then
+  if [[ -n "${RUN_USER:-}" ]]; then
+    :
+  elif [[ -n "${SUDO_USER:-}" && "${SUDO_USER:-}" != "root" ]]; then
+    RUN_USER="$SUDO_USER"
+  elif [[ "${EUID}" -eq 0 ]]; then
+    RUN_USER="root"
+  else
     RUN_USER="$(logname 2>/dev/null || true)"
   fi
   [[ -n "$RUN_USER" ]] || die "Unable to resolve RUN_USER. Export RUN_USER=<linux-user> and re-run."
-  [[ "$RUN_USER" != "root" ]] || die "RUN_USER resolved to root. Re-run with sudo from your normal user or set RUN_USER."
   id "$RUN_USER" >/dev/null 2>&1 || die "RUN_USER does not exist: $RUN_USER"
+  if [[ "$RUN_USER" == "root" ]]; then
+    [[ "${EUID}" -eq 0 ]] || die "RUN_USER=root requires running as root."
+    ROOT_MODE_ENABLED="1"
+    warn "RUN_USER resolved to root (root-only mode enabled). Service will run as root."
+  fi
 }
 
 check_platform() {
@@ -88,10 +98,14 @@ install_nodejs_22() {
 
 prepare_app_build() {
   local pw_path="$APP_DIR/.ms-playwright"
-  local npm_cmd=(sudo -H -u "$RUN_USER" bash -lc)
 
   log "Installing project dependencies (npm ci) as $RUN_USER..."
-  "${npm_cmd[@]}" "cd '$APP_DIR' && npm ci"
+  if [[ "$RUN_USER" == "root" ]]; then
+    bash -lc "cd '$APP_DIR' && npm ci"
+  else
+    local npm_cmd=(sudo -H -u "$RUN_USER" bash -lc)
+    "${npm_cmd[@]}" "cd '$APP_DIR' && npm ci"
+  fi
 
   log "Installing Playwright Chromium (+ OS deps)..."
   mkdir -p "$pw_path"
@@ -99,7 +113,46 @@ prepare_app_build() {
   chown -R "$RUN_USER":"$RUN_USER" "$pw_path"
 
   log "Building project as $RUN_USER..."
-  "${npm_cmd[@]}" "cd '$APP_DIR' && npm run build"
+  if [[ "$RUN_USER" == "root" ]]; then
+    bash -lc "cd '$APP_DIR' && npm run build"
+  else
+    local npm_cmd=(sudo -H -u "$RUN_USER" bash -lc)
+    "${npm_cmd[@]}" "cd '$APP_DIR' && npm run build"
+  fi
+}
+
+print_export_rerun_hint() {
+  if [[ "${ROOT_MODE_ENABLED}" == "1" ]]; then
+    printf 'bash scripts/server/install_ubuntu_systemd.sh'
+  else
+    printf 'sudo -E bash scripts/server/install_ubuntu_systemd.sh'
+  fi
+}
+
+print_editor_cmd() {
+  if [[ "${ROOT_MODE_ENABLED}" == "1" ]]; then
+    printf 'nano %s' "$ENV_FILE"
+  else
+    printf 'sudo nano %s' "$ENV_FILE"
+  fi
+}
+
+print_systemctl_cmd() {
+  local args="$*"
+  if [[ "${ROOT_MODE_ENABLED}" == "1" ]]; then
+    printf 'systemctl %s' "$args"
+  else
+    printf 'sudo systemctl %s' "$args"
+  fi
+}
+
+print_journalctl_cmd() {
+  local args="$*"
+  if [[ "${ROOT_MODE_ENABLED}" == "1" ]]; then
+    printf 'journalctl %s' "$args"
+  else
+    printf 'sudo journalctl %s' "$args"
+  fi
 }
 
 ensure_env_file() {
@@ -141,7 +194,7 @@ TG_SEND_MAX_RPM=18
 EOF
     fi
     warn "TG_BOT_TOKEN/TG_CHAT_ID were not found in environment. The service may fail until you fill $ENV_FILE."
-    warn "If you exported them before install, run the script as: sudo -E bash scripts/server/install_ubuntu_systemd.sh"
+    warn "If you exported them before install, re-run the script as: $(print_export_rerun_hint)"
   fi
   chown root:root "$ENV_FILE"
   chmod 600 "$ENV_FILE"
@@ -184,24 +237,24 @@ Service:       $SERVICE_NAME
 Env file:      $ENV_FILE
 Playwright dir: $APP_DIR/.ms-playwright
 
-If the service does not start, check secrets in $ENV_FILE (or rerun with exported vars + sudo -E):
+If the service does not start, check secrets in $ENV_FILE (or rerun with exported vars):
   export TG_BOT_TOKEN="..."
   export TG_CHAT_ID="..."
   export TG_SEND_MAX_RPM="18"
-  sudo -E bash scripts/server/install_ubuntu_systemd.sh
+  $(print_export_rerun_hint)
 
 Manual edit path (optional):
-  sudo nano $ENV_FILE
-  sudo systemctl restart $SERVICE_NAME
+  $(print_editor_cmd)
+  $(print_systemctl_cmd restart "$SERVICE_NAME")
 
 Check status/logs:
-  sudo systemctl status $SERVICE_NAME
-  sudo journalctl -u $SERVICE_NAME -f
+  $(print_systemctl_cmd status "$SERVICE_NAME")
+  $(print_journalctl_cmd -u "$SERVICE_NAME" -f)
 EOF
 }
 
 main() {
-  [[ "${EUID}" -eq 0 ]] || die "Run with sudo: sudo bash scripts/server/install_ubuntu_systemd.sh"
+  [[ "${EUID}" -eq 0 ]] || die "Run as root (direct root shell or sudo): sudo bash scripts/server/install_ubuntu_systemd.sh"
   check_platform
   resolve_app_dir
   resolve_run_user
