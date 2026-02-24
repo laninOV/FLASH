@@ -2,7 +2,17 @@ import type { PredictionResult } from "../types.js";
 
 const SEPARATOR = "==================";
 
-export function formatShortPredictionMessage(prediction: PredictionResult): string {
+export type ShortPredictionLinkMode = "plain_text_url" | "telegram_html_link";
+
+export interface FormatShortPredictionMessageOptions {
+  linkMode?: ShortPredictionLinkMode;
+}
+
+export function formatShortPredictionMessage(
+  prediction: PredictionResult,
+  options: FormatShortPredictionMessageOptions = {},
+): string {
+  const linkMode = options.linkMode ?? "plain_text_url";
   const names = resolvePlayerNames(prediction);
   const probs = prediction.modelSummary?.dirt?.modelProbabilities;
   const novaEdge = prediction.modelSummary?.novaEdge;
@@ -19,7 +29,7 @@ export function formatShortPredictionMessage(prediction: PredictionResult): stri
     "TENNIS SIGNAL",
     SEPARATOR,
     `${names.playerA} vs ${names.playerB}`,
-    `Link: ${prediction.matchUrl}`,
+    formatMatchLinkLine(prediction.matchUrl, linkMode),
     `Date: ${formatDateFromSource(prediction)}`,
     SEPARATOR,
     `Logistic: ${formatPercentPair(probs?.logRegP1)}`,
@@ -33,9 +43,6 @@ export function formatShortPredictionMessage(prediction: PredictionResult): stri
     `Agreement: ${methodsSummary.agreement}`,
     `Confidence: ${formatConfidence(prediction.confidence)}`,
     SEPARATOR,
-    `NOVA EDGE: ${formatNovaEdgePair(novaEdge?.p1, novaEdge?.p2)}`,
-    `NOVA PICK: ${formatNovaPick(novaEdge?.winner)}`,
-    SEPARATOR,
     "SHORT SUMMARY",
     `HISTORY-5: ${formatMethodSummary(
       prediction.predictedWinner,
@@ -46,6 +53,20 @@ export function formatShortPredictionMessage(prediction: PredictionResult): stri
   ];
 
   return lines.join("\n");
+}
+
+function formatMatchLinkLine(
+  matchUrl: string | undefined,
+  linkMode: ShortPredictionLinkMode,
+): string {
+  const url = String(matchUrl || "").trim();
+  if (!url) {
+    return "Ссылка на игру: -";
+  }
+  if (linkMode === "telegram_html_link") {
+    return `<a href="${escapeHtmlAttr(url)}">ссылка на игру</a>`;
+  }
+  return `Ссылка на игру: ${url}`;
 }
 
 function hasConsensusCheckmarks(
@@ -193,14 +214,6 @@ function formatNovaEdgePair(p1: number | undefined, p2: number | undefined): str
   return `${left}% / ${right}%`;
 }
 
-function formatNovaPick(winner: string | undefined): string {
-  const value = normalizeName(winner);
-  if (!value) {
-    return "-";
-  }
-  return value;
-}
-
 function formatMethodSummary(winner: string | undefined, pair: string): string {
   const normalizedWinner = normalizeName(winner);
   const winnerText = normalizedWinner || "-";
@@ -272,6 +285,14 @@ function formatCommaDecimal(value: number, digits: number): string {
 
 function normalizeName(value: string | undefined): string {
   return String(value || "").trim();
+}
+
+function escapeHtmlAttr(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
 }
 
 function canonicalWinnerName(value: string | undefined): string {

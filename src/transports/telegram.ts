@@ -22,10 +22,11 @@ export class TelegramTransport implements PredictionTransport {
 
   async sendPrediction(prediction: PredictionResult): Promise<void> {
     await this.throttle();
-    const message = formatShortPredictionMessage(prediction);
+    const htmlMessage = formatShortPredictionMessage(prediction, { linkMode: "telegram_html_link" });
+    const plainMessage = formatShortPredictionMessage(prediction, { linkMode: "plain_text_url" });
     const primary = await this.sendMessage({
       chat_id: this.chatId,
-      text: message,
+      text: htmlMessage,
       parse_mode: "HTML",
       disable_web_page_preview: true,
     });
@@ -36,7 +37,7 @@ export class TelegramTransport implements PredictionTransport {
     // Fallback to plain text when Telegram rejects formatting.
     const fallback = await this.sendMessage({
       chat_id: this.chatId,
-      text: message,
+      text: plainMessage,
       disable_web_page_preview: true,
     });
     if (fallback.ok) {

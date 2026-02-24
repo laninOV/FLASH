@@ -5,7 +5,8 @@ export class ConsoleTransport implements PredictionTransport {
   readonly name = "console";
 
   async sendPrediction(prediction: PredictionResult): Promise<void> {
-    process.stdout.write(`${formatShortPredictionMessage(prediction)}\n\n`);
+    process.stdout.write(
+      `${formatShortPredictionMessage(prediction, { linkMode: "plain_text_url" })}\n\n`,
+    );
   }
 }
-
