@@ -246,6 +246,63 @@ test("formatShortPredictionMessage does not add checkmarks when HISTORY-5 and NO
   assert.doesNotMatch(text, /✅✅✅/);
 });
 
+test("formatShortPredictionMessage adds checkmarks for 4/5 agreement with confidence above 50", () => {
+  const prediction: PredictionResult = {
+    ...basePrediction,
+    confidence: 0.501,
+    modelSummary: {
+      ...basePrediction.modelSummary!,
+      dirt: {
+        ...basePrediction.modelSummary!.dirt!,
+        modelProbabilities: {
+          ...basePrediction.modelSummary!.dirt!.modelProbabilities!,
+          markovP1: 46,
+        },
+      },
+    },
+  };
+
+  const text = formatShortPredictionMessage(prediction);
+  const lines = text.split("\n");
+  assert.equal(lines[0], "✅✅✅");
+  assert.match(text, /Agreement: 4\/5$/m);
+  assert.doesNotMatch(text, /Agreement: 4\/5 🔴/);
+  assert.match(text, /Confidence: 50,1%$/m);
+});
+
+test("formatShortPredictionMessage does not add checkmarks when confidence is exactly 50.0%", () => {
+  const prediction: PredictionResult = {
+    ...basePrediction,
+    confidence: 0.5,
+  };
+
+  const text = formatShortPredictionMessage(prediction);
+  assert.doesNotMatch(text, /✅✅✅/);
+  assert.match(text, /Confidence: 50,0% 🔴/);
+});
+
+test("formatShortPredictionMessage does not add checkmarks when agreement is 3/5", () => {
+  const prediction: PredictionResult = {
+    ...basePrediction,
+    confidence: 0.7,
+    modelSummary: {
+      ...basePrediction.modelSummary!,
+      dirt: {
+        ...basePrediction.modelSummary!.dirt!,
+        modelProbabilities: {
+          ...basePrediction.modelSummary!.dirt!.modelProbabilities!,
+          markovP1: 46,
+          bradleyP1: 44,
+        },
+      },
+    },
+  };
+
+  const text = formatShortPredictionMessage(prediction);
+  assert.doesNotMatch(text, /✅✅✅/);
+  assert.match(text, /Agreement: 3\/5 🔴/);
+});
+
 test("formatShortPredictionMessage renders NOVA FILTER SKIP for low confidence", () => {
   const prediction: PredictionResult = {
     ...basePrediction,
@@ -254,6 +311,46 @@ test("formatShortPredictionMessage renders NOVA FILTER SKIP for low confidence",
 
   const text = formatShortPredictionMessage(prediction);
   assert.match(text, /NOVA FILTER: 🔴 SKIP/);
+});
+
+test("formatShortPredictionMessage adds red markers to both Agreement and Confidence on weak random-like signal", () => {
+  const prediction: PredictionResult = {
+    ...basePrediction,
+    confidence: 0.5,
+    modelSummary: {
+      ...basePrediction.modelSummary!,
+      dirt: {
+        ...basePrediction.modelSummary!.dirt!,
+        modelProbabilities: {
+          ...basePrediction.modelSummary!.dirt!.modelProbabilities!,
+          logRegP1: 46,
+          markovP1: 50,
+          bradleyP1: 50,
+          pcaP1: 77,
+        },
+      },
+      novaEdge: {
+        ...basePrediction.modelSummary!.novaEdge!,
+        p1: 42,
+        p2: 58,
+        winner: "Amanda Anisimova",
+      },
+    },
+    predictedWinner: "Mirra Andreeva",
+  };
+
+  const text = formatShortPredictionMessage(prediction);
+  assert.match(text, /Agreement: 1\/5 🔴/);
+  assert.match(text, /Confidence: 50,0% 🔴/);
+  assert.doesNotMatch(text, /✅✅✅/);
+});
+
+test("formatShortPredictionMessage keeps Agreement non-red for 5/5 and Confidence non-red above 50", () => {
+  const text = formatShortPredictionMessage(basePrediction);
+  assert.match(text, /Agreement: 5\/5$/m);
+  assert.doesNotMatch(text, /Agreement: 5\/5 🔴/);
+  assert.match(text, /Confidence: 65,4%$/m);
+  assert.doesNotMatch(text, /Confidence: 65,4% 🔴/);
 });
 
 test("formatShortPredictionMessage renders NOVA FILTER SKIP for weak NOVA without Logistic agreement", () => {

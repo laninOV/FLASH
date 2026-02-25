@@ -16,12 +16,17 @@ export function formatShortPredictionMessage(
   const names = resolvePlayerNames(prediction);
   const probs = prediction.modelSummary?.dirt?.modelProbabilities;
   const novaEdge = prediction.modelSummary?.novaEdge;
-  const showConsensusCheckmarks = hasConsensusCheckmarks(prediction.predictedWinner, novaEdge?.winner);
   const methodsSummary = computeMethodsAgreement(
     prediction.predictedWinner,
     names.playerA,
     names.playerB,
     [probs?.logRegP1, probs?.markovP1, probs?.bradleyP1, probs?.pcaP1, novaEdge?.p1],
+  );
+  const showConsensusCheckmarks = shouldShowConsensusCheckmarks(
+    prediction.predictedWinner,
+    novaEdge?.winner,
+    prediction.confidence,
+    methodsSummary,
   );
 
   const lines = [
@@ -40,8 +45,8 @@ export function formatShortPredictionMessage(
     `Winner: ${prediction.predictedWinner}`,
     `Odds: ${formatWinnerOddComma(prediction, names.playerA, names.playerB)}`,
     `Methods: ${methodsSummary.methods}`,
-    `Agreement: ${methodsSummary.agreement}`,
-    `Confidence: ${formatConfidence(prediction.confidence)}`,
+    formatAgreementLine(methodsSummary),
+    formatConfidenceLine(prediction.confidence),
     SEPARATOR,
     "SHORT SUMMARY",
     `HISTORY-5: ${formatMethodSummary(
@@ -70,13 +75,36 @@ function formatMatchLinkLine(
   return `Ссылка на игру: ${url}`;
 }
 
-function hasConsensusCheckmarks(
+function shouldShowConsensusCheckmarks(
   historyWinner: string | undefined,
   novaWinner: string | undefined,
+  confidence: number,
+  methodsSummary: MethodsAgreementSummary,
 ): boolean {
   const a = canonicalWinnerName(historyWinner);
   const b = canonicalWinnerName(novaWinner);
-  return Boolean(a && b && a === b);
+  const confidencePct = getConfidencePct(confidence);
+  return Boolean(
+    a &&
+      b &&
+      a === b &&
+      methodsSummary.methods === 5 &&
+      methodsSummary.agreeCount >= 4 &&
+      confidencePct !== undefined &&
+      confidencePct > 50,
+  );
+}
+
+function formatAgreementLine(methodsSummary: MethodsAgreementSummary): string {
+  const lowAgreement = methodsSummary.methods === 5 && methodsSummary.agreeCount <= 3;
+  return `Agreement: ${methodsSummary.agreementText}${lowAgreement ? " 🔴" : ""}`;
+}
+
+function formatConfidenceLine(confidence: number): string {
+  const text = formatConfidence(confidence);
+  const confidencePct = getConfidencePct(confidence);
+  const lowConfidence = confidencePct !== undefined && confidencePct <= 50;
+  return `Confidence: ${text}${lowConfidence ? " 🔴" : ""}`;
 }
 
 function resolveSideFromP1(p1?: number): "A" | "B" | "neutral" | undefined {
@@ -259,6 +287,13 @@ function formatConfidence(confidence: number): string {
   return `${formatCommaDecimal(confidence * 100, 1)}%`;
 }
 
+function getConfidencePct(confidence: number): number | undefined {
+  if (!Number.isFinite(confidence)) {
+    return undefined;
+  }
+  return confidence * 100;
+}
+
 function formatNovaEdgePair(p1: number | undefined, p2: number | undefined): string {
   if (!isFiniteNumber(p1) || !isFiniteNumber(p2)) {
     return "- / -";
@@ -275,12 +310,18 @@ function formatMethodSummary(winner: string | undefined, pair: string): string {
   return `${winnerText} | ${pairText}`;
 }
 
+interface MethodsAgreementSummary {
+  methods: number;
+  agreeCount: number;
+  agreementText: string;
+}
+
 function computeMethodsAgreement(
   predictedWinner: string,
   playerA: string,
   playerB: string,
   probabilities: Array<number | undefined>,
-): { methods: number; agreement: string } {
+): MethodsAgreementSummary {
   const winnerSide = winnerToSide(predictedWinner, playerA, playerB);
   let methods = 0;
   let agree = 0;
@@ -297,9 +338,9 @@ function computeMethodsAgreement(
   }
 
   if (methods === 0) {
-    return { methods: 0, agreement: "-/-" };
+    return { methods: 0, agreeCount: 0, agreementText: "-/-" };
   }
-  return { methods, agreement: `${agree}/${methods}` };
+  return { methods, agreeCount: agree, agreementText: `${agree}/${methods}` };
 }
 
 function winnerToSide(
