@@ -9,7 +9,7 @@ User=__RUN_USER__
 WorkingDirectory=__APP_DIR__
 EnvironmentFile=__ENV_FILE__
 Environment=PLAYWRIGHT_BROWSERS_PATH=__PLAYWRIGHT_BROWSERS_PATH__
-ExecStart=/usr/bin/env node dist/src/controlBotCli.js --entry-url https://www.flashscore.com.ua/tennis/ --headed false --slow-mo 0 --timeout-ms 30000 --telegram true --console false
+ExecStart=/usr/bin/env node dist/src/controlBotCli.js --entry-url https://www.flashscore.co.ke/tennis/ --headed false --slow-mo 0 --timeout-ms 30000 --telegram true --console false
 Restart=always
 RestartSec=5
 KillSignal=SIGINT

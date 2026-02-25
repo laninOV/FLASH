@@ -4,6 +4,7 @@ import { extractRecentMatchesFromProfile } from "../extract/playerProfile.js";
 import { extractTechStatsFromMatch } from "../extract/techStats.js";
 import type { PlayerRecentStats, RunConfig } from "../types.js";
 import { scanTechHistoryCandidates } from "./historyScan.js";
+import { buildPlayerRecentFormSummary } from "./playerForm.js";
 import { throwIfAborted } from "./utils.js";
 
 export interface CollectPlayerStatsInput {
@@ -36,10 +37,13 @@ export async function collectPlayerStats(input: CollectPlayerStatsInput): Promis
     scanLimit,
   });
   const recentMatches = profileHistory.matches;
+  stats.recentForm = buildPlayerRecentFormSummary(recentMatches);
   stats.historyScanStats = {
     candidatePool: profileHistory.candidatePool,
     scanned: 0,
     accepted: 0,
+    statsMissBudget: config.historyStatsMissBudget,
+    statsMissesForBudget: 0,
     filtered: {
       sameAsTargetMatch: profileHistory.filtered.sameAsTargetMatch,
       nonSingles: profileHistory.filtered.nonSingles,
@@ -62,6 +66,7 @@ export async function collectPlayerStats(input: CollectPlayerStatsInput): Promis
     playerName: player.name,
     candidates: recentMatches,
     needCount: requiredHistoryCount,
+    statsMissBudget: config.historyStatsMissBudget,
     logger,
     signal,
     parseMatch: async (candidate) =>
@@ -73,10 +78,20 @@ export async function collectPlayerStats(input: CollectPlayerStatsInput): Promis
   if (stats.historyScanStats) {
     stats.historyScanStats.scanned = scanResult.scanned;
     stats.historyScanStats.accepted = scanResult.parsedMatches.length;
+    stats.historyScanStats.statsMissesForBudget = scanResult.statsMissesForBudget;
+    stats.historyScanStats.earlyStopReason = scanResult.earlyStopReason;
     stats.historyScanStats.filtered.techMissing = scanResult.techMissing;
     stats.historyScanStats.filtered.nonSinglesHistory = scanResult.nonSinglesHistory;
     stats.historyScanStats.filtered.metricsIncomplete = scanResult.metricsIncomplete;
     stats.historyScanStats.filtered.parseError = scanResult.parseErrors;
+  }
+
+  if (scanResult.earlyStopReason === "stats_miss_budget_reached") {
+    logger.warn(
+      `Player ${player.name}: early stop (${scanResult.earlyStopReason} ` +
+        `${scanResult.statsMissesForBudget}/${scanResult.earlyStopBudget ?? config.historyStatsMissBudget}), ` +
+        `accepted=${scanResult.parsedMatches.length}/${requiredHistoryCount}.`,
+    );
   }
 
   if (stats.parsedMatches.length < requiredHistoryCount) {

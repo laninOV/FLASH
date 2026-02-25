@@ -75,6 +75,60 @@ const basePrediction: PredictionResult = {
       winner: "Mirra Andreeva",
       source: "stable14_nova_v1",
     },
+    hybridShadow: {
+      p1: 58.2,
+      p2: 41.8,
+      winner: "Mirra Andreeva",
+      source: "form_stats_hybrid_v2",
+      components: {
+        statsP1: 61.1,
+        formP1: 53.4,
+        hybridRawP1: 58.2,
+        statsWeight: 0.65,
+        formWeight: 0.35,
+        statsReliability: 1,
+        formReliability: 1,
+        hybridReliability: 1,
+      },
+      warnings: [],
+    },
+    mahalShadow: {
+      p1: 56.1,
+      p2: 43.9,
+      winner: "Mirra Andreeva",
+      source: "stable14_mahal_edge_v2",
+      components: {
+        rawP1: 61.2,
+        scoreS: 0.42,
+        distanceD: 0.9,
+        reliability: 0.64,
+        statsCoverage: 1,
+        varianceStability: 0.58,
+        signConsensus: 0.73,
+        distanceConfidence: 0.6,
+      },
+      warnings: [],
+    },
+    matchupShadow: {
+      p1: 54.6,
+      p2: 45.4,
+      winner: "Mirra Andreeva",
+      source: "stable14_matchup_cross_v1",
+      components: {
+        rawP1: 58.1,
+        scoreS: 0.23,
+        reliability: 0.62,
+        statsCoverage: 1,
+        componentAgreement: 0.74,
+        stabilityConfidence: 0.66,
+        edgeMagnitude: 0.42,
+        serveMatch: 0.11,
+        returnMatch: 0.08,
+        pressureMatch: 0.03,
+        controlMatch: 0.04,
+      },
+      warnings: [],
+    },
   },
   warnings: ["x"],
 };
@@ -83,7 +137,7 @@ test("formatShortPredictionMessage renders no-YTD short message with NOVA and HI
   const text = formatShortPredictionMessage(basePrediction);
   const lines = text.split("\n");
 
-  assert.equal(lines.length, 22);
+  assert.equal(lines.length, 23);
   assert.equal(lines[0], "✅✅✅");
   assert.equal(lines[1], "TENNIS SIGNAL");
   assert.equal(lines[3], "Mirra Andreeva vs Amanda Anisimova");
@@ -95,13 +149,17 @@ test("formatShortPredictionMessage renders no-YTD short message with NOVA and HI
   assert.equal(lines[18], "SHORT SUMMARY");
   assert.match(lines[19] || "", /^HISTORY-5: Mirra Andreeva \| 65% \/ 35%$/);
   assert.match(lines[20] || "", /^NOVA: Mirra Andreeva \| 62% \/ 38%$/);
-  assert.equal(lines[21], "==================");
+  assert.equal(lines[21], "NOVA FILTER: 🟢 HIGH");
+  assert.equal(lines[22], "==================");
 
   assert.doesNotMatch(text, /YTD SIGNAL/);
   assert.doesNotMatch(text, /\bYTD:/);
   assert.doesNotMatch(text, /PCLASS:/);
   assert.doesNotMatch(text, /NOVA EDGE:/);
   assert.doesNotMatch(text, /NOVA PICK:/);
+  assert.doesNotMatch(text, /HYBRID \(shadow\):/);
+  assert.doesNotMatch(text, /MAHAL \(shadow\):/);
+  assert.doesNotMatch(text, /MATCHUP \(shadow\):/);
 });
 
 test("formatShortPredictionMessage keeps placeholders and still hides PCLASS", () => {
@@ -116,6 +174,9 @@ test("formatShortPredictionMessage keeps placeholders and still hides PCLASS", (
         },
       },
       novaEdge: undefined,
+      hybridShadow: undefined,
+      mahalShadow: undefined,
+      matchupShadow: undefined,
     },
   };
 
@@ -126,12 +187,16 @@ test("formatShortPredictionMessage keeps placeholders and still hides PCLASS", (
   assert.match(text, /PCA: - \/ -/);
   assert.match(text, /SHORT SUMMARY/);
   assert.match(text, /NOVA: - \| - \/ -/);
+  assert.match(text, /NOVA FILTER: 🟡 NORMAL/);
   assert.match(text, /Methods: 0/);
   assert.match(text, /Agreement: -\/-/);
   assert.doesNotMatch(text, /PCLASS:/);
   assert.doesNotMatch(text, /✅✅✅/);
   assert.doesNotMatch(text, /NOVA EDGE:/);
   assert.doesNotMatch(text, /NOVA PICK:/);
+  assert.doesNotMatch(text, /HYBRID \(shadow\):/);
+  assert.doesNotMatch(text, /MAHAL \(shadow\):/);
+  assert.doesNotMatch(text, /MATCHUP \(shadow\):/);
 });
 
 test("formatShortPredictionMessage renders Telegram HTML link when requested", () => {
@@ -179,4 +244,76 @@ test("formatShortPredictionMessage does not add checkmarks when HISTORY-5 and NO
   const lines = text.split("\n");
   assert.equal(lines[0], "TENNIS SIGNAL");
   assert.doesNotMatch(text, /✅✅✅/);
+});
+
+test("formatShortPredictionMessage renders NOVA FILTER SKIP for low confidence", () => {
+  const prediction: PredictionResult = {
+    ...basePrediction,
+    confidence: 0.49,
+  };
+
+  const text = formatShortPredictionMessage(prediction);
+  assert.match(text, /NOVA FILTER: 🔴 SKIP/);
+});
+
+test("formatShortPredictionMessage renders NOVA FILTER SKIP for weak NOVA without Logistic agreement", () => {
+  const prediction: PredictionResult = {
+    ...basePrediction,
+    modelSummary: {
+      ...basePrediction.modelSummary!,
+      dirt: {
+        ...basePrediction.modelSummary!.dirt!,
+        modelProbabilities: {
+          ...basePrediction.modelSummary!.dirt!.modelProbabilities!,
+          logRegP1: 46,
+        },
+      },
+      novaEdge: {
+        ...basePrediction.modelSummary!.novaEdge!,
+        p1: 52,
+        p2: 48,
+      },
+    },
+  };
+
+  const text = formatShortPredictionMessage(prediction);
+  assert.match(text, /NOVA FILTER: 🔴 SKIP/);
+});
+
+test("formatShortPredictionMessage renders NOVA FILTER NORMAL for disagreement with strong NOVA", () => {
+  const prediction: PredictionResult = {
+    ...basePrediction,
+    modelSummary: {
+      ...basePrediction.modelSummary!,
+      dirt: {
+        ...basePrediction.modelSummary!.dirt!,
+        modelProbabilities: {
+          ...basePrediction.modelSummary!.dirt!.modelProbabilities!,
+          logRegP1: 46,
+        },
+      },
+    },
+  };
+
+  const text = formatShortPredictionMessage(prediction);
+  assert.match(text, /NOVA FILTER: 🟡 NORMAL/);
+});
+
+test("formatShortPredictionMessage renders NOVA FILTER NORMAL when Logistic is missing", () => {
+  const prediction: PredictionResult = {
+    ...basePrediction,
+    modelSummary: {
+      ...basePrediction.modelSummary!,
+      dirt: {
+        ...basePrediction.modelSummary!.dirt!,
+        modelProbabilities: {
+          ...basePrediction.modelSummary!.dirt!.modelProbabilities!,
+          logRegP1: undefined,
+        },
+      },
+    },
+  };
+
+  const text = formatShortPredictionMessage(prediction);
+  assert.match(text, /NOVA FILTER: 🟡 NORMAL/);
 });

@@ -1,0 +1,82 @@
+{
+  "startedAt": "2026-02-24T22:00:11.970Z",
+  "finishedAt": "2026-02-24T22:00:34.358Z",
+  "durationSec": 22.39,
+  "config": {
+    "entryUrl": "https://www.flashscore.com.ua/tennis/",
+    "status": "finished",
+    "historyStatsMissBudget": 3,
+    "timeoutMs": 60000,
+    "maxGotoRetries": 4,
+    "outcomeTimeoutMs": 25000,
+    "outcomeRetries": 2,
+    "requiredHistoryCount": 5,
+    "targetPredictions": 1,
+    "candidateScanLimit": 120,
+    "artifactPrefix": "shadow-bench-smoke"
+  },
+  "collection": {
+    "processedFinishedCandidates": 1,
+    "acceptedPredictions": 1,
+    "parserErrors": 0,
+    "skippedDoubles": 0,
+    "skippedStrict5": 0,
+    "skippedFastStrict5": 0
+  },
+  "hitRate": {
+    "main": {
+      "hit": 0,
+      "total": 1,
+      "rate": 0
+    },
+    "nova": {
+      "hit": 0,
+      "total": 1,
+      "rate": 0
+    },
+    "hybridShadow": {
+      "hit": 0,
+      "total": 1,
+      "rate": 0
+    },
+    "mahalShadow": {
+      "hit": 0,
+      "total": 1,
+      "rate": 0
+    },
+    "matchupShadow": {
+      "hit": 0,
+      "total": 1,
+      "rate": 0
+    }
+  },
+  "outcomeSummary": {
+    "fetchedMatches": 1,
+    "singles": 1,
+    "unmatchedPredictionMatchUrls": 0
+  },
+  "disagreements": {
+    "compared": 1,
+    "hybridVsHistoryDiff": 0,
+    "hybridVsNovaDiff": 0,
+    "mahalVsHistoryDiff": 0,
+    "mahalVsNovaDiff": 0,
+    "matchupVsHistoryDiff": 0,
+    "matchupVsNovaDiff": 0,
+    "allThreeDifferent": 0,
+    "allFourDifferent": 0,
+    "allFiveDifferent": 0,
+    "hybridOnlyCorrect": 0,
+    "mahalOnlyCorrect": 0,
+    "matchupOnlyCorrect": 0,
+    "historyOnlyCorrect": 0,
+    "novaOnlyCorrect": 0,
+    "hybridAndHistoryCorrectNovaWrong": 0,
+    "hybridAndNovaCorrectHistoryWrong": 0,
+    "mahalAndHistoryCorrectNovaWrong": 0,
+    "mahalAndNovaCorrectHistoryWrong": 0,
+    "matchupAndHistoryCorrectNovaWrong": 0,
+    "matchupAndNovaCorrectHistoryWrong": 0
+  },
+  "sampleDivergences": []
+}

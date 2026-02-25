@@ -1,0 +1,96 @@
+{
+  "startedAt": "2026-02-24T22:43:49.450Z",
+  "finishedAt": "2026-02-24T22:44:12.028Z",
+  "durationSec": 22.58,
+  "config": {
+    "entryUrl": "https://www.flashscore.com.ua/tennis/",
+    "status": "finished",
+    "historyStatsMissBudget": 3,
+    "timeoutMs": 60000,
+    "maxGotoRetries": 2,
+    "outcomeTimeoutMs": 25000,
+    "outcomeRetries": 1,
+    "requiredHistoryCount": 5,
+    "targetPredictions": 1,
+    "candidateScanLimit": 120,
+    "artifactPrefix": "shadow-bench-multiday-smoke",
+    "daysBack": 1
+  },
+  "collection": {
+    "daysVisited": 2,
+    "uniqueFinishedCandidates": 120,
+    "processedFinishedCandidates": 1,
+    "acceptedPredictions": 1,
+    "parserErrors": 0,
+    "skippedDoubles": 0,
+    "skippedStrict5": 0,
+    "skippedFastStrict5": 0
+  },
+  "hitRate": {
+    "main": {
+      "hit": 1,
+      "total": 1,
+      "rate": 100
+    },
+    "nova": {
+      "hit": 1,
+      "total": 1,
+      "rate": 100
+    },
+    "hybridShadow": {
+      "hit": 1,
+      "total": 1,
+      "rate": 100
+    },
+    "mahalShadow": {
+      "hit": 1,
+      "total": 1,
+      "rate": 100
+    },
+    "matchupShadow": {
+      "hit": 1,
+      "total": 1,
+      "rate": 100
+    },
+    "marketResidualShadow": {
+      "hit": 1,
+      "total": 1,
+      "rate": 100
+    }
+  },
+  "outcomeSummary": {
+    "fetchedMatches": 1,
+    "singles": 1,
+    "unmatchedPredictionMatchUrls": 0
+  },
+  "disagreements": {
+    "compared": 1,
+    "hybridVsHistoryDiff": 0,
+    "hybridVsNovaDiff": 0,
+    "mahalVsHistoryDiff": 0,
+    "mahalVsNovaDiff": 0,
+    "matchupVsHistoryDiff": 0,
+    "matchupVsNovaDiff": 0,
+    "mroaVsHistoryDiff": 0,
+    "mroaVsNovaDiff": 0,
+    "allThreeDifferent": 0,
+    "allFourDifferent": 0,
+    "allFiveDifferent": 0,
+    "allSixDifferent": 0,
+    "hybridOnlyCorrect": 0,
+    "mahalOnlyCorrect": 0,
+    "matchupOnlyCorrect": 0,
+    "mroaOnlyCorrect": 0,
+    "historyOnlyCorrect": 0,
+    "novaOnlyCorrect": 0,
+    "hybridAndHistoryCorrectNovaWrong": 0,
+    "hybridAndNovaCorrectHistoryWrong": 0,
+    "mahalAndHistoryCorrectNovaWrong": 0,
+    "mahalAndNovaCorrectHistoryWrong": 0,
+    "matchupAndHistoryCorrectNovaWrong": 0,
+    "matchupAndNovaCorrectHistoryWrong": 0,
+    "mroaAndHistoryCorrectNovaWrong": 0,
+    "mroaAndNovaCorrectHistoryWrong": 0
+  },
+  "sampleDivergences": []
+}

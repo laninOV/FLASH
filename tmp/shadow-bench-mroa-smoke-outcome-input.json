@@ -1,0 +1,21 @@
+[
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/kecmanovic-miomir-MTQ5CPOR/schoolkate-tristan-hn8XQkiU/?mid=xdoWfvTG",
+    "mainPick": "Кецманович М.",
+    "novaPick": "Кецманович М.",
+    "hybridShadowPick": "Кецманович М.",
+    "hybridShadowP1": 46.9,
+    "mahalShadowPick": "Кецманович М.",
+    "mahalShadowP1": 44.5,
+    "matchupShadowPick": "Кецманович М.",
+    "matchupShadowP1": 47.7,
+    "marketResidualShadowPick": "Кецманович М.",
+    "marketResidualShadowP1": 39.7,
+    "mainModelProbabilities": {
+      "logRegP1": 45.667061901516526,
+      "markovP1": 51.38404609371378,
+      "bradleyP1": 47.142857142857146,
+      "pcaP1": 56.79320996353757
+    }
+  }
+]

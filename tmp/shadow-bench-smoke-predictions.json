@@ -1,0 +1,171 @@
+[
+  {
+    "createdAt": "2026-02-24T22:00:32.531Z",
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/krueger-ashlyn-O81eud9p/mcnally-caty-YDHquro6/?mid=jwOrMGRF",
+    "matchLabel": "Крюгер Э. vs Макналли К.",
+    "tournament": "Austin, хард - 1/16",
+    "matchStatus": "upcoming",
+    "scheduledStartText": "25.02.2026 00:30",
+    "playerAName": "Крюгер Э.",
+    "playerBName": "Макналли К.",
+    "predictedWinner": "Макналли К.",
+    "confidence": 0.7096578682312714,
+    "reason": "DirtTennis formulas (pair-by-index, strict 5 full Tech histories, stable14)",
+    "statsCoverage": {
+      "requestedPerPlayer": 5,
+      "playerACollected": 5,
+      "playerBCollected": 5
+    },
+    "dataStatus": "metrics_policy=stable14, coverage A 5/5, B 5/5, valid_pairs=5/5, scan_count: A 5/30 accepted=5, B 5/30 accepted=5, rejected_incomplete_metrics: A=0 B=0, non_singles_history: A=0 B=0, tech_missing: A=0 B=0, weights: logreg=22% markov=29% bradley=14% pca=35%, model_probs: logreg=42.8 markov=43.8 bradley=30.7 pca=8.4 final=29.4",
+    "modelSummary": {
+      "modules": [
+        {
+          "name": "LOGREG",
+          "side": "away",
+          "strength": 1.4407382974695522,
+          "explain": [
+            "P1=42.8 P2=57.2"
+          ],
+          "flags": []
+        },
+        {
+          "name": "MARKOV",
+          "side": "away",
+          "strength": 1.2317526937466283,
+          "explain": [
+            "P1=43.8 P2=56.2"
+          ],
+          "flags": []
+        },
+        {
+          "name": "BRADLEY",
+          "side": "away",
+          "strength": 3.8571428571428585,
+          "explain": [
+            "P1=30.7 P2=69.3"
+          ],
+          "flags": []
+        },
+        {
+          "name": "PCA",
+          "side": "away",
+          "strength": 8.317827941719287,
+          "explain": [
+            "P1=8.4 P2=91.6"
+          ],
+          "flags": []
+        }
+      ],
+      "ensemble": {
+        "finalSide": "away",
+        "score": -4.94486802346907,
+        "votesHome": 0,
+        "votesAway": 4,
+        "strongHome": 0,
+        "strongAway": 2,
+        "active": 4
+      },
+      "rating5": {
+        "playerA": 29.396383235545542,
+        "playerB": 70.60361676445446
+      },
+      "reliability": {
+        "playerA": 1,
+        "playerB": 1
+      },
+      "dirt": {
+        "validPairs": 5,
+        "requestedPairs": 5,
+        "modelProbabilities": {
+          "logRegP1": 42.79630851265224,
+          "markovP1": 43.84123653126686,
+          "bradleyP1": 30.71428571428571,
+          "pcaP1": 8.410860291403564,
+          "finalP1": 29.396383235545542
+        },
+        "weights": {
+          "logReg": 0.21805203683809202,
+          "markov": 0.2948921220161607,
+          "bradley": 0.1362825230238075,
+          "pca": 0.35077331812193974
+        },
+        "stability": {
+          "logReg": 0.25,
+          "markov": 0.38639809664872926,
+          "bradley": 0.25,
+          "pca": 0.6434671708797584
+        },
+        "pclass": {
+          "source": "missing"
+        }
+      },
+      "novaEdge": {
+        "p1": 37.42850718893762,
+        "p2": 62.57149281106238,
+        "winner": "Макналли К.",
+        "source": "stable14_nova_v1"
+      },
+      "hybridShadow": {
+        "p1": 42.2,
+        "p2": 57.8,
+        "winner": "Макналли К.",
+        "source": "form_stats_hybrid_v2",
+        "components": {
+          "statsP1": 32.6,
+          "formP1": 50,
+          "hybridRawP1": 36.1,
+          "statsWeight": 0.8,
+          "formWeight": 0.2,
+          "statsReliability": 1,
+          "formReliability": 0,
+          "hybridReliability": 0.563
+        },
+        "warnings": [
+          "hybrid_form_unavailable_a",
+          "hybrid_form_unavailable_b",
+          "hybrid_form_low_coverage"
+        ]
+      },
+      "mahalShadow": {
+        "p1": 36.3,
+        "p2": 63.7,
+        "winner": "Макналли К.",
+        "source": "stable14_mahal_edge_v2",
+        "components": {
+          "rawP1": 32.427,
+          "scoreS": -0.734,
+          "distanceD": 0.915,
+          "reliability": 0.78,
+          "statsCoverage": 1,
+          "varianceStability": 0.476,
+          "signConsensus": 0.7,
+          "distanceConfidence": 0.61
+        },
+        "warnings": []
+      },
+      "matchupShadow": {
+        "p1": 46.8,
+        "p2": 53.2,
+        "winner": "Макналли К.",
+        "source": "stable14_matchup_cross_v1",
+        "components": {
+          "rawP1": 46.018,
+          "scoreS": -0.055,
+          "reliability": 0.8,
+          "statsCoverage": 1,
+          "componentAgreement": 0.798,
+          "stabilityConfidence": 0.97,
+          "edgeMagnitude": 0.1,
+          "serveMatch": 0.058,
+          "returnMatch": -0.175,
+          "pressureMatch": -0.075,
+          "controlMatch": -0.066
+        },
+        "warnings": []
+      }
+    },
+    "warnings": [
+      "pclass_missing_dv_data"
+    ]
+  }
+]

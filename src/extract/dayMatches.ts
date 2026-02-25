@@ -28,13 +28,18 @@ export async function extractDayMatches(
   page: Page,
   config: RunConfig,
   logger: Logger,
+  options?: {
+    skipNavigation?: boolean;
+  },
 ): Promise<DayMatchRef[]> {
-  await gotoWithRetry(page, config.entryUrl, {
-    timeoutMs: config.timeoutMs,
-    retries: config.maxGotoRetries,
-    logger,
-    stepLabel: "day-page",
-  });
+  if (options?.skipNavigation !== true) {
+    await gotoWithRetry(page, config.entryUrl, {
+      timeoutMs: config.timeoutMs,
+      retries: config.maxGotoRetries,
+      logger,
+      stepLabel: "day-page",
+    });
+  }
   try {
     await page.waitForSelector('[data-event-row="true"][id^="g_2_"]', {
       timeout: Math.min(config.timeoutMs, 5_000),

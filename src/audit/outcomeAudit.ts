@@ -23,7 +23,15 @@ export interface OutcomePredictionInput {
   matchUrl: string;
   mainPick?: string;
   novaPick?: string;
+  hybridShadowPick?: string;
+  mahalShadowPick?: string;
+  matchupShadowPick?: string;
+  marketResidualShadowPick?: string;
   mainOdds?: number;
+  hybridShadowP1?: number;
+  mahalShadowP1?: number;
+  matchupShadowP1?: number;
+  marketResidualShadowP1?: number;
   mainModelProbabilities?: {
     logRegP1?: number;
     markovP1?: number;
@@ -51,6 +59,10 @@ export interface OutcomeAuditResult {
   hitRate?: {
     main: AccuracySummary;
     nova: AccuracySummary;
+    hybridShadow: AccuracySummary;
+    mahalShadow: AccuracySummary;
+    matchupShadow: AccuracySummary;
+    marketResidualShadow: AccuracySummary;
   };
   componentHitRate?: {
     main: Record<"logistic" | "markov" | "bradley" | "pca", AccuracySummary>;
@@ -79,6 +91,12 @@ export async function runOutcomeAudit(options: OutcomeAuditOptions): Promise<Out
 
   const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+  await context.addInitScript(() => {
+    const scope = globalThis as { __name?: (target: unknown, name?: string) => unknown };
+    if (typeof scope.__name !== "function") {
+      scope.__name = (target: unknown): unknown => target;
+    }
+  });
   const page = await context.newPage();
   page.setDefaultTimeout(timeoutMs);
 
@@ -116,6 +134,10 @@ export async function runOutcomeAudit(options: OutcomeAuditOptions): Promise<Out
 
   const mainHit = createAccuracySummary();
   const novaHit = createAccuracySummary();
+  const hybridShadowHit = createAccuracySummary();
+  const mahalShadowHit = createAccuracySummary();
+  const matchupShadowHit = createAccuracySummary();
+  const marketResidualShadowHit = createAccuracySummary();
   const mainComponent = createComponentSummary();
   const mainRoi = createRoiSummary();
 
@@ -131,6 +153,10 @@ export async function runOutcomeAudit(options: OutcomeAuditOptions): Promise<Out
 
     applyPickSummary(mainHit, prediction.mainPick, match);
     applyPickSummary(novaHit, prediction.novaPick, match);
+    applyPickSummary(hybridShadowHit, prediction.hybridShadowPick, match);
+    applyPickSummary(mahalShadowHit, prediction.mahalShadowPick, match);
+    applyPickSummary(matchupShadowHit, prediction.matchupShadowPick, match);
+    applyPickSummary(marketResidualShadowHit, prediction.marketResidualShadowPick, match);
     applyComponentSummary(mainComponent, prediction.mainModelProbabilities, match);
     applyRoiSummary(mainRoi, prediction.mainPick, prediction.mainOdds, match);
   }
@@ -142,6 +168,10 @@ export async function runOutcomeAudit(options: OutcomeAuditOptions): Promise<Out
     hitRate: {
       main: finalizeAccuracy(mainHit),
       nova: finalizeAccuracy(novaHit),
+      hybridShadow: finalizeAccuracy(hybridShadowHit),
+      mahalShadow: finalizeAccuracy(mahalShadowHit),
+      matchupShadow: finalizeAccuracy(matchupShadowHit),
+      marketResidualShadow: finalizeAccuracy(marketResidualShadowHit),
     },
     componentHitRate: {
       main: finalizeComponentSummary(mainComponent),
@@ -168,6 +198,10 @@ export function formatOutcomeAudit(result: OutcomeAuditResult): string {
     lines.push("Hit-rate:");
     lines.push(`- HISTORY-5: ${formatAccuracy(result.hitRate.main)}`);
     lines.push(`- NOVA: ${formatAccuracy(result.hitRate.nova)}`);
+    lines.push(`- HYBRID (shadow): ${formatAccuracy(result.hitRate.hybridShadow)}`);
+    lines.push(`- MAHAL (shadow): ${formatAccuracy(result.hitRate.mahalShadow)}`);
+    lines.push(`- MATCHUP (shadow): ${formatAccuracy(result.hitRate.matchupShadow)}`);
+    lines.push(`- MROA (shadow): ${formatAccuracy(result.hitRate.marketResidualShadow)}`);
   } else {
     lines.push("");
     lines.push("Hit-rate: n/a (predictions file not provided)");
@@ -535,7 +569,14 @@ function matchesLooseName(pick: string, target: string): boolean {
   const targetTokens = target.split(" ").filter(Boolean);
   const pickLast = pickTokens[pickTokens.length - 1] || "";
   const targetLast = targetTokens[targetTokens.length - 1] || "";
-  return Boolean(pickLast && targetLast && pickLast === targetLast);
+  // Avoid false positives on initials like "A"/"K" in abbreviated tennis names.
+  return Boolean(
+    pickLast &&
+      targetLast &&
+      pickLast.length >= 3 &&
+      targetLast.length >= 3 &&
+      pickLast === targetLast,
+  );
 }
 
 function finalizeAccuracy(summary: AccuracySummary): AccuracySummary {

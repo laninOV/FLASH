@@ -1,0 +1,203 @@
+{
+  "startedAt": "2026-02-24T19:30:05.529Z",
+  "finishedAt": "2026-02-24T19:30:33.317Z",
+  "durationSec": 27.79,
+  "recomputedFromPredictionsFile": "tmp/hybrid-shadow-30-predictions.json",
+  "collection": {
+    "processedFinishedCandidates": 34,
+    "acceptedPredictions": 30,
+    "parserErrors": 0,
+    "skippedDoubles": 0,
+    "skippedStrict5": 2,
+    "skippedFastStrict5": 2
+  },
+  "originalConfig": {
+    "entryUrl": "https://www.flashscore.com.ua/tennis/",
+    "status": "finished",
+    "historyStatsMissBudget": 3,
+    "timeoutMs": 60000,
+    "maxGotoRetries": 4,
+    "requiredHistoryCount": 5,
+    "targetPredictions": 30,
+    "candidateScanLimit": 120
+  },
+  "hitRate": {
+    "main": {
+      "hit": 20,
+      "total": 30,
+      "rate": 66.66666666666666
+    },
+    "nova": {
+      "hit": 21,
+      "total": 30,
+      "rate": 70
+    },
+    "hybridShadow": {
+      "hit": 16,
+      "total": 30,
+      "rate": 53.333333333333336
+    }
+  },
+  "outcomeSummary": {
+    "fetchedMatches": 30,
+    "singles": 30,
+    "unmatchedPredictionMatchUrls": 0
+  },
+  "disagreements": {
+    "compared": 30,
+    "hybridVsHistoryDiff": 10,
+    "hybridVsNovaDiff": 9,
+    "allThreeDifferent": 0,
+    "hybridOnlyCorrect": 0,
+    "historyOnlyCorrect": 5,
+    "novaOnlyCorrect": 5,
+    "hybridAndHistoryCorrectNovaWrong": 2,
+    "hybridAndNovaCorrectHistoryWrong": 3
+  },
+  "sampleDivergences": [
+    {
+      "matchUrl": "https://www.flashscore.com.ua/match/tennis/nakashima-brandon-ETGnbrpH/ymer-elias-GhVfMwlD?mid=h2IFFSq9",
+      "label": "Накасима Б. vs Имер Э.",
+      "winnerName": "Накасима Б.",
+      "winnerSide": "A",
+      "mainPick": "Накасима Б.",
+      "novaPick": "Имер Э.",
+      "hybridPick": "Имер Э.",
+      "mainCorrect": true,
+      "novaCorrect": false,
+      "hybridCorrect": false
+    },
+    {
+      "matchUrl": "https://www.flashscore.com.ua/match/tennis/de-minaur-alex-EZgZ9Xfh/kypson-patrick-8W9dxtVO?mid=r9tja7aS",
+      "label": "Кипсон П. vs Де Минаур А.",
+      "winnerName": "Кипсон П.",
+      "winnerSide": "A",
+      "mainPick": "Де Минаур А.",
+      "novaPick": "Кипсон П.",
+      "hybridPick": "Де Минаур А.",
+      "mainCorrect": false,
+      "novaCorrect": true,
+      "hybridCorrect": false
+    },
+    {
+      "matchUrl": "https://www.flashscore.com.ua/match/tennis/vacherot-valentin-rFqoSYd8/wong-chak-lam-coleman-zJqvgzz6?mid=n5VTiPi2",
+      "label": "Вашеро В. vs Вонг Ч.",
+      "winnerName": "Вашеро В.",
+      "winnerSide": "A",
+      "mainPick": "Вашеро В.",
+      "novaPick": "Вонг Ч.",
+      "hybridPick": "Вашеро В.",
+      "mainCorrect": true,
+      "novaCorrect": false,
+      "hybridCorrect": true
+    },
+    {
+      "matchUrl": "https://www.flashscore.com.ua/match/tennis/kovacevic-aleksandar-AudsF90U/walton-adam-jNRjAU1U?mid=Kx6btuEN",
+      "label": "Уолтон А. vs Ковачевич А.",
+      "winnerName": "Ковачевич А.",
+      "winnerSide": "B",
+      "mainPick": "Ковачевич А.",
+      "novaPick": "Уолтон А.",
+      "hybridPick": "Ковачевич А.",
+      "mainCorrect": true,
+      "novaCorrect": false,
+      "hybridCorrect": true
+    },
+    {
+      "matchUrl": "https://www.flashscore.com.ua/match/tennis/bergs-zizou-SbeTx1o8/brooksby-jenson-MoOtVkbN?mid=OW9tyc0e",
+      "label": "Бергс З. vs Бруксби Дж.",
+      "winnerName": "Бруксби Дж.",
+      "winnerSide": "B",
+      "mainPick": "Бруксби Дж.",
+      "novaPick": "Бруксби Дж.",
+      "hybridPick": "Бергс З.",
+      "mainCorrect": true,
+      "novaCorrect": true,
+      "hybridCorrect": false
+    },
+    {
+      "matchUrl": "https://www.flashscore.com.ua/match/tennis/khachanov-karen-4bNPtZT5/shevchenko-alexander-jTIB3FIA?mid=dYDCKyLE",
+      "label": "Шевченко А. vs Хачанов К.",
+      "winnerName": "Хачанов К.",
+      "winnerSide": "B",
+      "mainPick": "Шевченко А.",
+      "novaPick": "Хачанов К.",
+      "hybridPick": "Хачанов К.",
+      "mainCorrect": false,
+      "novaCorrect": true,
+      "hybridCorrect": true
+    },
+    {
+      "matchUrl": "https://www.flashscore.com.ua/match/tennis/marozsan-fabian-I1mux0lj/rinderknech-arthur-pIxZZsof?mid=Oj0zcvNE",
+      "label": "Марожан Ф. vs Риндеркнех А.",
+      "winnerName": "Риндеркнех А.",
+      "winnerSide": "B",
+      "mainPick": "Марожан Ф.",
+      "novaPick": "Риндеркнех А.",
+      "hybridPick": "Марожан Ф.",
+      "mainCorrect": false,
+      "novaCorrect": true,
+      "hybridCorrect": false
+    },
+    {
+      "matchUrl": "https://www.flashscore.com.ua/match/tennis/bublik-alexander-t0WN9vR6/struff-jan-lennard-Ek3bDDo2?mid=nLVW7by9",
+      "label": "Штруфф Я-Л. vs Бублик А.",
+      "winnerName": "Бублик А.",
+      "winnerSide": "B",
+      "mainPick": "Бублик А.",
+      "novaPick": "Штруфф Я-Л.",
+      "hybridPick": "Штруфф Я-Л.",
+      "mainCorrect": true,
+      "novaCorrect": false,
+      "hybridCorrect": false
+    },
+    {
+      "matchUrl": "https://www.flashscore.com.ua/match/tennis/griekspoor-tallon-f3zfMU5i/virtanen-otto-hnYnFaTm?mid=jHKA0GTr",
+      "label": "Виртанен О. vs Грикспур Т.",
+      "winnerName": "Грикспур Т.",
+      "winnerSide": "B",
+      "mainPick": "Грикспур Т.",
+      "novaPick": "Виртанен О.",
+      "hybridPick": "Виртанен О.",
+      "mainCorrect": true,
+      "novaCorrect": false,
+      "hybridCorrect": false
+    },
+    {
+      "matchUrl": "https://www.flashscore.com.ua/match/tennis/comesana-francisco-SxKK0RUD/martinez-pedro-WtiN88eD?mid=nafC3V4c",
+      "label": "Комесана Ф. vs Мартинес Портеро П.",
+      "winnerName": "Комесана Ф.",
+      "winnerSide": "A",
+      "mainPick": "Мартинес Портеро П.",
+      "novaPick": "Комесана Ф.",
+      "hybridPick": "Мартинес Портеро П.",
+      "mainCorrect": false,
+      "novaCorrect": true,
+      "hybridCorrect": false
+    },
+    {
+      "matchUrl": "https://www.flashscore.com.ua/match/tennis/jarry-nicolas-W24W9IyU/prizmic-dino-YcluY2Zi?mid=0diPT9Y8",
+      "label": "Харри Н. vs Призмич Д.",
+      "winnerName": "Призмич Д.",
+      "winnerSide": "B",
+      "mainPick": "Харри Н.",
+      "novaPick": "Призмич Д.",
+      "hybridPick": "Призмич Д.",
+      "mainCorrect": false,
+      "novaCorrect": true,
+      "hybridCorrect": true
+    },
+    {
+      "matchUrl": "https://www.flashscore.com.ua/match/tennis/fruhvirtova-linda-WrhNf3At/townsend-taylor-Y9jUuHka?mid=OheSuExt",
+      "label": "Таунсенд Т. vs Фрухвиртова Л.",
+      "winnerName": "Таунсенд Т.",
+      "winnerSide": "A",
+      "mainPick": "Таунсенд Т.",
+      "novaPick": "Фрухвиртова Л.",
+      "hybridPick": "Фрухвиртова Л.",
+      "mainCorrect": true,
+      "novaCorrect": false,
+      "hybridCorrect": false
+    }
+  ]
+}

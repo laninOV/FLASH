@@ -1,5 +1,9 @@
 import { clamp, ratio } from "./common/math.js";
 import { aggregateIndexPairs } from "./predict/dirtPairs.js";
+import { computeFormStatsHybrid } from "./predict/formStatsHybrid.js";
+import { computeMahalEdgeShadow } from "./predict/mahalEdge.js";
+import { computeMarketResidualShadow } from "./predict/marketResidual.js";
+import { computeMatchupCrossShadow } from "./predict/matchupCross.js";
 import { computeNovaEdge } from "./predict/novaEdge.js";
 import { extractDirtFeatureRow, type DirtFeatureRow } from "./predict/requiredMetrics.js";
 import { pickByOddsOrSeed } from "./predict/tieBreak.js";
@@ -37,6 +41,48 @@ export function predict(
       seed: tieBreakSeed,
     },
   );
+  const hybridShadow = computeFormStatsHybrid({
+    playerAStats,
+    playerBStats,
+    playerAName: context.playerAName,
+    playerBName: context.playerBName,
+    requestedPerPlayer,
+    homeOdd: context.marketOdds?.home,
+    awayOdd: context.marketOdds?.away,
+    seed: tieBreakSeed,
+  });
+  const mahalShadow = computeMahalEdgeShadow({
+    playerAStats,
+    playerBStats,
+    playerAName: context.playerAName,
+    playerBName: context.playerBName,
+    requestedPerPlayer,
+    homeOdd: context.marketOdds?.home,
+    awayOdd: context.marketOdds?.away,
+    seed: tieBreakSeed,
+  });
+  const matchupShadow = computeMatchupCrossShadow({
+    playerAStats,
+    playerBStats,
+    playerAName: context.playerAName,
+    playerBName: context.playerBName,
+    requestedPerPlayer,
+    homeOdd: context.marketOdds?.home,
+    awayOdd: context.marketOdds?.away,
+    seed: tieBreakSeed,
+  });
+  const marketResidualShadow = computeMarketResidualShadow({
+    playerAStats,
+    playerBStats,
+    playerAName: context.playerAName,
+    playerBName: context.playerBName,
+    requestedPerPlayer,
+    homeOdd: context.marketOdds?.home,
+    awayOdd: context.marketOdds?.away,
+    tournament: context.tournament,
+    status: context.status,
+    seed: tieBreakSeed,
+  });
 
   const modules = [
     probabilityToModule("LOGREG", pairResult.modelProbabilities.logRegP1),
@@ -140,6 +186,38 @@ export function predict(
         p2: novaEdge.p2,
         winner: novaEdge.winner,
         source: novaEdge.source,
+      },
+      hybridShadow: {
+        p1: hybridShadow.p1,
+        p2: hybridShadow.p2,
+        winner: hybridShadow.winner,
+        source: hybridShadow.source,
+        components: hybridShadow.components,
+        warnings: hybridShadow.warnings,
+      },
+      mahalShadow: {
+        p1: mahalShadow.p1,
+        p2: mahalShadow.p2,
+        winner: mahalShadow.winner,
+        source: mahalShadow.source,
+        components: mahalShadow.components,
+        warnings: mahalShadow.warnings,
+      },
+      matchupShadow: {
+        p1: matchupShadow.p1,
+        p2: matchupShadow.p2,
+        winner: matchupShadow.winner,
+        source: matchupShadow.source,
+        components: matchupShadow.components,
+        warnings: matchupShadow.warnings,
+      },
+      marketResidualShadow: {
+        p1: marketResidualShadow.p1,
+        p2: marketResidualShadow.p2,
+        winner: marketResidualShadow.winner,
+        source: marketResidualShadow.source,
+        components: marketResidualShadow.components,
+        warnings: marketResidualShadow.warnings,
       },
     },
     warnings,

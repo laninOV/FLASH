@@ -1,0 +1,197 @@
+[
+  {
+    "createdAt": "2026-02-24T22:29:10.195Z",
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/kecmanovic-miomir-MTQ5CPOR/schoolkate-tristan-hn8XQkiU/?mid=xdoWfvTG",
+    "matchLabel": "Скулкейт Т. vs Кецманович М.",
+    "tournament": "Акапулько, хард - 1/16",
+    "matchStatus": "upcoming",
+    "scheduledStartText": "24.02.2026 04:05",
+    "playerAName": "Скулкейт Т.",
+    "playerBName": "Кецманович М.",
+    "predictedWinner": "Кецманович М.",
+    "confidence": 0.5,
+    "reason": "DirtTennis formulas (pair-by-index, strict 5 full Tech histories, stable14)",
+    "statsCoverage": {
+      "requestedPerPlayer": 5,
+      "playerACollected": 5,
+      "playerBCollected": 5
+    },
+    "dataStatus": "metrics_policy=stable14, coverage A 5/5, B 5/5, valid_pairs=5/5, scan_count: A 5/30 accepted=5, B 5/30 accepted=5, rejected_incomplete_metrics: A=0 B=0, non_singles_history: A=0 B=0, tech_missing: A=0 B=0, weights: logreg=41% markov=29% bradley=9% pca=22%, model_probs: logreg=45.7 markov=51.4 bradley=47.1 pca=56.8 final=49.9",
+    "modelSummary": {
+      "modules": [
+        {
+          "name": "LOGREG",
+          "side": "away",
+          "strength": 0.8665876196966948,
+          "explain": [
+            "P1=45.7 P2=54.3"
+          ],
+          "flags": []
+        },
+        {
+          "name": "MARKOV",
+          "side": "home",
+          "strength": 0.27680921874275555,
+          "explain": [
+            "P1=51.4 P2=48.6"
+          ],
+          "flags": []
+        },
+        {
+          "name": "BRADLEY",
+          "side": "away",
+          "strength": 0.5714285714285708,
+          "explain": [
+            "P1=47.1 P2=52.9"
+          ],
+          "flags": []
+        },
+        {
+          "name": "PCA",
+          "side": "home",
+          "strength": 1.3586419927075142,
+          "explain": [
+            "P1=56.8 P2=43.2"
+          ],
+          "flags": []
+        }
+      ],
+      "ensemble": {
+        "finalSide": "away",
+        "score": -0.03331971424852612,
+        "votesHome": 2,
+        "votesAway": 2,
+        "strongHome": 0,
+        "strongAway": 0,
+        "active": 4
+      },
+      "rating5": {
+        "playerA": 49.86116785729781,
+        "playerB": 50.13883214270219
+      },
+      "reliability": {
+        "playerA": 1,
+        "playerB": 1
+      },
+      "dirt": {
+        "validPairs": 5,
+        "requestedPairs": 5,
+        "modelProbabilities": {
+          "logRegP1": 45.667061901516526,
+          "markovP1": 51.38404609371378,
+          "bradleyP1": 47.142857142857146,
+          "pcaP1": 56.79320996353757,
+          "finalP1": 49.86116785729781
+        },
+        "weights": {
+          "logReg": 0.41035873344692053,
+          "markov": 0.2857787674511897,
+          "bradley": 0.08502340908695324,
+          "pca": 0.21883909001493657
+        },
+        "stability": {
+          "logReg": 0.7541282193884679,
+          "markov": 0.6002102633517173,
+          "bradley": 0.25,
+          "pca": 0.6434671708797584
+        },
+        "pclass": {
+          "source": "missing"
+        }
+      },
+      "novaEdge": {
+        "p1": 42.118109367942026,
+        "p2": 57.881890632057974,
+        "winner": "Кецманович М.",
+        "source": "stable14_nova_v1"
+      },
+      "hybridShadow": {
+        "p1": 46.9,
+        "p2": 53.1,
+        "winner": "Кецманович М.",
+        "source": "form_stats_hybrid_v2",
+        "components": {
+          "statsP1": 43.8,
+          "formP1": 50,
+          "hybridRawP1": 45,
+          "statsWeight": 0.8,
+          "formWeight": 0.2,
+          "statsReliability": 1,
+          "formReliability": 0,
+          "hybridReliability": 0.619
+        },
+        "warnings": [
+          "hybrid_form_unavailable_a",
+          "hybrid_form_unavailable_b",
+          "hybrid_form_low_coverage"
+        ]
+      },
+      "mahalShadow": {
+        "p1": 44.5,
+        "p2": 55.5,
+        "winner": "Кецманович М.",
+        "source": "stable14_mahal_edge_v2",
+        "components": {
+          "rawP1": 42.758,
+          "scoreS": -0.292,
+          "distanceD": 0.6,
+          "reliability": 0.757,
+          "statsCoverage": 1,
+          "varianceStability": 0.501,
+          "signConsensus": 0.54,
+          "distanceConfidence": 0.4
+        },
+        "warnings": []
+      },
+      "matchupShadow": {
+        "p1": 47.7,
+        "p2": 52.3,
+        "winner": "Кецманович М.",
+        "source": "stable14_matchup_cross_v1",
+        "components": {
+          "rawP1": 46.93,
+          "scoreS": -0.042,
+          "reliability": 0.748,
+          "statsCoverage": 1,
+          "componentAgreement": 0.318,
+          "stabilityConfidence": 0.973,
+          "edgeMagnitude": 0.077,
+          "serveMatch": 0.359,
+          "returnMatch": -0.42,
+          "pressureMatch": -0.061,
+          "controlMatch": -0.022
+        },
+        "warnings": [
+          "matchup_high_component_conflict"
+        ]
+      },
+      "marketResidualShadow": {
+        "p1": 39.7,
+        "p2": 60.3,
+        "winner": "Кецманович М.",
+        "source": "market_residual_oppadj_v1",
+        "components": {
+          "marketRel": 0,
+          "residualScoreR": -0.55,
+          "residualAdjRaw": -0.551,
+          "gate": 0.758,
+          "residRel": 0.758,
+          "statsCoverage": 1,
+          "stabilityConf": 0.002,
+          "edgeCoherence": 0.825,
+          "serveEdge": -7.417,
+          "returnEdge": -7.494,
+          "controlEdge": -4.991,
+          "pressureEdge": -9.945,
+          "oppQualityEdge": 0.07
+        },
+        "warnings": [
+          "mroa_market_unavailable"
+        ]
+      }
+    },
+    "warnings": [
+      "pclass_missing_dv_data"
+    ]
+  }
+]

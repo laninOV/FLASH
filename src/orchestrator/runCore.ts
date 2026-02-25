@@ -31,7 +31,7 @@ export async function run(config: RunConfig, options: RunOptions = {}): Promise<
   logger.info(
     `History policy: requested_recent_count=${config.recentCount}, ` +
       `recent_count_forced=${REQUIRED_HISTORY_COUNT}, metrics_policy=${METRICS_POLICY}, ` +
-      `match_scope=singles_only`,
+      `history_stats_miss_budget=${config.historyStatsMissBudget}, match_scope=singles_only`,
   );
   const startedAt = new Date().toISOString();
   const summary: RunSummary = {
@@ -93,6 +93,20 @@ export async function run(config: RunConfig, options: RunOptions = {}): Promise<
           signal,
           requiredHistoryCount: REQUIRED_HISTORY_COUNT,
         });
+        if (
+          playerAStats.parsedMatches.length < REQUIRED_HISTORY_COUNT &&
+          playerAStats.historyScanStats?.earlyStopReason === "stats_miss_budget_reached"
+        ) {
+          summary.skippedMatches += 1;
+          const collectionSec = toSeconds(Date.now() - collectionStartedMs);
+          logger.warn(
+            `Skipping ${playerA.name} vs ${playerB.name}: strict_5_not_reached_fast ` +
+              `(player=A, reason=stats_miss_budget_reached, need=${REQUIRED_HISTORY_COUNT}, ` +
+              `A=${playerAStats.parsedMatches.length}, collection=${collectionSec.toFixed(2)}s).`,
+          );
+          logger.warn(`History scan stats A: ${formatHistoryScanStats(playerAStats)}`);
+          continue;
+        }
         const playerBStats = await collectPlayerStats({
           page: session.page,
           player: playerB,

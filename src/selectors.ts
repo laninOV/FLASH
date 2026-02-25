@@ -56,9 +56,13 @@ export const MATCH_LINK_HINTS = ["match", "event", "tennis"] as const;
 
 export const TECH_STAT_SECTIONS = new Set([
   "service",
+  "serving",
   "return",
+  "returning",
   "points",
   "games",
+  "overall",
+  "match statistics",
   "подача",
   "возврат",
   "повернення",

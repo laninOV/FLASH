@@ -12,11 +12,12 @@ const schema = z.object({
   telegram: z.boolean(),
   console: z.boolean(),
   maxGotoRetries: z.number().int().min(0).max(10),
+  historyStatsMissBudget: z.number().int().min(0).max(100),
   tgSendMaxRpm: z.number().int().min(0).max(120),
 });
 
 const DEFAULTS = {
-  entryUrl: "https://www.flashscore.com.ua/tennis/",
+  entryUrl: "https://www.flashscore.co.ke/tennis/",
   status: "all",
   recentCount: 5,
   headed: true,
@@ -25,6 +26,7 @@ const DEFAULTS = {
   telegram: true,
   console: true,
   maxGotoRetries: 2,
+  historyStatsMissBudget: 3,
   tgSendMaxRpm: 18,
 } as const;
 
@@ -47,6 +49,11 @@ export function buildRunConfig(
     telegram: readBool(args, "telegram", DEFAULTS.telegram),
     console: readBool(args, "console", DEFAULTS.console),
     maxGotoRetries: readInt(args, "max-goto-retries", DEFAULTS.maxGotoRetries),
+    historyStatsMissBudget: readInt(
+      args,
+      "history-stats-miss-budget",
+      DEFAULTS.historyStatsMissBudget,
+    ),
     tgSendMaxRpm: readEnvInt(env, "TG_SEND_MAX_RPM", DEFAULTS.tgSendMaxRpm),
   });
 

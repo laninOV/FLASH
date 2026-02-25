@@ -1,12 +1,12 @@
 # FLASH (Flashscore Tennis)
 
-Playwright-based tennis prediction pipeline for `https://www.flashscore.com.ua/tennis/`.
+Playwright-based tennis prediction pipeline for `https://www.flashscore.co.ke/tennis/`.
 
 The runtime builds predictions from strict history-only `Tech Statistics` (`stable14`) collected from Flashscore match pages and player results pages.
 
 ## Current Source / Policy
 
-- Source: Flashscore (`flashscore.com.ua`) for day page, match page, player profiles/results, match stats, odds, outcome audit.
+- Source: Flashscore (`flashscore.co.ke`) for day page, match page, player profiles/results, match stats, odds, outcome audit.
 - Match scope: singles only (doubles/mixed filtered out).
 - History policy: strict `5` valid historical matches per player.
 - Metrics policy: `stable14`.
@@ -51,7 +51,7 @@ export TG_SEND_MAX_RPM="18"
 
 ```bash
 npm run predict -- \
-  --entry-url https://www.flashscore.com.ua/tennis/ \
+  --entry-url https://www.flashscore.co.ke/tennis/ \
   --status all \
   --limit 10 \
   --recent-count 5 \
@@ -68,7 +68,7 @@ npm run predict -- \
 
 ```bash
 npm run audit:calc -- \
-  --entry-url https://www.flashscore.com.ua/tennis/ \
+  --entry-url https://www.flashscore.co.ke/tennis/ \
   --status all \
   --limit 10 \
   --headed false \
@@ -80,7 +80,7 @@ npm run audit:calc -- \
 
 ```bash
 npm run audit:match -- \
-  --match-url "https://www.flashscore.com.ua/match/tennis/moutet-corentin-bX0EWcV9/zverev-alexander-dGbUhw9m/" \
+  --match-url "https://www.flashscore.co.ke/match/tennis/moutet-corentin-bX0EWcV9/zverev-alexander-dGbUhw9m/" \
   --player-a "Зверев" \
   --player-b "Муте" \
   --headed false \
@@ -92,14 +92,14 @@ npm run audit:match -- \
 
 ```bash
 npm run audit:outcome -- \
-  --match-urls "https://www.flashscore.com.ua/match/tennis/alcaraz-garfia-carlos-UkhgIFEq/zverev-alexander-dGbUhw9m/?mid=OWtBstdE"
+  --match-urls "https://www.flashscore.co.ke/match/tennis/alcaraz-garfia-carlos-UkhgIFEq/zverev-alexander-dGbUhw9m/?mid=OWtBstdE"
 ```
 
 Optional predictions file (JSON array with `matchUrl`, `mainPick`, `novaPick`, etc.):
 
 ```bash
 npm run audit:outcome -- \
-  --match-urls "https://www.flashscore.com.ua/match/.../?mid=..." \
+  --match-urls "https://www.flashscore.co.ke/match/.../?mid=..." \
   --predictions-file ./predictions.json
 ```
 
@@ -107,7 +107,7 @@ npm run audit:outcome -- \
 
 ```bash
 npm run control-bot -- \
-  --entry-url https://www.flashscore.com.ua/tennis/ \
+  --entry-url https://www.flashscore.co.ke/tennis/ \
   --headed false \
   --slow-mo 0 \
   --timeout-ms 30000
@@ -241,7 +241,7 @@ This script:
 
 ## CLI defaults
 
-- `--entry-url`: `https://www.flashscore.com.ua/tennis/`
+- `--entry-url`: `https://www.flashscore.co.ke/tennis/`
 - `--status`: `all`
 - `--recent-count`: `5` (runtime still enforces strict history = 5)
 - `--headed`: `true`

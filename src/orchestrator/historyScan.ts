@@ -1,5 +1,8 @@
 import type { Logger } from "../logger.js";
-import { extractDirtFeatureRow } from "../predict/requiredMetrics.js";
+import {
+  extractDirtFeatureRow,
+  extractDirtFeatureRowDiagnostics,
+} from "../predict/requiredMetrics.js";
 import type {
   HistoricalMatchTechStats,
   PlayerRecentStats,
@@ -25,6 +28,7 @@ export interface TechHistoryScanInput {
   playerName: string;
   candidates: RecentMatchRef[];
   needCount: number;
+  statsMissBudget?: number;
   logger?: Pick<Logger, "debug" | "warn">;
   signal?: AbortSignal;
   parseMatch: (
@@ -40,6 +44,9 @@ export interface TechHistoryScanOutput {
   nonSinglesHistory: number;
   metricsIncomplete: number;
   parseErrors: number;
+  statsMissesForBudget: number;
+  earlyStopReason?: "stats_miss_budget_reached";
+  earlyStopBudget?: number;
   errors: string[];
 }
 
@@ -53,6 +60,32 @@ export async function scanTechHistoryCandidates(
   let nonSinglesHistory = 0;
   let metricsIncomplete = 0;
   let parseErrors = 0;
+  let statsMissesForBudget = 0;
+  let earlyStopReason: "stats_miss_budget_reached" | undefined;
+  let earlyStopBudget: number | undefined;
+  let metricsIncompleteDiagnosticsLogged = 0;
+  const statsMissBudget = Math.max(0, Number(input.statsMissBudget || 0));
+
+  const shouldStopForBudget = (): boolean =>
+    statsMissBudget > 0 &&
+    parsedMatches.length < input.needCount &&
+    statsMissesForBudget >= statsMissBudget;
+
+  const logMetricsIncompleteDetails = (parsed: HistoricalMatchTechStats, recentUrl: string): void => {
+    if (metricsIncompleteDiagnosticsLogged >= 2) {
+      return;
+    }
+    const diagnostics = extractDirtFeatureRowDiagnostics(parsed);
+    if (!diagnostics.missingKeys.length) {
+      return;
+    }
+    metricsIncompleteDiagnosticsLogged += 1;
+    const presentKeys = Array.from(new Set(parsed.rows.map((row) => row.metricKey).filter(Boolean))).slice(0, 20);
+    input.logger?.warn(
+      `Player ${input.playerName}: metrics_incomplete missing=[${diagnostics.missingKeys.join(", ")}] ` +
+        `for ${recentUrl} (present_metric_keys_sample=[${presentKeys.join(", ")}])`,
+    );
+  };
 
   for (let index = 0; index < input.candidates.length; index += 1) {
     throwIfAborted(input.signal);
@@ -71,8 +104,18 @@ export async function scanTechHistoryCandidates(
       const parsedResult = await input.parseMatch(recent, index);
       if (!parsedResult) {
         techMissing += 1;
+        statsMissesForBudget += 1;
         errors.push(`Recent match skipped (tech_missing): ${recent.url}`);
         input.logger?.warn(`Player ${input.playerName}: tech_missing for ${recent.url}`);
+        if (shouldStopForBudget()) {
+          earlyStopReason = "stats_miss_budget_reached";
+          earlyStopBudget = statsMissBudget;
+          input.logger?.warn(
+            `Player ${input.playerName}: early_stop=stats_miss_budget_reached ` +
+              `(${statsMissesForBudget}/${statsMissBudget}), accepted=${parsedMatches.length}/${input.needCount}`,
+          );
+          break;
+        }
         continue;
       }
       if (typeof parsedResult === "object" && "status" in parsedResult) {
@@ -84,16 +127,37 @@ export async function scanTechHistoryCandidates(
             continue;
           }
           techMissing += 1;
+          statsMissesForBudget += 1;
           errors.push(`Recent match skipped (tech_missing): ${recent.url}`);
           input.logger?.warn(`Player ${input.playerName}: tech_missing for ${recent.url}`);
+          if (shouldStopForBudget()) {
+            earlyStopReason = "stats_miss_budget_reached";
+            earlyStopBudget = statsMissBudget;
+            input.logger?.warn(
+              `Player ${input.playerName}: early_stop=stats_miss_budget_reached ` +
+                `(${statsMissesForBudget}/${statsMissBudget}), accepted=${parsedMatches.length}/${input.needCount}`,
+            );
+            break;
+          }
           continue;
         }
 
         const parsed = parsedResult.parsed;
         if (!extractDirtFeatureRow(parsed)) {
           metricsIncomplete += 1;
+          statsMissesForBudget += 1;
           errors.push(`Recent match skipped (metrics_incomplete): ${recent.url}`);
           input.logger?.warn(`Player ${input.playerName}: metrics_incomplete for ${recent.url}`);
+          logMetricsIncompleteDetails(parsed, recent.url);
+          if (shouldStopForBudget()) {
+            earlyStopReason = "stats_miss_budget_reached";
+            earlyStopBudget = statsMissBudget;
+            input.logger?.warn(
+              `Player ${input.playerName}: early_stop=stats_miss_budget_reached ` +
+                `(${statsMissesForBudget}/${statsMissBudget}), accepted=${parsedMatches.length}/${input.needCount}`,
+            );
+            break;
+          }
           continue;
         }
 
@@ -108,8 +172,19 @@ export async function scanTechHistoryCandidates(
       const parsed = parsedResult;
       if (!extractDirtFeatureRow(parsed)) {
         metricsIncomplete += 1;
+        statsMissesForBudget += 1;
         errors.push(`Recent match skipped (metrics_incomplete): ${recent.url}`);
         input.logger?.warn(`Player ${input.playerName}: metrics_incomplete for ${recent.url}`);
+        logMetricsIncompleteDetails(parsed, recent.url);
+        if (shouldStopForBudget()) {
+          earlyStopReason = "stats_miss_budget_reached";
+          earlyStopBudget = statsMissBudget;
+          input.logger?.warn(
+            `Player ${input.playerName}: early_stop=stats_miss_budget_reached ` +
+              `(${statsMissesForBudget}/${statsMissBudget}), accepted=${parsedMatches.length}/${input.needCount}`,
+          );
+          break;
+        }
         continue;
       }
 
@@ -132,6 +207,9 @@ export async function scanTechHistoryCandidates(
     nonSinglesHistory,
     metricsIncomplete,
     parseErrors,
+    statsMissesForBudget,
+    earlyStopReason,
+    earlyStopBudget,
     errors,
   };
 }

@@ -134,4 +134,8 @@ test("predict keeps deterministic result for 195806-like fixture", () => {
   );
   assert.ok(first.modelSummary?.dirt?.validPairs === 5);
   assert.ok(first.modelSummary?.novaEdge);
+  assert.ok(first.modelSummary?.hybridShadow);
+  assert.ok(first.modelSummary?.mahalShadow);
+  assert.ok(first.modelSummary?.matchupShadow);
+  assert.ok(first.modelSummary?.marketResidualShadow);
 });

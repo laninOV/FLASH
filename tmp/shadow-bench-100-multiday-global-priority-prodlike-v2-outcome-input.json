@@ -1,0 +1,1902 @@
+[
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/jodar-rafael-OdngshVK/norrie-cameron-pvzhJGY8/?mid=jLdUzJyo",
+    "mainPick": "Норри К.",
+    "novaPick": "Норри К.",
+    "hybridShadowPick": "Норри К.",
+    "hybridShadowP1": 46.9,
+    "mahalShadowPick": "Норри К.",
+    "mahalShadowP1": 44.9,
+    "matchupShadowPick": "Норри К.",
+    "matchupShadowP1": 49.8,
+    "marketResidualShadowPick": "Норри К.",
+    "marketResidualShadowP1": 42.9,
+    "mainModelProbabilities": {
+      "logRegP1": 50.904389941456444,
+      "markovP1": 50.327691891805344,
+      "bradleyP1": 54.28571428571429,
+      "pcaP1": 34.41023440087054
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/jovic-iva-bmWvBlnL/pegula-jessica-KdojxrAR/?mid=hOuQo8Xh",
+    "mainPick": "Jovic I.",
+    "novaPick": "Jovic I.",
+    "hybridShadowPick": "Jovic I.",
+    "hybridShadowP1": 51.7,
+    "mahalShadowPick": "Jovic I.",
+    "mahalShadowP1": 51.4,
+    "matchupShadowPick": "Jovic I.",
+    "matchupShadowP1": 50,
+    "marketResidualShadowPick": "Пегула Дж.",
+    "marketResidualShadowP1": 49.7,
+    "mainModelProbabilities": {
+      "logRegP1": 51.160747294391896,
+      "markovP1": 54.97851340769491,
+      "bradleyP1": 59.28571428571428,
+      "pcaP1": 60.156681619934616
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/burruchaga-roman-andres-CE7B5N90/moeller-elmer-SU8MMreH/?mid=bLnbfRRq",
+    "mainPick": "Бурручага Р. А.",
+    "novaPick": "Бурручага Р. А.",
+    "hybridShadowPick": "Бурручага Р. А.",
+    "hybridShadowP1": 48.1,
+    "mahalShadowPick": "Бурручага Р. А.",
+    "mahalShadowP1": 46.3,
+    "matchupShadowPick": "Бурручага Р. А.",
+    "matchupShadowP1": 48.8,
+    "marketResidualShadowPick": "Moller E.",
+    "marketResidualShadowP1": 52.4,
+    "mainModelProbabilities": {
+      "logRegP1": 46.710986924273,
+      "markovP1": 45.883262362079414,
+      "bradleyP1": 44.28571428571429,
+      "pcaP1": 30.87818825793181
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/cobolli-flavio-zDtaCcPe/pacheco-mendez-rodrigo-lfCDHN1s/?mid=pMlvgIcT",
+    "mainPick": "Pacheco Mendez R.",
+    "novaPick": "Pacheco Mendez R.",
+    "hybridShadowPick": "Pacheco Mendez R.",
+    "hybridShadowP1": 60.8,
+    "mahalShadowPick": "Pacheco Mendez R.",
+    "mahalShadowP1": 69.8,
+    "matchupShadowPick": "Pacheco Mendez R.",
+    "matchupShadowP1": 53.6,
+    "marketResidualShadowPick": "Pacheco Mendez R.",
+    "marketResidualShadowP1": 66.2,
+    "mainModelProbabilities": {
+      "logRegP1": 60.20702690827786,
+      "markovP1": 57.010370789529006,
+      "bradleyP1": 72.85714285714286,
+      "pcaP1": 96.5530825017924
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/anisimova-amanda-nwkutKbi/tjen-janice-ngVYO2lo/?mid=rglWzMm2",
+    "mainPick": "Tjen J.",
+    "novaPick": "Анисимова А.",
+    "hybridShadowPick": "Tjen J.",
+    "hybridShadowP1": 55.1,
+    "mahalShadowPick": "Tjen J.",
+    "mahalShadowP1": 54.2,
+    "matchupShadowPick": "Tjen J.",
+    "matchupShadowP1": 50.6,
+    "marketResidualShadowPick": "Tjen J.",
+    "marketResidualShadowP1": 52.5,
+    "mainModelProbabilities": {
+      "logRegP1": 52.98676536575558,
+      "markovP1": 48.512428365849416,
+      "bradleyP1": 43.57142857142857,
+      "pcaP1": 69.13286689027439
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/alcaraz-garfia-carlos-UkhgIFEq/royer-valentin-IFGPWCuI/?mid=4S4GTRCG",
+    "mainPick": "Алькарас К.",
+    "novaPick": "Алькарас К.",
+    "hybridShadowPick": "Алькарас К.",
+    "hybridShadowP1": 55.3,
+    "mahalShadowPick": "Алькарас К.",
+    "mahalShadowP1": 64,
+    "matchupShadowPick": "Алькарас К.",
+    "matchupShadowP1": 52.5,
+    "marketResidualShadowPick": "Алькарас К.",
+    "marketResidualShadowP1": 62.1,
+    "mainModelProbabilities": {
+      "logRegP1": 55.862718498245066,
+      "markovP1": 58.56682440991184,
+      "bradleyP1": 71.42857142857143,
+      "pcaP1": 91.27319374970494
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/alcaraz-garfia-carlos-UkhgIFEq/rublev-andrey-AeAn4gP0/?mid=nLPB21XH",
+    "mainPick": "Алькарас К.",
+    "novaPick": "Алькарас К.",
+    "hybridShadowPick": "Алькарас К.",
+    "hybridShadowP1": 52.8,
+    "mahalShadowPick": "Алькарас К.",
+    "mahalShadowP1": 58.3,
+    "matchupShadowPick": "Алькарас К.",
+    "matchupShadowP1": 51.1,
+    "marketResidualShadowPick": "Алькарас К.",
+    "marketResidualShadowP1": 58.4,
+    "mainModelProbabilities": {
+      "logRegP1": 53.65346006912216,
+      "markovP1": 53.04600741746232,
+      "bradleyP1": 61.42857142857143,
+      "pcaP1": 81.44730368059004
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/alcaraz-garfia-carlos-UkhgIFEq/arthur-fils-IoIhUqIN/?mid=GjrFHGzg",
+    "mainPick": "Алькарас К.",
+    "novaPick": "Филс А.",
+    "hybridShadowPick": "Алькарас К.",
+    "hybridShadowP1": 52.1,
+    "mahalShadowPick": "Алькарас К.",
+    "mahalShadowP1": 51.8,
+    "matchupShadowPick": "Филс А.",
+    "matchupShadowP1": 49.7,
+    "marketResidualShadowPick": "Алькарас К.",
+    "marketResidualShadowP1": 52,
+    "mainModelProbabilities": {
+      "logRegP1": 51.95125051051584,
+      "markovP1": 51.90172337890607,
+      "bradleyP1": 57.857142857142854,
+      "pcaP1": 71.42562703237982
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/alcaraz-garfia-carlos-UkhgIFEq/khachanov-karen-4bNPtZT5/?mid=E9C9gyJE",
+    "mainPick": "Алькарас К.",
+    "novaPick": "Алькарас К.",
+    "hybridShadowPick": "Алькарас К.",
+    "hybridShadowP1": 52.9,
+    "mahalShadowPick": "Алькарас К.",
+    "mahalShadowP1": 60.8,
+    "matchupShadowPick": "Алькарас К.",
+    "matchupShadowP1": 51.4,
+    "marketResidualShadowPick": "Алькарас К.",
+    "marketResidualShadowP1": 58.3,
+    "mainModelProbabilities": {
+      "logRegP1": 52.029347079431524,
+      "markovP1": 57.08094134260464,
+      "bradleyP1": 65.71428571428571,
+      "pcaP1": 91.95481108588693
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/altmaier-daniel-IPR8h9gM/davidovich-fokina-alejandro-0zQXLfz4/?mid=8bSeBaDc",
+    "mainPick": "Давидович Фокина А.",
+    "novaPick": "Давидович Фокина А.",
+    "hybridShadowPick": "Давидович Фокина А.",
+    "hybridShadowP1": 42.5,
+    "mahalShadowPick": "Давидович Фокина А.",
+    "mahalShadowP1": 31.1,
+    "matchupShadowPick": "Давидович Фокина А.",
+    "matchupShadowP1": 45.1,
+    "marketResidualShadowPick": "Давидович Фокина А.",
+    "marketResidualShadowP1": 35.3,
+    "mainModelProbabilities": {
+      "logRegP1": 39.5900469942278,
+      "markovP1": 44.63955607821474,
+      "bradleyP1": 24.285714285714285,
+      "pcaP1": 4.345258687622558
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/andreeva-mirra-lI6fOOat/anisimova-amanda-nwkutKbi/?mid=dMRwKQV6",
+    "mainPick": "Анисимова А.",
+    "novaPick": "Анисимова А.",
+    "hybridShadowPick": "Андреева М.",
+    "hybridShadowP1": 52.6,
+    "mahalShadowPick": "Андреева М.",
+    "mahalShadowP1": 52.9,
+    "matchupShadowPick": "Андреева М.",
+    "matchupShadowP1": 50.3,
+    "marketResidualShadowPick": "Андреева М.",
+    "marketResidualShadowP1": 53.2,
+    "mainModelProbabilities": {
+      "logRegP1": 51.33009034646936,
+      "markovP1": 53.570271395271405,
+      "bradleyP1": 55.71428571428571,
+      "pcaP1": 21.772539104549914
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/andreeva-mirra-lI6fOOat/cristian-jaqueline-vo9FVe2A/?mid=Y1strQWH",
+    "mainPick": "Андреева М.",
+    "novaPick": "Кристиан Ж.",
+    "hybridShadowPick": "Андреева М.",
+    "hybridShadowP1": 50.7,
+    "mahalShadowPick": "Кристиан Ж.",
+    "mahalShadowP1": 46.6,
+    "matchupShadowPick": "Кристиан Ж.",
+    "matchupShadowP1": 49.3,
+    "marketResidualShadowPick": "Кристиан Ж.",
+    "marketResidualShadowP1": 46.8,
+    "mainModelProbabilities": {
+      "logRegP1": 52.464091047712905,
+      "markovP1": 49.60938612814774,
+      "bradleyP1": 55.71428571428571,
+      "pcaP1": 47.32783718037505
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/arango-emiliana-rwWwX7oC/potapova-anastasia-x81l09qG/?mid=4YyJuiGq",
+    "mainPick": "Аранго Э.",
+    "novaPick": "Аранго Э.",
+    "hybridShadowPick": "Потапова А.",
+    "hybridShadowP1": 43.8,
+    "mahalShadowPick": "Потапова А.",
+    "mahalShadowP1": 35.3,
+    "matchupShadowPick": "Потапова А.",
+    "matchupShadowP1": 49.4,
+    "marketResidualShadowPick": "Потапова А.",
+    "marketResidualShadowP1": 38.3,
+    "mainModelProbabilities": {
+      "logRegP1": 47.21842806346626,
+      "markovP1": 50.41380959961494,
+      "bradleyP1": 45.714285714285715,
+      "pcaP1": 97
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/atmane-terence-6mkEQ279/dimitrov-grigor-SQgEEKh4/?mid=Y11znqpn",
+    "mainPick": "Атман Т.",
+    "novaPick": "Атман Т.",
+    "hybridShadowPick": "Димитров Г.",
+    "hybridShadowP1": 44.6,
+    "mahalShadowPick": "Димитров Г.",
+    "mahalShadowP1": 42.7,
+    "matchupShadowPick": "Димитров Г.",
+    "matchupShadowP1": 48.7,
+    "marketResidualShadowPick": "Димитров Г.",
+    "marketResidualShadowP1": 49.5,
+    "mainModelProbabilities": {
+      "logRegP1": 44.904634978750785,
+      "markovP1": 44.75324944717054,
+      "bradleyP1": 37.857142857142854,
+      "pcaP1": 87.29883118724861
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/atmane-terence-6mkEQ279/cobolli-flavio-zDtaCcPe/?mid=C8vqtChf",
+    "mainPick": "Атман Т.",
+    "novaPick": "Атман Т.",
+    "hybridShadowPick": "Атман Т.",
+    "hybridShadowP1": 57,
+    "mahalShadowPick": "Атман Т.",
+    "mahalShadowP1": 62.4,
+    "matchupShadowPick": "Атман Т.",
+    "matchupShadowP1": 52.7,
+    "marketResidualShadowPick": "Атман Т.",
+    "marketResidualShadowP1": 63.9,
+    "mainModelProbabilities": {
+      "logRegP1": 56.9410480959073,
+      "markovP1": 52.553615981554685,
+      "bradleyP1": 65.71428571428571,
+      "pcaP1": 89.03531580181988
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/basilashvili-nikoloz-Kb8ttRy2/shevchenko-alexander-jTIB3FIA/?mid=MsUE5RlR",
+    "mainPick": "Шевченко А.",
+    "novaPick": "Шевченко А.",
+    "hybridShadowPick": "Шевченко А.",
+    "hybridShadowP1": 44.7,
+    "mahalShadowPick": "Шевченко А.",
+    "mahalShadowP1": 36.8,
+    "matchupShadowPick": "Шевченко А.",
+    "matchupShadowP1": 46.7,
+    "marketResidualShadowPick": "Шевченко А.",
+    "marketResidualShadowP1": 37,
+    "mainModelProbabilities": {
+      "logRegP1": 41.32034985317411,
+      "markovP1": 46.96958754702449,
+      "bradleyP1": 33.57142857142857,
+      "pcaP1": 12.039186014842256
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/bencic-belinda-ObGlDvu0/monfils-elina-jyngIesG/?mid=YcJtbXkS",
+    "mainPick": "Бенчич Б.",
+    "novaPick": "Бенчич Б.",
+    "hybridShadowPick": "Бенчич Б.",
+    "hybridShadowP1": 57.3,
+    "mahalShadowPick": "Бенчич Б.",
+    "mahalShadowP1": 67.2,
+    "matchupShadowPick": "Бенчич Б.",
+    "matchupShadowP1": 53.4,
+    "marketResidualShadowPick": "Бенчич Б.",
+    "marketResidualShadowP1": 63.9,
+    "mainModelProbabilities": {
+      "logRegP1": 57.351477176185384,
+      "markovP1": 56.055668769815114,
+      "bradleyP1": 75.71428571428571,
+      "pcaP1": 95.39113332873347
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/bergs-zizou-SbeTx1o8/brooksby-jenson-MoOtVkbN/?mid=OW9tyc0e",
+    "mainPick": "Бруксби Дж.",
+    "novaPick": "Бруксби Дж.",
+    "hybridShadowPick": "Бергс З.",
+    "hybridShadowP1": 51.9,
+    "mahalShadowPick": "Бергс З.",
+    "mahalShadowP1": 50.8,
+    "matchupShadowPick": "Бруксби Дж.",
+    "matchupShadowP1": 49.3,
+    "marketResidualShadowPick": "Бруксби Дж.",
+    "marketResidualShadowP1": 47.2,
+    "mainModelProbabilities": {
+      "logRegP1": 50.08303017814895,
+      "markovP1": 47.64324341286411,
+      "bradleyP1": 48.57142857142857,
+      "pcaP1": 27.92050441066529
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/berrettini-matteo-OhwtM7N8/lajovic-dusan-bJf33z45/?mid=rJD6lL0d",
+    "mainPick": "Берреттини М.",
+    "novaPick": "Лайович Д.",
+    "hybridShadowPick": "Берреттини М.",
+    "hybridShadowP1": 50.6,
+    "mahalShadowPick": "Берреттини М.",
+    "mahalShadowP1": 50.9,
+    "matchupShadowPick": "Лайович Д.",
+    "matchupShadowP1": 50,
+    "marketResidualShadowPick": "Берреттини М.",
+    "marketResidualShadowP1": 53.9,
+    "mainModelProbabilities": {
+      "logRegP1": 50.591311603693164,
+      "markovP1": 48.864123845944434,
+      "bradleyP1": 50.71428571428571,
+      "pcaP1": 66.75122883286558
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/blinkova-anna-f1PZMn7P/jovic-iva-bmWvBlnL/?mid=UklO1nt1",
+    "mainPick": "Jovic I.",
+    "novaPick": "Jovic I.",
+    "hybridShadowPick": "Jovic I.",
+    "hybridShadowP1": 41.9,
+    "mahalShadowPick": "Jovic I.",
+    "mahalShadowP1": 35.9,
+    "matchupShadowPick": "Jovic I.",
+    "matchupShadowP1": 46.7,
+    "marketResidualShadowPick": "Jovic I.",
+    "marketResidualShadowP1": 38.5,
+    "mainModelProbabilities": {
+      "logRegP1": 41.77559566745506,
+      "markovP1": 46.806462143779626,
+      "bradleyP1": 34.285714285714285,
+      "pcaP1": 9.661316896874654
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/bondar-anna-O8s9yjMD/rakhimova-kamilla-boU2UKtN/?mid=6kYeGoef",
+    "mainPick": "Бондарь А.",
+    "novaPick": "Рахимова К.",
+    "hybridShadowPick": "Бондарь А.",
+    "hybridShadowP1": 50.7,
+    "mahalShadowPick": "Рахимова К.",
+    "mahalShadowP1": 45.7,
+    "matchupShadowPick": "Бондарь А.",
+    "matchupShadowP1": 50.1,
+    "marketResidualShadowPick": "Рахимова К.",
+    "marketResidualShadowP1": 43.6,
+    "mainModelProbabilities": {
+      "logRegP1": 54.27912006795769,
+      "markovP1": 52.385340565851735,
+      "bradleyP1": 52.142857142857146,
+      "pcaP1": 65.1662071281492
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/bouzas-maneiro-jessica-Gj20DdaG/watson-heather-OMXPbN89/?mid=IBr4WHPO",
+    "mainPick": "Уотсон Х.",
+    "novaPick": "Уотсон Х.",
+    "hybridShadowPick": "Уотсон Х.",
+    "hybridShadowP1": 46.2,
+    "mahalShadowPick": "Уотсон Х.",
+    "mahalShadowP1": 38.7,
+    "matchupShadowPick": "Уотсон Х.",
+    "matchupShadowP1": 47.6,
+    "marketResidualShadowPick": "Уотсон Х.",
+    "marketResidualShadowP1": 35.5,
+    "mainModelProbabilities": {
+      "logRegP1": 48.48285964927202,
+      "markovP1": 48.81306428717777,
+      "bradleyP1": 47.857142857142854,
+      "pcaP1": 30.21041601982241
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/bucsa-cristina-fkFeyKHL/vekic-donna-AsWv5414/?mid=8lyloDhM",
+    "mainPick": "Векич Д.",
+    "novaPick": "Букша К.",
+    "hybridShadowPick": "Векич Д.",
+    "hybridShadowP1": 39.3,
+    "mahalShadowPick": "Векич Д.",
+    "mahalShadowP1": 26,
+    "matchupShadowPick": "Векич Д.",
+    "matchupShadowP1": 45.9,
+    "marketResidualShadowPick": "Векич Д.",
+    "marketResidualShadowP1": 34.2,
+    "mainModelProbabilities": {
+      "logRegP1": 36.98813577125021,
+      "markovP1": 43.14806950739154,
+      "bradleyP1": 22.857142857142854,
+      "pcaP1": 3
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/boulter-katie-0SeXj3jT/haddad-maia-beatriz-lSABz6E8/?mid=zywtmZN9",
+    "mainPick": "Хаддад Майа Б.",
+    "novaPick": "Бултер К.",
+    "hybridShadowPick": "Бултер К.",
+    "hybridShadowP1": 58.6,
+    "mahalShadowPick": "Бултер К.",
+    "mahalShadowP1": 67.7,
+    "matchupShadowPick": "Бултер К.",
+    "matchupShadowP1": 55.6,
+    "marketResidualShadowPick": "Бултер К.",
+    "marketResidualShadowP1": 63.9,
+    "mainModelProbabilities": {
+      "logRegP1": 60.189426685139665,
+      "markovP1": 53.12859497690558,
+      "bradleyP1": 68.57142857142857,
+      "pcaP1": 8.981118552112703
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/burruchaga-roman-andres-CE7B5N90/kopriva-vit-EHGKxKDL/?mid=jNLz4org",
+    "mainPick": "Бурручага Р. А.",
+    "novaPick": "Бурручага Р. А.",
+    "hybridShadowPick": "Бурручага Р. А.",
+    "hybridShadowP1": 52.9,
+    "mahalShadowPick": "Бурручага Р. А.",
+    "mahalShadowP1": 59,
+    "matchupShadowPick": "Бурручага Р. А.",
+    "matchupShadowP1": 51.6,
+    "marketResidualShadowPick": "Бурручага Р. А.",
+    "marketResidualShadowP1": 57.7,
+    "mainModelProbabilities": {
+      "logRegP1": 52.71531736709528,
+      "markovP1": 55.41199103239258,
+      "bradleyP1": 60,
+      "pcaP1": 70.47172305577068
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/berrettini-matteo-OhwtM7N8/buse-ignacio-A1LQjAPb/?mid=GUSFx10k",
+    "mainPick": "Берреттини М.",
+    "novaPick": "Бусе И.",
+    "hybridShadowPick": "Берреттини М.",
+    "hybridShadowP1": 47.6,
+    "mahalShadowPick": "Берреттини М.",
+    "mahalShadowP1": 45.1,
+    "matchupShadowPick": "Берреттини М.",
+    "matchupShadowP1": 48.9,
+    "marketResidualShadowPick": "Бусе И.",
+    "marketResidualShadowP1": 50.5,
+    "mainModelProbabilities": {
+      "logRegP1": 47.949124378929945,
+      "markovP1": 46.99607053726836,
+      "bradleyP1": 43.57142857142857,
+      "pcaP1": 16.39371051144423
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/hassan-benjamin-W66euka4/wawrinka-stan-Uo9lu6le/?mid=G66YxJVr",
+    "mainPick": "Хассан Б.",
+    "novaPick": "Вавринка С.",
+    "hybridShadowPick": "Вавринка С.",
+    "hybridShadowP1": 52.7,
+    "mahalShadowPick": "Вавринка С.",
+    "mahalShadowP1": 54.2,
+    "matchupShadowPick": "Хассан Б.",
+    "matchupShadowP1": 50,
+    "marketResidualShadowPick": "Вавринка С.",
+    "marketResidualShadowP1": 55.5,
+    "mainModelProbabilities": {
+      "logRegP1": 50.679759022686014,
+      "markovP1": 46.14123299433477,
+      "bradleyP1": 50,
+      "pcaP1": 18.990807327824022
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/monteiro-thiago-YqLucTlj/vallejo-daniel-U5RiWEZu/?mid=fTLeRcec",
+    "mainPick": "Валлехо Д.",
+    "novaPick": "Валлехо Д.",
+    "hybridShadowPick": "Валлехо Д.",
+    "hybridShadowP1": 54,
+    "mahalShadowPick": "Валлехо Д.",
+    "mahalShadowP1": 59.1,
+    "matchupShadowPick": "Валлехо Д.",
+    "matchupShadowP1": 52.3,
+    "marketResidualShadowPick": "Валлехо Д.",
+    "marketResidualShadowP1": 62.8,
+    "mainModelProbabilities": {
+      "logRegP1": 52.38652317442178,
+      "markovP1": 53.44688704202688,
+      "bradleyP1": 57.142857142857146,
+      "pcaP1": 63.66104359441142
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/rocha-henrique-b7jXvxef/vallejo-daniel-U5RiWEZu/?mid=K6yp5CGr",
+    "mainPick": "Валлехо Д.",
+    "novaPick": "Валлехо Д.",
+    "hybridShadowPick": "Роша Э.",
+    "hybridShadowP1": 49.7,
+    "mahalShadowPick": "Валлехо Д.",
+    "mahalShadowP1": 50.3,
+    "matchupShadowPick": "Валлехо Д.",
+    "matchupShadowP1": 50.2,
+    "marketResidualShadowPick": "Роша Э.",
+    "marketResidualShadowP1": 47.9,
+    "mainModelProbabilities": {
+      "logRegP1": 50.08717478422488,
+      "markovP1": 52.514627849376915,
+      "bradleyP1": 50,
+      "pcaP1": 49.34764421116849
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/carreno-busta-pablo-W8WmcXdq/van-de-zandschulp-botic-YwiLpILD/?mid=Y3M0dNBD",
+    "mainPick": "Карреньо-Буста П.",
+    "novaPick": "Карреньо-Буста П.",
+    "hybridShadowPick": "Карреньо-Буста П.",
+    "hybridShadowP1": 43.7,
+    "mahalShadowPick": "Карреньо-Буста П.",
+    "mahalShadowP1": 39.2,
+    "matchupShadowPick": "Карреньо-Буста П.",
+    "matchupShadowP1": 46.3,
+    "marketResidualShadowPick": "Карреньо-Буста П.",
+    "marketResidualShadowP1": 39.1,
+    "mainModelProbabilities": {
+      "logRegP1": 40.74774983429842,
+      "markovP1": 45.44553345143741,
+      "bradleyP1": 37.14285714285714,
+      "pcaP1": 4.850572023033709
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/masarova-rebeka-KGQ2bDHb/wang-xinyu-2001-8jMJmh84/?mid=OC7ua7n1",
+    "mainPick": "Ван С.",
+    "novaPick": "Машарова Р.",
+    "hybridShadowPick": "Ван С.",
+    "hybridShadowP1": 52.8,
+    "mahalShadowPick": "Ван С.",
+    "mahalShadowP1": 52.9,
+    "matchupShadowPick": "Ван С.",
+    "matchupShadowP1": 50.4,
+    "marketResidualShadowPick": "Машарова Р.",
+    "marketResidualShadowP1": 47.4,
+    "mainModelProbabilities": {
+      "logRegP1": 52.64518059497614,
+      "markovP1": 58.070892337282906,
+      "bradleyP1": 59.28571428571429,
+      "pcaP1": 77.56809095925699
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/vacherot-valentin-rFqoSYd8/wong-chak-lam-coleman-zJqvgzz6/?mid=n5VTiPi2",
+    "mainPick": "Вашеро В.",
+    "novaPick": "Вонг Ч.",
+    "hybridShadowPick": "Вашеро В.",
+    "hybridShadowP1": 51.8,
+    "mahalShadowPick": "Вашеро В.",
+    "mahalShadowP1": 54.3,
+    "matchupShadowPick": "Вонг Ч.",
+    "matchupShadowP1": 49.7,
+    "marketResidualShadowPick": "Вашеро В.",
+    "marketResidualShadowP1": 60.4,
+    "mainModelProbabilities": {
+      "logRegP1": 49.87609460256736,
+      "markovP1": 49.53877140714458,
+      "bradleyP1": 52.142857142857146,
+      "pcaP1": 60.804329085871636
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/virtanen-otto-hnYnFaTm/vukic-aleksandar-O2CmIROi/?mid=A36YAMQ6",
+    "mainPick": "Виртанен О.",
+    "novaPick": "Виртанен О.",
+    "hybridShadowPick": "Виртанен О.",
+    "hybridShadowP1": 55.5,
+    "mahalShadowPick": "Виртанен О.",
+    "mahalShadowP1": 63.1,
+    "matchupShadowPick": "Виртанен О.",
+    "matchupShadowP1": 51.8,
+    "marketResidualShadowPick": "Виртанен О.",
+    "marketResidualShadowP1": 59.6,
+    "mainModelProbabilities": {
+      "logRegP1": 53.840004352026014,
+      "markovP1": 57.904052181375434,
+      "bradleyP1": 61.42857142857143,
+      "pcaP1": 89.15556695328127
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/griekspoor-tallon-f3zfMU5i/virtanen-otto-hnYnFaTm/?mid=jHKA0GTr",
+    "mainPick": "Грикспур Т.",
+    "novaPick": "Виртанен О.",
+    "hybridShadowPick": "Виртанен О.",
+    "hybridShadowP1": 54.3,
+    "mahalShadowPick": "Виртанен О.",
+    "mahalShadowP1": 60.6,
+    "matchupShadowPick": "Виртанен О.",
+    "matchupShadowP1": 50.4,
+    "marketResidualShadowPick": "Виртанен О.",
+    "marketResidualShadowP1": 59.1,
+    "mainModelProbabilities": {
+      "logRegP1": 51.23548216129899,
+      "markovP1": 56.058610704005105,
+      "bradleyP1": 49.28571428571429,
+      "pcaP1": 30.759994409487586
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/bartunkova-nikola-84ILHaZ4/volynets-katie-vw1oqIPi/?mid=KGI16kfR",
+    "mainPick": "Волынец К.",
+    "novaPick": "Бартункова Н.",
+    "hybridShadowPick": "Бартункова Н.",
+    "hybridShadowP1": 44.4,
+    "mahalShadowPick": "Бартункова Н.",
+    "mahalShadowP1": 35.8,
+    "matchupShadowPick": "Бартункова Н.",
+    "matchupShadowP1": 46.9,
+    "marketResidualShadowPick": "Бартункова Н.",
+    "marketResidualShadowP1": 33.5,
+    "mainModelProbabilities": {
+      "logRegP1": 48.7414441929039,
+      "markovP1": 46.67328673129891,
+      "bradleyP1": 47.142857142857146,
+      "pcaP1": 83.00090247888545
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/cobolli-flavio-zDtaCcPe/wong-chak-lam-coleman-zJqvgzz6/?mid=p4TuDjjo",
+    "mainPick": "Вонг Ч.",
+    "novaPick": "Вонг Ч.",
+    "hybridShadowPick": "Вонг Ч.",
+    "hybridShadowP1": 57.5,
+    "mahalShadowPick": "Вонг Ч.",
+    "mahalShadowP1": 58.3,
+    "matchupShadowPick": "Вонг Ч.",
+    "matchupShadowP1": 52.3,
+    "marketResidualShadowPick": "Вонг Ч.",
+    "marketResidualShadowP1": 56.4,
+    "mainModelProbabilities": {
+      "logRegP1": 60.47381200342907,
+      "markovP1": 56.15425584959055,
+      "bradleyP1": 73.57142857142858,
+      "pcaP1": 90.75065421054202
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/draper-jack-SWxNhpmK/halys-quentin-EDve8Ljh/?mid=URLQdYS7",
+    "mainPick": "Дрейпер Дж.",
+    "novaPick": "Дрейпер Дж.",
+    "hybridShadowPick": "Дрейпер Дж.",
+    "hybridShadowP1": 44.1,
+    "mahalShadowPick": "Дрейпер Дж.",
+    "mahalShadowP1": 37,
+    "matchupShadowPick": "Дрейпер Дж.",
+    "matchupShadowP1": 46.5,
+    "marketResidualShadowPick": "Дрейпер Дж.",
+    "marketResidualShadowP1": 35,
+    "mainModelProbabilities": {
+      "logRegP1": 43.61943411380737,
+      "markovP1": 47.42204211592529,
+      "bradleyP1": 40.71428571428571,
+      "pcaP1": 10.50879321188442
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/halys-quentin-EDve8Ljh/o-connell-christopher-SptFeDiE/?mid=fDaIE4Rs",
+    "mainPick": "Гали К.",
+    "novaPick": "Гали К.",
+    "hybridShadowPick": "О'Конелл К.",
+    "hybridShadowP1": 45.5,
+    "mahalShadowPick": "О'Конелл К.",
+    "mahalShadowP1": 46.4,
+    "matchupShadowPick": "О'Конелл К.",
+    "matchupShadowP1": 48.2,
+    "marketResidualShadowPick": "О'Конелл К.",
+    "marketResidualShadowP1": 46.7,
+    "mainModelProbabilities": {
+      "logRegP1": 43.8263316326701,
+      "markovP1": 46.339694840538094,
+      "bradleyP1": 35,
+      "pcaP1": 71.19759411562757
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/halys-quentin-EDve8Ljh/shevchenko-alexander-jTIB3FIA/?mid=jsGVLuDs",
+    "mainPick": "Шевченко А.",
+    "novaPick": "Гали К.",
+    "hybridShadowPick": "Шевченко А.",
+    "hybridShadowP1": 48.6,
+    "mahalShadowPick": "Шевченко А.",
+    "mahalShadowP1": 49,
+    "matchupShadowPick": "Шевченко А.",
+    "matchupShadowP1": 49.3,
+    "marketResidualShadowPick": "Шевченко А.",
+    "marketResidualShadowP1": 47.2,
+    "mainModelProbabilities": {
+      "logRegP1": 47.63345017485454,
+      "markovP1": 52.287363358340485,
+      "bradleyP1": 48.57142857142857,
+      "pcaP1": 46.91058453864469
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/barrena-alex-EcYZCT1F/gaubas-vilius-j3oO3m94/?mid=WEbmmAKG",
+    "mainPick": "Гаубас В.",
+    "novaPick": "Гаубас В.",
+    "hybridShadowPick": "Гаубас В.",
+    "hybridShadowP1": 55.7,
+    "mahalShadowPick": "Гаубас В.",
+    "mahalShadowP1": 62.1,
+    "matchupShadowPick": "Гаубас В.",
+    "matchupShadowP1": 53.9,
+    "marketResidualShadowPick": "Гаубас В.",
+    "marketResidualShadowP1": 60.1,
+    "mainModelProbabilities": {
+      "logRegP1": 58.90022410912186,
+      "markovP1": 54.27195294307571,
+      "bradleyP1": 62.14285714285713,
+      "pcaP1": 86.92884328822483
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/gaubas-vilius-j3oO3m94/reis-da-silva-joao-lucas-0fnJ8Cja/?mid=jDtOCbt4",
+    "mainPick": "Гаубас В.",
+    "novaPick": "Гаубас В.",
+    "hybridShadowPick": "Реис Да Сильва Ж.",
+    "hybridShadowP1": 49.6,
+    "mahalShadowPick": "Гаубас В.",
+    "mahalShadowP1": 53.7,
+    "matchupShadowPick": "Гаубас В.",
+    "matchupShadowP1": 51.4,
+    "marketResidualShadowPick": "Гаубас В.",
+    "marketResidualShadowP1": 54.4,
+    "mainModelProbabilities": {
+      "logRegP1": 51.63997864386464,
+      "markovP1": 50.383344360877516,
+      "bradleyP1": 45,
+      "pcaP1": 63.25620241360143
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/gauff-coco-f5BXmEH6/mertens-elise-Y1ZrrUtl/?mid=v3rioaVr",
+    "mainPick": "Гауфф К.",
+    "novaPick": "Мертенс Э.",
+    "hybridShadowPick": "Мертенс Э.",
+    "hybridShadowP1": 45.1,
+    "mahalShadowPick": "Мертенс Э.",
+    "mahalShadowP1": 43.5,
+    "matchupShadowPick": "Мертенс Э.",
+    "matchupShadowP1": 47.7,
+    "marketResidualShadowPick": "Мертенс Э.",
+    "marketResidualShadowP1": 39.2,
+    "mainModelProbabilities": {
+      "logRegP1": 45.16111511165829,
+      "markovP1": 49.29527110503399,
+      "bradleyP1": 41.42857142857143,
+      "pcaP1": 75.29879474867333
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/eala-alexandra-ppu9X7PH/gauff-coco-f5BXmEH6/?mid=zuLFS7Eb",
+    "mainPick": "Эала А.",
+    "novaPick": "Эала А.",
+    "hybridShadowPick": "Эала А.",
+    "hybridShadowP1": 47.2,
+    "mahalShadowPick": "Эала А.",
+    "mahalShadowP1": 40.9,
+    "matchupShadowPick": "Эала А.",
+    "matchupShadowP1": 47.4,
+    "marketResidualShadowPick": "Эала А.",
+    "marketResidualShadowP1": 41.8,
+    "mainModelProbabilities": {
+      "logRegP1": 44.355813114923464,
+      "markovP1": 49.03097528496748,
+      "bradleyP1": 35.71428571428571,
+      "pcaP1": 61.637472759805156
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/duckworth-james-2JWHPUUb/svrcina-dalibor-vDue624T/?mid=tS4rpNEb",
+    "mainPick": "Сврчина Д.",
+    "novaPick": "Сврчина Д.",
+    "hybridShadowPick": "Сврчина Д.",
+    "hybridShadowP1": 43.1,
+    "mahalShadowPick": "Сврчина Д.",
+    "mahalShadowP1": 32.1,
+    "matchupShadowPick": "Сврчина Д.",
+    "matchupShadowP1": 46.3,
+    "marketResidualShadowPick": "Сврчина Д.",
+    "marketResidualShadowP1": 36.1,
+    "mainModelProbabilities": {
+      "logRegP1": 43.707928532810946,
+      "markovP1": 43.984694001384824,
+      "bradleyP1": 43.57142857142857,
+      "pcaP1": 7.042074622159376
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/jones-francesca-OU6w8nNa/stearns-peyton-YsJXLo1O/?mid=xGiWaQAD",
+    "mainPick": "Джонс Ф.",
+    "novaPick": "Стирнс П.",
+    "hybridShadowPick": "Стирнс П.",
+    "hybridShadowP1": 46.3,
+    "mahalShadowPick": "Стирнс П.",
+    "mahalShadowP1": 40.6,
+    "matchupShadowPick": "Стирнс П.",
+    "matchupShadowP1": 48.8,
+    "marketResidualShadowPick": "Стирнс П.",
+    "marketResidualShadowP1": 39.5,
+    "mainModelProbabilities": {
+      "logRegP1": 48.537433954740365,
+      "markovP1": 51.28981854185772,
+      "bradleyP1": 44.28571428571429,
+      "pcaP1": 91.96804440297596
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/dzumhur-damir-hMrlbuuQ/martinez-pedro-WtiN88eD/?mid=t48dmfS6",
+    "mainPick": "Джумхур Д.",
+    "novaPick": "Мартинес Портеро П.",
+    "hybridShadowPick": "Мартинес Портеро П.",
+    "hybridShadowP1": 46.8,
+    "mahalShadowPick": "Мартинес Портеро П.",
+    "mahalShadowP1": 40.9,
+    "matchupShadowPick": "Мартинес Портеро П.",
+    "matchupShadowP1": 48.3,
+    "marketResidualShadowPick": "Мартинес Портеро П.",
+    "marketResidualShadowP1": 43.2,
+    "mainModelProbabilities": {
+      "logRegP1": 47.73831696133256,
+      "markovP1": 47.48740845115201,
+      "bradleyP1": 45.714285714285715,
+      "pcaP1": 80.47998475678583
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/dzumhur-damir-hMrlbuuQ/monfils-gael-fm7G8o0m/?mid=IkRQRuaU",
+    "mainPick": "Джумхур Д.",
+    "novaPick": "Джумхур Д.",
+    "hybridShadowPick": "Монфис Г.",
+    "hybridShadowP1": 46.6,
+    "mahalShadowPick": "Монфис Г.",
+    "mahalShadowP1": 39.8,
+    "matchupShadowPick": "Монфис Г.",
+    "matchupShadowP1": 49,
+    "marketResidualShadowPick": "Монфис Г.",
+    "marketResidualShadowP1": 44.6,
+    "mainModelProbabilities": {
+      "logRegP1": 48.73209530981703,
+      "markovP1": 47.7743629307438,
+      "bradleyP1": 47.142857142857146,
+      "pcaP1": 86.9357261865489
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/dzumhur-damir-hMrlbuuQ/faria-jaime-ETojuYQP/?mid=GrANaoMO",
+    "mainPick": "Джумхур Д.",
+    "novaPick": "Фария Дж.",
+    "hybridShadowPick": "Фария Дж.",
+    "hybridShadowP1": 45.4,
+    "mahalShadowPick": "Фария Дж.",
+    "mahalShadowP1": 35.8,
+    "matchupShadowPick": "Фария Дж.",
+    "matchupShadowP1": 48.3,
+    "marketResidualShadowPick": "Фария Дж.",
+    "marketResidualShadowP1": 43.1,
+    "mainModelProbabilities": {
+      "logRegP1": 47.870656968269294,
+      "markovP1": 47.03323288265496,
+      "bradleyP1": 39.99999999999999,
+      "pcaP1": 91.28973062231715
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/moutet-corentin-bX0EWcV9/zverev-alexander-dGbUhw9m/?mid=jumOd0b4",
+    "mainPick": "Зверев А.",
+    "novaPick": "Зверев А.",
+    "hybridShadowPick": "Зверев А.",
+    "hybridShadowP1": 54.3,
+    "mahalShadowPick": "Зверев А.",
+    "mahalShadowP1": 62.9,
+    "matchupShadowPick": "Зверев А.",
+    "matchupShadowP1": 52.3,
+    "marketResidualShadowPick": "Зверев А.",
+    "marketResidualShadowP1": 59.1,
+    "mainModelProbabilities": {
+      "logRegP1": 56.25198313767163,
+      "markovP1": 54.34156070771096,
+      "bradleyP1": 67.14285714285714,
+      "pcaP1": 94.66127581580899
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/mejia-nicolas-QcT8wHe4/ymer-elias-GhVfMwlD/?mid=00TSCtPr",
+    "mainPick": "Мехия Н.",
+    "novaPick": "Мехия Н.",
+    "hybridShadowPick": "Мехия Н.",
+    "hybridShadowP1": 49.4,
+    "mahalShadowPick": "Мехия Н.",
+    "mahalShadowP1": 44.5,
+    "matchupShadowPick": "Мехия Н.",
+    "matchupShadowP1": 48.7,
+    "marketResidualShadowPick": "Мехия Н.",
+    "marketResidualShadowP1": 41.4,
+    "mainModelProbabilities": {
+      "logRegP1": 50.84783565318164,
+      "markovP1": 49.28326177074519,
+      "bradleyP1": 56.42857142857143,
+      "pcaP1": 41.895889118472226
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/carreno-busta-pablo-W8WmcXdq/nardi-luca-pfrQxVu7/?mid=SS2ep1w9",
+    "mainPick": "Карреньо-Буста П.",
+    "novaPick": "Карреньо-Буста П.",
+    "hybridShadowPick": "Карреньо-Буста П.",
+    "hybridShadowP1": 57.5,
+    "mahalShadowPick": "Карреньо-Буста П.",
+    "mahalShadowP1": 68.3,
+    "matchupShadowPick": "Карреньо-Буста П.",
+    "matchupShadowP1": 53,
+    "marketResidualShadowPick": "Карреньо-Буста П.",
+    "marketResidualShadowP1": 63.1,
+    "mainModelProbabilities": {
+      "logRegP1": 57.18049746463746,
+      "markovP1": 55.71425004224744,
+      "bradleyP1": 60,
+      "pcaP1": 95.68619655287377
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/carreno-busta-pablo-W8WmcXdq/shapovalov-denis-zXddgn9o/?mid=KYTv6x6L",
+    "mainPick": "Карреньо-Буста П.",
+    "novaPick": "Карреньо-Буста П.",
+    "hybridShadowPick": "Карреньо-Буста П.",
+    "hybridShadowP1": 53,
+    "mahalShadowPick": "Карреньо-Буста П.",
+    "mahalShadowP1": 53,
+    "matchupShadowPick": "Карреньо-Буста П.",
+    "matchupShadowP1": 51.6,
+    "marketResidualShadowPick": "Карреньо-Буста П.",
+    "marketResidualShadowP1": 53.1,
+    "mainModelProbabilities": {
+      "logRegP1": 55.02192367717801,
+      "markovP1": 51.95713245509965,
+      "bradleyP1": 54.28571428571428,
+      "pcaP1": 71.7700307035954
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/bellucci-mattia-M9pojLqi/kecmanovic-miomir-MTQ5CPOR/?mid=Cb1uFtBt",
+    "mainPick": "Кецманович М.",
+    "novaPick": "Кецманович М.",
+    "hybridShadowPick": "Кецманович М.",
+    "hybridShadowP1": 53.5,
+    "mahalShadowPick": "Кецманович М.",
+    "mahalShadowP1": 56.5,
+    "matchupShadowPick": "Кецманович М.",
+    "matchupShadowP1": 51.7,
+    "marketResidualShadowPick": "Кецманович М.",
+    "marketResidualShadowP1": 61.7,
+    "mainModelProbabilities": {
+      "logRegP1": 53.80768732727248,
+      "markovP1": 49.07054109622087,
+      "bradleyP1": 52.857142857142854,
+      "pcaP1": 66.99052590414676
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/kypson-patrick-8W9dxtVO/wong-chak-lam-coleman-zJqvgzz6/?mid=0pklxchf",
+    "mainPick": "Вонг Ч.",
+    "novaPick": "Кипсон П.",
+    "hybridShadowPick": "Вонг Ч.",
+    "hybridShadowP1": 49.1,
+    "mahalShadowPick": "Кипсон П.",
+    "mahalShadowP1": 53.6,
+    "matchupShadowPick": "Вонг Ч.",
+    "matchupShadowP1": 49.7,
+    "marketResidualShadowPick": "Кипсон П.",
+    "marketResidualShadowP1": 53.3,
+    "mainModelProbabilities": {
+      "logRegP1": 48.95178524681772,
+      "markovP1": 50.40921417212184,
+      "bradleyP1": 56.42857142857142,
+      "pcaP1": 47.779978719062775
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/de-minaur-alex-EZgZ9Xfh/kypson-patrick-8W9dxtVO/?mid=r9tja7aS",
+    "mainPick": "Де Минаур А.",
+    "novaPick": "Кипсон П.",
+    "hybridShadowPick": "Де Минаур А.",
+    "hybridShadowP1": 46.8,
+    "mahalShadowPick": "Де Минаур А.",
+    "mahalShadowP1": 49.2,
+    "matchupShadowPick": "Кипсон П.",
+    "matchupShadowP1": 50.4,
+    "marketResidualShadowPick": "Кипсон П.",
+    "marketResidualShadowP1": 51,
+    "mainModelProbabilities": {
+      "logRegP1": 49.0302629742112,
+      "markovP1": 47.63826170247311,
+      "bradleyP1": 47.14285714285714,
+      "pcaP1": 30.86075241605013
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/kozlov-stefan-hI2zuuMo/kypson-patrick-8W9dxtVO/?mid=z33gB3kg",
+    "mainPick": "Кипсон П.",
+    "novaPick": "Кипсон П.",
+    "hybridShadowPick": "Кипсон П.",
+    "hybridShadowP1": 55.4,
+    "mahalShadowPick": "Кипсон П.",
+    "mahalShadowP1": 65.2,
+    "matchupShadowPick": "Кипсон П.",
+    "matchupShadowP1": 54.2,
+    "marketResidualShadowPick": "Кипсон П.",
+    "marketResidualShadowP1": 66.8,
+    "mainModelProbabilities": {
+      "logRegP1": 59.31673834980065,
+      "markovP1": 51.46377207130955,
+      "bradleyP1": 67.85714285714286,
+      "pcaP1": 88.09460259773788
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/cobolli-flavio-zDtaCcPe/korda-sebastian-SYklCTPO/?mid=OAU2AT36",
+    "mainPick": "Корда С.",
+    "novaPick": "Корда С.",
+    "hybridShadowPick": "Корда С.",
+    "hybridShadowP1": 40.6,
+    "mahalShadowPick": "Корда С.",
+    "mahalShadowP1": 33.9,
+    "matchupShadowPick": "Корда С.",
+    "matchupShadowP1": 46.2,
+    "marketResidualShadowPick": "Корда С.",
+    "marketResidualShadowP1": 35.6,
+    "mainModelProbabilities": {
+      "logRegP1": 39.170173004064466,
+      "markovP1": 43.622297262815216,
+      "bradleyP1": 30,
+      "pcaP1": 3.8349728560645495
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/comesana-francisco-SxKK0RUD/martinez-pedro-WtiN88eD/?mid=nafC3V4c",
+    "mainPick": "Мартинес Портеро П.",
+    "novaPick": "Комесана Ф.",
+    "hybridShadowPick": "Мартинес Портеро П.",
+    "hybridShadowP1": 49.3,
+    "mahalShadowPick": "Мартинес Портеро П.",
+    "mahalShadowP1": 49.2,
+    "matchupShadowPick": "Мартинес Портеро П.",
+    "matchupShadowP1": 49.3,
+    "marketResidualShadowPick": "Комесана Ф.",
+    "marketResidualShadowP1": 50.6,
+    "mainModelProbabilities": {
+      "logRegP1": 49.149208318705284,
+      "markovP1": 49.730204826244986,
+      "bradleyP1": 45,
+      "pcaP1": 39.68182667165008
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/cerundolo-juan-manuel-A93TM7BR/kopriva-vit-EHGKxKDL/?mid=2JYub03U",
+    "mainPick": "Черундоло Х.-М.",
+    "novaPick": "Черундоло Х.-М.",
+    "hybridShadowPick": "Черундоло Х.-М.",
+    "hybridShadowP1": 48.8,
+    "mahalShadowPick": "Черундоло Х.-М.",
+    "mahalShadowP1": 47.5,
+    "matchupShadowPick": "Черундоло Х.-М.",
+    "matchupShadowP1": 49.1,
+    "marketResidualShadowPick": "Черундоло Х.-М.",
+    "marketResidualShadowP1": 49.1,
+    "mainModelProbabilities": {
+      "logRegP1": 48.32828093060989,
+      "markovP1": 48.161789099183,
+      "bradleyP1": 49.285714285714285,
+      "pcaP1": 14.4303598709845
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/korda-sebastian-SYklCTPO/ruud-casper-zN9UpRqp/?mid=vwTPqvJ0",
+    "mainPick": "Рууд К.",
+    "novaPick": "Корда С.",
+    "hybridShadowPick": "Корда С.",
+    "hybridShadowP1": 56.5,
+    "mahalShadowPick": "Корда С.",
+    "mahalShadowP1": 69.7,
+    "matchupShadowPick": "Корда С.",
+    "matchupShadowP1": 53.4,
+    "marketResidualShadowPick": "Корда С.",
+    "marketResidualShadowP1": 64.2,
+    "mainModelProbabilities": {
+      "logRegP1": 58.13544339845083,
+      "markovP1": 56.5970054510782,
+      "bradleyP1": 68.57142857142857,
+      "pcaP1": 3
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/krueger-ashlyn-O81eud9p/mcnally-caty-YDHquro6/?mid=jwOrMGRF",
+    "mainPick": "Макналли К.",
+    "novaPick": "Макналли К.",
+    "hybridShadowPick": "Макналли К.",
+    "hybridShadowP1": 42.2,
+    "mahalShadowPick": "Макналли К.",
+    "mahalShadowP1": 36.3,
+    "matchupShadowPick": "Макналли К.",
+    "matchupShadowP1": 46.8,
+    "marketResidualShadowPick": "Макналли К.",
+    "marketResidualShadowP1": 35.9,
+    "mainModelProbabilities": {
+      "logRegP1": 42.79630851265224,
+      "markovP1": 43.84123653126686,
+      "bradleyP1": 30.71428571428571,
+      "pcaP1": 8.410860291403564
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/jodar-rafael-OdngshVK/quinn-ethan-fDEtnFgg/?mid=GdHxBkGM",
+    "mainPick": "Jodar R.",
+    "novaPick": "Jodar R.",
+    "hybridShadowPick": "Jodar R.",
+    "hybridShadowP1": 48.5,
+    "mahalShadowPick": "Jodar R.",
+    "mahalShadowP1": 46.1,
+    "matchupShadowPick": "Jodar R.",
+    "matchupShadowP1": 47.6,
+    "marketResidualShadowPick": "Jodar R.",
+    "marketResidualShadowP1": 49.4,
+    "mainModelProbabilities": {
+      "logRegP1": 46.83909450936267,
+      "markovP1": 45.879656177938536,
+      "bradleyP1": 45,
+      "pcaP1": 25.91806042240315
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/cirstea-sorana-fBPsm3Iq/eala-alexandra-ppu9X7PH/?mid=KtQy8YSr",
+    "mainPick": "Эала А.",
+    "novaPick": "Кырстя С.",
+    "hybridShadowPick": "Кырстя С.",
+    "hybridShadowP1": 62.3,
+    "mahalShadowPick": "Кырстя С.",
+    "mahalShadowP1": 78,
+    "matchupShadowPick": "Кырстя С.",
+    "matchupShadowP1": 57,
+    "marketResidualShadowPick": "Кырстя С.",
+    "marketResidualShadowP1": 65.4,
+    "mainModelProbabilities": {
+      "logRegP1": 65.61517891113185,
+      "markovP1": 59.63669877033722,
+      "bradleyP1": 77.85714285714286,
+      "pcaP1": 3
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/hanfmann-yannick-zLJYYbhm/lajovic-dusan-bJf33z45/?mid=O81ufIX0",
+    "mainPick": "Ханфманн Я.",
+    "novaPick": "Лайович Д.",
+    "hybridShadowPick": "Ханфманн Я.",
+    "hybridShadowP1": 47,
+    "mahalShadowPick": "Ханфманн Я.",
+    "mahalShadowP1": 43.7,
+    "matchupShadowPick": "Ханфманн Я.",
+    "matchupShadowP1": 49.9,
+    "marketResidualShadowPick": "Ханфманн Я.",
+    "marketResidualShadowP1": 42.7,
+    "mainModelProbabilities": {
+      "logRegP1": 50.103309714261094,
+      "markovP1": 47.817904640269205,
+      "bradleyP1": 43.57142857142857,
+      "pcaP1": 23.3306812533164
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/avanesyan-elina-bigXsmFf/lepchenko-varvara-vkOnO123/?mid=4pC3XqVh",
+    "mainPick": "Лепченко В.",
+    "novaPick": "Аванесян Э.",
+    "hybridShadowPick": "Аванесян Э.",
+    "hybridShadowP1": 48.2,
+    "mahalShadowPick": "Аванесян Э.",
+    "mahalShadowP1": 45,
+    "matchupShadowPick": "Аванесян Э.",
+    "matchupShadowP1": 49.6,
+    "marketResidualShadowPick": "Аванесян Э.",
+    "marketResidualShadowP1": 41.3,
+    "mainModelProbabilities": {
+      "logRegP1": 51.67507085165653,
+      "markovP1": 50.07225356890806,
+      "bradleyP1": 52.142857142857146,
+      "pcaP1": 50.83618681295333
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/lepchenko-varvara-vkOnO123/zhang-shuai-OY0ZExo5/?mid=xYtlz0Qa",
+    "mainPick": "Лепченко В.",
+    "novaPick": "Чжан Шуай",
+    "hybridShadowPick": "Чжан Шуай",
+    "hybridShadowP1": 49.2,
+    "mahalShadowPick": "Чжан Шуай",
+    "mahalShadowP1": 45.5,
+    "matchupShadowPick": "Чжан Шуай",
+    "matchupShadowP1": 49.4,
+    "marketResidualShadowPick": "Чжан Шуай",
+    "marketResidualShadowP1": 47.2,
+    "mainModelProbabilities": {
+      "logRegP1": 50.446875375478314,
+      "markovP1": 50.330909092510765,
+      "bradleyP1": 45.71428571428571,
+      "pcaP1": 58.12186974998904
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/bergs-zizou-SbeTx1o8/lehecka-jiri-6PlgfXKR/?mid=nk3xlFQk",
+    "mainPick": "Лехечка И.",
+    "novaPick": "Лехечка И.",
+    "hybridShadowPick": "Лехечка И.",
+    "hybridShadowP1": 52.6,
+    "mahalShadowPick": "Лехечка И.",
+    "mahalShadowP1": 56.9,
+    "matchupShadowPick": "Лехечка И.",
+    "matchupShadowP1": 51.1,
+    "marketResidualShadowPick": "Лехечка И.",
+    "marketResidualShadowP1": 55.6,
+    "mainModelProbabilities": {
+      "logRegP1": 53.0656139540956,
+      "markovP1": 57.49889046023367,
+      "bradleyP1": 65,
+      "pcaP1": 88.25940623170429
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/arthur-fils-IoIhUqIN/lehecka-jiri-6PlgfXKR/?mid=dSQb5jK6",
+    "mainPick": "Лехечка И.",
+    "novaPick": "Лехечка И.",
+    "hybridShadowPick": "Лехечка И.",
+    "hybridShadowP1": 60.1,
+    "mahalShadowPick": "Лехечка И.",
+    "mahalShadowP1": 70.9,
+    "matchupShadowPick": "Лехечка И.",
+    "matchupShadowP1": 54.3,
+    "marketResidualShadowPick": "Лехечка И.",
+    "marketResidualShadowP1": 65.8,
+    "mainModelProbabilities": {
+      "logRegP1": 58.98211808482152,
+      "markovP1": 60.377293243589136,
+      "bradleyP1": 76.42857142857142,
+      "pcaP1": 5.02217308586318
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/linette-magda-vXvzyRlq/maria-tatjana-OGYNaUZG/?mid=259In5CT",
+    "mainPick": "Мария Т.",
+    "novaPick": "Линетт М.",
+    "hybridShadowPick": "Линетт М.",
+    "hybridShadowP1": 54.2,
+    "mahalShadowPick": "Линетт М.",
+    "mahalShadowP1": 58.4,
+    "matchupShadowPick": "Линетт М.",
+    "matchupShadowP1": 52.1,
+    "marketResidualShadowPick": "Линетт М.",
+    "marketResidualShadowP1": 59,
+    "mainModelProbabilities": {
+      "logRegP1": 55.04326859255674,
+      "markovP1": 49.244765055836524,
+      "bradleyP1": 50,
+      "pcaP1": 20.583419042996816
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/linette-magda-vXvzyRlq/tauson-clara-2PPTHPya/?mid=O0F3Nld4",
+    "mainPick": "Линетт М.",
+    "novaPick": "Линетт М.",
+    "hybridShadowPick": "Линетт М.",
+    "hybridShadowP1": 52,
+    "mahalShadowPick": "Линетт М.",
+    "mahalShadowP1": 53.6,
+    "matchupShadowPick": "Линетт М.",
+    "matchupShadowP1": 51.3,
+    "marketResidualShadowPick": "Линетт М.",
+    "marketResidualShadowP1": 53.1,
+    "mainModelProbabilities": {
+      "logRegP1": 53.592474482976606,
+      "markovP1": 49.84698846390712,
+      "bradleyP1": 55,
+      "pcaP1": 49.84679070823635
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/luz-orlando-vTTQuqa9/rocha-henrique-b7jXvxef/?mid=YP5I6Nn3",
+    "mainPick": "Луж О.",
+    "novaPick": "Луж О.",
+    "hybridShadowPick": "Луж О.",
+    "hybridShadowP1": 55.2,
+    "mahalShadowPick": "Луж О.",
+    "mahalShadowP1": 65.1,
+    "matchupShadowPick": "Луж О.",
+    "matchupShadowP1": 52.7,
+    "marketResidualShadowPick": "Луж О.",
+    "marketResidualShadowP1": 63,
+    "mainModelProbabilities": {
+      "logRegP1": 54.19519283948339,
+      "markovP1": 55.11965052609774,
+      "bradleyP1": 65.71428571428572,
+      "pcaP1": 86.69131269586886
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/mcdonald-mackenzie-WWi3O0v6/ymer-elias-GhVfMwlD/?mid=ED497LlI",
+    "mainPick": "Макдональд М.",
+    "novaPick": "Имер Э.",
+    "hybridShadowPick": "Имер Э.",
+    "hybridShadowP1": 44.4,
+    "mahalShadowPick": "Имер Э.",
+    "mahalShadowP1": 39.1,
+    "matchupShadowPick": "Имер Э.",
+    "matchupShadowP1": 47.2,
+    "marketResidualShadowPick": "Имер Э.",
+    "marketResidualShadowP1": 38.2,
+    "mainModelProbabilities": {
+      "logRegP1": 44.23731174601508,
+      "markovP1": 44.77417468663991,
+      "bradleyP1": 37.142857142857146,
+      "pcaP1": 82.8760801299876
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/mannarino-adrian-fLOdtByM/shimabukuro-sho-86URR6MP/?mid=0SLND6EL",
+    "mainPick": "Маннарино А.",
+    "novaPick": "Шимабукуро Ш.",
+    "hybridShadowPick": "Шимабукуро Ш.",
+    "hybridShadowP1": 42.6,
+    "mahalShadowPick": "Шимабукуро Ш.",
+    "mahalShadowP1": 31.1,
+    "matchupShadowPick": "Шимабукуро Ш.",
+    "matchupShadowP1": 46.1,
+    "marketResidualShadowPick": "Шимабукуро Ш.",
+    "marketResidualShadowP1": 35.9,
+    "mainModelProbabilities": {
+      "logRegP1": 43.77008004822261,
+      "markovP1": 40.54436961843285,
+      "bradleyP1": 26.428571428571427,
+      "pcaP1": 94.31425725951256
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/marozsan-fabian-I1mux0lj/rinderknech-arthur-pIxZZsof/?mid=Oj0zcvNE",
+    "mainPick": "Марожан Ф.",
+    "novaPick": "Риндеркнех А.",
+    "hybridShadowPick": "Марожан Ф.",
+    "hybridShadowP1": 52.1,
+    "mahalShadowPick": "Марожан Ф.",
+    "mahalShadowP1": 54.1,
+    "matchupShadowPick": "Риндеркнех А.",
+    "matchupShadowP1": 49.8,
+    "marketResidualShadowPick": "Марожан Ф.",
+    "marketResidualShadowP1": 52.8,
+    "mainModelProbabilities": {
+      "logRegP1": 51.17378739167121,
+      "markovP1": 52.756224601730274,
+      "bradleyP1": 45,
+      "pcaP1": 74.17121421081715
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/marozsan-fabian-I1mux0lj/rublev-andrey-AeAn4gP0/?mid=0xom1U9L",
+    "mainPick": "Марожан Ф.",
+    "novaPick": "Рублёв А.",
+    "hybridShadowPick": "Рублёв А.",
+    "hybridShadowP1": 49.3,
+    "mahalShadowPick": "Рублёв А.",
+    "mahalShadowP1": 49.4,
+    "matchupShadowPick": "Рублёв А.",
+    "matchupShadowP1": 49.9,
+    "marketResidualShadowPick": "Марожан Ф.",
+    "marketResidualShadowP1": 51.3,
+    "mainModelProbabilities": {
+      "logRegP1": 51.2946139027963,
+      "markovP1": 49.70957862361486,
+      "bradleyP1": 45,
+      "pcaP1": 69.92220045477254
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/birrell-kimberly-S4ljFw3g/petra-marcinko-2J180sTE/?mid=bPUmI7Qs",
+    "mainPick": "Биррелл К.",
+    "novaPick": "Биррелл К.",
+    "hybridShadowPick": "Биррелл К.",
+    "hybridShadowP1": 42.4,
+    "mahalShadowPick": "Биррелл К.",
+    "mahalShadowP1": 38.7,
+    "matchupShadowPick": "Биррелл К.",
+    "matchupShadowP1": 47.5,
+    "marketResidualShadowPick": "Биррелл К.",
+    "marketResidualShadowP1": 38.2,
+    "mainModelProbabilities": {
+      "logRegP1": 44.49914690864167,
+      "markovP1": 46.08921278696585,
+      "bradleyP1": 42.14285714285714,
+      "pcaP1": 18.277830236530658
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/medvedev-daniil-O8qG0Nhb/tsitsipas-stefanos-hb6oWfc6/?mid=zZmKWaGk",
+    "mainPick": "Медведев Д.",
+    "novaPick": "Медведев Д.",
+    "hybridShadowPick": "Медведев Д.",
+    "hybridShadowP1": 54.8,
+    "mahalShadowPick": "Медведев Д.",
+    "mahalShadowP1": 63.4,
+    "matchupShadowPick": "Медведев Д.",
+    "matchupShadowP1": 52.4,
+    "marketResidualShadowPick": "Медведев Д.",
+    "marketResidualShadowP1": 64.2,
+    "mainModelProbabilities": {
+      "logRegP1": 53.56222351141882,
+      "markovP1": 55.42333495640962,
+      "bradleyP1": 49.28571428571429,
+      "pcaP1": 75.88237482042322
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/medvedev-daniil-O8qG0Nhb/shang-juncheng-tvjTgE3J/?mid=KzL2ru8L",
+    "mainPick": "Медведев Д.",
+    "novaPick": "Медведев Д.",
+    "hybridShadowPick": "Медведев Д.",
+    "hybridShadowP1": 50.3,
+    "mahalShadowPick": "Медведев Д.",
+    "mahalShadowP1": 56.2,
+    "matchupShadowPick": "Медведев Д.",
+    "matchupShadowP1": 50.6,
+    "marketResidualShadowPick": "Медведев Д.",
+    "marketResidualShadowP1": 57.5,
+    "mainModelProbabilities": {
+      "logRegP1": 50.392120479035476,
+      "markovP1": 53.463046940461325,
+      "bradleyP1": 49.28571428571429,
+      "pcaP1": 68.74326280547594
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/galan-daniel-elahi-jgzV6009/mena-facundo-GALIwHH5/?mid=b5OGEKBi",
+    "mainPick": "Галан Д. Э.",
+    "novaPick": "Галан Д. Э.",
+    "hybridShadowPick": "Галан Д. Э.",
+    "hybridShadowP1": 48,
+    "mahalShadowPick": "Галан Д. Э.",
+    "mahalShadowP1": 48.9,
+    "matchupShadowPick": "Галан Д. Э.",
+    "matchupShadowP1": 49.3,
+    "marketResidualShadowPick": "Галан Д. Э.",
+    "marketResidualShadowP1": 48.3,
+    "mainModelProbabilities": {
+      "logRegP1": 46.84380938127722,
+      "markovP1": 49.396519401281886,
+      "bradleyP1": 51.42857142857143,
+      "pcaP1": 38.79438375957259
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/hurkacz-hubert-zuHOBnY9/mensik-jakub-UFj257G8/?mid=lKONzl6C",
+    "mainPick": "Меншик Я.",
+    "novaPick": "Меншик Я.",
+    "hybridShadowPick": "Меншик Я.",
+    "hybridShadowP1": 55.3,
+    "mahalShadowPick": "Меншик Я.",
+    "mahalShadowP1": 61.6,
+    "matchupShadowPick": "Меншик Я.",
+    "matchupShadowP1": 50.4,
+    "marketResidualShadowPick": "Меншик Я.",
+    "marketResidualShadowP1": 59.6,
+    "mainModelProbabilities": {
+      "logRegP1": 50.544130757244005,
+      "markovP1": 56.987501275534214,
+      "bradleyP1": 67.14285714285714,
+      "pcaP1": 94.5989741319382
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/mensik-jakub-UFj257G8/sinner-jannik-6HdC3z4H/?mid=GSi9r2iU",
+    "mainPick": "Синнер Я.",
+    "novaPick": "Синнер Я.",
+    "hybridShadowPick": "Синнер Я.",
+    "hybridShadowP1": 46.2,
+    "mahalShadowPick": "Синнер Я.",
+    "mahalShadowP1": 42,
+    "matchupShadowPick": "Синнер Я.",
+    "matchupShadowP1": 46.6,
+    "marketResidualShadowPick": "Синнер Я.",
+    "marketResidualShadowP1": 39.1,
+    "mainModelProbabilities": {
+      "logRegP1": 41.78143920239252,
+      "markovP1": 47.856150179370005,
+      "bradleyP1": 37.142857142857146,
+      "pcaP1": 13.836610360119575
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/mensik-jakub-UFj257G8/zhang-zhizhen-IFKEHRGG/?mid=xG138lqh",
+    "mainPick": "Чжан Ч.",
+    "novaPick": "Чжан Ч.",
+    "hybridShadowPick": "Чжан Ч.",
+    "hybridShadowP1": 44.2,
+    "mahalShadowPick": "Чжан Ч.",
+    "mahalShadowP1": 41.9,
+    "matchupShadowPick": "Чжан Ч.",
+    "matchupShadowP1": 46,
+    "marketResidualShadowPick": "Чжан Ч.",
+    "marketResidualShadowP1": 42.2,
+    "mainModelProbabilities": {
+      "logRegP1": 38.48497864060274,
+      "markovP1": 45.8490954457275,
+      "bradleyP1": 24.999999999999996,
+      "pcaP1": 9.04640995589157
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/korda-sebastian-SYklCTPO/michelsen-alex-nDIhfm9l/?mid=rqLKFTOE",
+    "mainPick": "Микельсен А.",
+    "novaPick": "Корда С.",
+    "hybridShadowPick": "Корда С.",
+    "hybridShadowP1": 41.6,
+    "mahalShadowPick": "Корда С.",
+    "mahalShadowP1": 30.4,
+    "matchupShadowPick": "Корда С.",
+    "matchupShadowP1": 45.5,
+    "marketResidualShadowPick": "Корда С.",
+    "marketResidualShadowP1": 34.2,
+    "mainModelProbabilities": {
+      "logRegP1": 39.50716906867261,
+      "markovP1": 40.98039998458117,
+      "bradleyP1": 25.71428571428571,
+      "pcaP1": 96.48885664376368
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/mochizuki-shintaro-KrwvlzXb/mpetshi-perricard-giovanni-ITe9m2F8/?mid=2w3QCrdf",
+    "mainPick": "Мпеши-Перрикар Дж.",
+    "novaPick": "Мпеши-Перрикар Дж.",
+    "hybridShadowPick": "Мочизуки Ш.",
+    "hybridShadowP1": 45.5,
+    "mahalShadowPick": "Мпеши-Перрикар Дж.",
+    "mahalShadowP1": 50.2,
+    "matchupShadowPick": "Мпеши-Перрикар Дж.",
+    "matchupShadowP1": 50.5,
+    "marketResidualShadowPick": "Мпеши-Перрикар Дж.",
+    "marketResidualShadowP1": 52.6,
+    "mainModelProbabilities": {
+      "logRegP1": 50.33479268157954,
+      "markovP1": 45.44645804885205,
+      "bradleyP1": 49.28571428571428,
+      "pcaP1": 85.601207580979
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/choinski-jan-Es82hMVD/mpetshi-perricard-giovanni-ITe9m2F8/?mid=8WDTzumT",
+    "mainPick": "Мпеши-Перрикар Дж.",
+    "novaPick": "Ян Чоински",
+    "hybridShadowPick": "Ян Чоински",
+    "hybridShadowP1": 45.3,
+    "mahalShadowPick": "Ян Чоински",
+    "mahalShadowP1": 42.8,
+    "matchupShadowPick": "Ян Чоински",
+    "matchupShadowP1": 48.5,
+    "marketResidualShadowPick": "Ян Чоински",
+    "marketResidualShadowP1": 43.6,
+    "mainModelProbabilities": {
+      "logRegP1": 47.05605704127978,
+      "markovP1": 42.92006477857083,
+      "bradleyP1": 40,
+      "pcaP1": 86.20817279714207
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/moutet-corentin-bX0EWcV9/paul-tommy-pd3ye1BS/?mid=vg139xuI",
+    "mainPick": "Муте К.",
+    "novaPick": "Пол Т.",
+    "hybridShadowPick": "Пол Т.",
+    "hybridShadowP1": 48.5,
+    "mahalShadowPick": "Пол Т.",
+    "mahalShadowP1": 43.3,
+    "matchupShadowPick": "Пол Т.",
+    "matchupShadowP1": 47.8,
+    "marketResidualShadowPick": "Пол Т.",
+    "marketResidualShadowP1": 45,
+    "mainModelProbabilities": {
+      "logRegP1": 46.53969984074527,
+      "markovP1": 50.1870127366549,
+      "bradleyP1": 47.857142857142854,
+      "pcaP1": 66.97923612669861
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/berrettini-matteo-OhwtM7N8/nava-emilio-AJGo8fir/?mid=GrbXev3l",
+    "mainPick": "Берреттини М.",
+    "novaPick": "Берреттини М.",
+    "hybridShadowPick": "Берреттини М.",
+    "hybridShadowP1": 43.5,
+    "mahalShadowPick": "Берреттини М.",
+    "mahalShadowP1": 36.8,
+    "matchupShadowPick": "Берреттини М.",
+    "matchupShadowP1": 46.6,
+    "marketResidualShadowPick": "Берреттини М.",
+    "marketResidualShadowP1": 35.9,
+    "mainModelProbabilities": {
+      "logRegP1": 44.24021547014515,
+      "markovP1": 45.970182370740055,
+      "bradleyP1": 42.857142857142854,
+      "pcaP1": 15.308065152676924
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/kopriva-vit-EHGKxKDL/navone-mariano-YoPUeL3o/?mid=KChK19Z9",
+    "mainPick": "Коприва В.",
+    "novaPick": "Коприва В.",
+    "hybridShadowPick": "Коприва В.",
+    "hybridShadowP1": 43.9,
+    "mahalShadowPick": "Коприва В.",
+    "mahalShadowP1": 39.2,
+    "matchupShadowPick": "Коприва В.",
+    "matchupShadowP1": 47.1,
+    "marketResidualShadowPick": "Коприва В.",
+    "marketResidualShadowP1": 34.4,
+    "mainModelProbabilities": {
+      "logRegP1": 44.61984913041774,
+      "markovP1": 50.89786939276417,
+      "bradleyP1": 44.28571428571428,
+      "pcaP1": 22.383093780032773
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/nakashima-brandon-ETGnbrpH/wong-chak-lam-coleman-zJqvgzz6/?mid=nm8w3KFk",
+    "mainPick": "Накасима Б.",
+    "novaPick": "Накасима Б.",
+    "hybridShadowPick": "Накасима Б.",
+    "hybridShadowP1": 52.8,
+    "mahalShadowPick": "Накасима Б.",
+    "mahalShadowP1": 59.6,
+    "matchupShadowPick": "Накасима Б.",
+    "matchupShadowP1": 52.2,
+    "marketResidualShadowPick": "Накасима Б.",
+    "marketResidualShadowP1": 57.4,
+    "mainModelProbabilities": {
+      "logRegP1": 54.32607699174135,
+      "markovP1": 51.22730720842897,
+      "bradleyP1": 59.28571428571428,
+      "pcaP1": 85.91856980225049
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/nakashima-brandon-ETGnbrpH/ymer-elias-GhVfMwlD/?mid=h2IFFSq9",
+    "mainPick": "Накасима Б.",
+    "novaPick": "Имер Э.",
+    "hybridShadowPick": "Имер Э.",
+    "hybridShadowP1": 45.7,
+    "mahalShadowPick": "Имер Э.",
+    "mahalShadowP1": 41.4,
+    "matchupShadowPick": "Имер Э.",
+    "matchupShadowP1": 49.8,
+    "marketResidualShadowPick": "Имер Э.",
+    "marketResidualShadowP1": 40.3,
+    "mainModelProbabilities": {
+      "logRegP1": 50.643739033773116,
+      "markovP1": 44.59794035173763,
+      "bradleyP1": 45,
+      "pcaP1": 87.97138570941692
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/cilic-marin-nLoK5syL/nakashima-brandon-ETGnbrpH/?mid=AuOziUOj",
+    "mainPick": "Чилич М.",
+    "novaPick": "Чилич М.",
+    "hybridShadowPick": "Чилич М.",
+    "hybridShadowP1": 46.1,
+    "mahalShadowPick": "Чилич М.",
+    "mahalShadowP1": 43.9,
+    "matchupShadowPick": "Чилич М.",
+    "matchupShadowP1": 49.9,
+    "marketResidualShadowPick": "Чилич М.",
+    "marketResidualShadowP1": 41.3,
+    "mainModelProbabilities": {
+      "logRegP1": 51.16179037928684,
+      "markovP1": 49.01744301248094,
+      "bradleyP1": 47.142857142857146,
+      "pcaP1": 24.726262809479532
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/lehecka-jiri-6PlgfXKR/nardi-luca-pfrQxVu7/?mid=2yAlJeKs",
+    "mainPick": "Нарди Л.",
+    "novaPick": "Лехечка И.",
+    "hybridShadowPick": "Лехечка И.",
+    "hybridShadowP1": 43.8,
+    "mahalShadowPick": "Лехечка И.",
+    "mahalShadowP1": 38,
+    "matchupShadowPick": "Лехечка И.",
+    "matchupShadowP1": 47.2,
+    "marketResidualShadowPick": "Лехечка И.",
+    "marketResidualShadowP1": 40.4,
+    "mainModelProbabilities": {
+      "logRegP1": 44.494288927701305,
+      "markovP1": 40.76281751678523,
+      "bradleyP1": 32.857142857142854,
+      "pcaP1": 88.82110484982294
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/auger-aliassime-felix-CzXh4LAb/zhang-zhizhen-IFKEHRGG/?mid=pt7ugVLt",
+    "mainPick": "Чжан Ч.",
+    "novaPick": "Чжан Ч.",
+    "hybridShadowPick": "Чжан Ч.",
+    "hybridShadowP1": 48.7,
+    "mahalShadowPick": "Оже-Альяссим Ф.",
+    "mahalShadowP1": 52.2,
+    "matchupShadowPick": "Чжан Ч.",
+    "matchupShadowP1": 48.2,
+    "marketResidualShadowPick": "Чжан Ч.",
+    "marketResidualShadowP1": 48,
+    "mainModelProbabilities": {
+      "logRegP1": 44.105344619053234,
+      "markovP1": 52.40737067810238,
+      "bradleyP1": 46.42857142857143,
+      "pcaP1": 50.13460328905901
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/osorio-serrano-maria-camila-rysUUciD/tjen-janice-ngVYO2lo/?mid=SAZXlegc",
+    "mainPick": "Осорио Серрано М.-К.",
+    "novaPick": "Осорио Серрано М.-К.",
+    "hybridShadowPick": "Осорио Серрано М.-К.",
+    "hybridShadowP1": 51.7,
+    "mahalShadowPick": "Осорио Серрано М.-К.",
+    "mahalShadowP1": 53.7,
+    "matchupShadowPick": "Осорио Серрано М.-К.",
+    "matchupShadowP1": 50.7,
+    "marketResidualShadowPick": "Осорио Серрано М.-К.",
+    "marketResidualShadowP1": 56.1,
+    "mainModelProbabilities": {
+      "logRegP1": 51.53638757519548,
+      "markovP1": 55.2371547340119,
+      "bradleyP1": 48.57142857142857,
+      "pcaP1": 62.55255386381402
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/parks-alycia-Uwhd6a1e/selekhmeteva-oksana-v7vDWRvO/?mid=2gqINT2K",
+    "mainPick": "Селехметьева О.",
+    "novaPick": "Селехметьева О.",
+    "hybridShadowPick": "Селехметьева О.",
+    "hybridShadowP1": 47.4,
+    "mahalShadowPick": "Селехметьева О.",
+    "mahalShadowP1": 39.3,
+    "matchupShadowPick": "Селехметьева О.",
+    "matchupShadowP1": 46.2,
+    "marketResidualShadowPick": "Селехметьева О.",
+    "marketResidualShadowP1": 36.8,
+    "mainModelProbabilities": {
+      "logRegP1": 44.20871625907519,
+      "markovP1": 47.76368472004182,
+      "bradleyP1": 38.57142857142857,
+      "pcaP1": 25.931668422379527
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/passaro-francesco-6iHVMexn/vallejo-daniel-U5RiWEZu/?mid=8MfXRm3L",
+    "mainPick": "Пассаро Ф.",
+    "novaPick": "Валлехо Д.",
+    "hybridShadowPick": "Валлехо Д.",
+    "hybridShadowP1": 48.9,
+    "mahalShadowPick": "Валлехо Д.",
+    "mahalShadowP1": 45.3,
+    "matchupShadowPick": "Валлехо Д.",
+    "matchupShadowP1": 49.3,
+    "marketResidualShadowPick": "Валлехо Д.",
+    "marketResidualShadowP1": 42.7,
+    "mainModelProbabilities": {
+      "logRegP1": 49.62331168237957,
+      "markovP1": 48.3623412291746,
+      "bradleyP1": 48.57142857142857,
+      "pcaP1": 64.61483508645202
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/anisimova-amanda-nwkutKbi/pegula-jessica-KdojxrAR/?mid=lbkRC5p3",
+    "mainPick": "Пегула Дж.",
+    "novaPick": "Пегула Дж.",
+    "hybridShadowPick": "Пегула Дж.",
+    "hybridShadowP1": 55.4,
+    "mahalShadowPick": "Пегула Дж.",
+    "mahalShadowP1": 59.5,
+    "matchupShadowPick": "Пегула Дж.",
+    "matchupShadowP1": 52.4,
+    "marketResidualShadowPick": "Пегула Дж.",
+    "marketResidualShadowP1": 61.3,
+    "mainModelProbabilities": {
+      "logRegP1": 56.65427605217965,
+      "markovP1": 52.40196156842499,
+      "bradleyP1": 64.28571428571428,
+      "pcaP1": 83.86914364250043
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/barrena-alex-EcYZCT1F/pellegrino-andrea-ENPUiYgk/?mid=4ht3MRQr",
+    "mainPick": "Пеллегрино А.",
+    "novaPick": "Баррена А.",
+    "hybridShadowPick": "Баррена А.",
+    "hybridShadowP1": 48.4,
+    "mahalShadowPick": "Баррена А.",
+    "mahalShadowP1": 43.3,
+    "matchupShadowPick": "Баррена А.",
+    "matchupShadowP1": 48.2,
+    "marketResidualShadowPick": "Баррена А.",
+    "marketResidualShadowP1": 42,
+    "mainModelProbabilities": {
+      "logRegP1": 49.55137197927005,
+      "markovP1": 46.14105333725431,
+      "bradleyP1": 47.857142857142854,
+      "pcaP1": 58.79629245671351
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/galan-daniel-elahi-jgzV6009/pellegrino-andrea-ENPUiYgk/?mid=YmYgNBxR",
+    "mainPick": "Пеллегрино А.",
+    "novaPick": "Пеллегрино А.",
+    "hybridShadowPick": "Пеллегрино А.",
+    "hybridShadowP1": 55.8,
+    "mahalShadowPick": "Пеллегрино А.",
+    "mahalShadowP1": 64.4,
+    "matchupShadowPick": "Пеллегрино А.",
+    "matchupShadowP1": 53.1,
+    "marketResidualShadowPick": "Пеллегрино А.",
+    "marketResidualShadowP1": 65.7,
+    "mainModelProbabilities": {
+      "logRegP1": 55.51339297716879,
+      "markovP1": 53.12284599260151,
+      "bradleyP1": 61.42857142857142,
+      "pcaP1": 86.02149515265138
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/korda-sebastian-SYklCTPO/paul-tommy-pd3ye1BS/?mid=IwFGNcw1",
+    "mainPick": "Корда С.",
+    "novaPick": "Корда С.",
+    "hybridShadowPick": "Корда С.",
+    "hybridShadowP1": 46.6,
+    "mahalShadowPick": "Корда С.",
+    "mahalShadowP1": 43.1,
+    "matchupShadowPick": "Корда С.",
+    "matchupShadowP1": 48.1,
+    "marketResidualShadowPick": "Корда С.",
+    "marketResidualShadowP1": 41.8,
+    "mainModelProbabilities": {
+      "logRegP1": 45.4233942119263,
+      "markovP1": 47.1708843306816,
+      "bradleyP1": 35.71428571428571,
+      "pcaP1": 17.96206717666103
+    }
+  }
+]

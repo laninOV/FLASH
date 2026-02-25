@@ -13,6 +13,7 @@ export interface RunConfig {
   telegram: boolean;
   console: boolean;
   maxGotoRetries: number;
+  historyStatsMissBudget: number;
   telegramToken?: string;
   telegramChatId?: string;
   tgSendMaxRpm: number;
@@ -105,9 +106,21 @@ export interface PlayerRecentStats {
   playerName: string;
   profileUrl?: string;
   parsedMatches: HistoricalMatchTechStats[];
+  recentForm?: PlayerRecentFormSummary;
   missingStatsCount: number;
   historyScanStats?: HistoryScanStats;
   errors: string[];
+}
+
+export interface PlayerRecentFormSummary {
+  windowRequested: number;
+  windowUsed: number;
+  wins: number;
+  losses: number;
+  weightedScore: number;
+  usableMatches: number;
+  unparsedScoreRows: number;
+  source: "profile_results_flashscore_v1";
 }
 
 export interface MatchContext {
@@ -169,6 +182,9 @@ export interface HistoryScanStats {
   candidatePool: number;
   scanned: number;
   accepted: number;
+  statsMissBudget?: number;
+  statsMissesForBudget?: number;
+  earlyStopReason?: "stats_miss_budget_reached";
   filtered: {
     sameAsTargetMatch: number;
     nonSingles: number;
@@ -282,5 +298,84 @@ export interface PredictionModelSummary {
     p2: number;
     winner?: string;
     source: "stable14_nova_v1";
+  };
+  hybridShadow?: {
+    p1: number;
+    p2: number;
+    winner?: string;
+    source: "form_stats_hybrid_v2";
+    components?: {
+      statsP1?: number;
+      formP1?: number;
+      hybridRawP1?: number;
+      statsWeight: number;
+      formWeight: number;
+      statsReliability: number;
+      formReliability: number;
+      hybridReliability: number;
+    };
+    warnings: string[];
+  };
+  mahalShadow?: {
+    p1: number;
+    p2: number;
+    winner?: string;
+    source: "stable14_mahal_edge_v1" | "stable14_mahal_edge_v2";
+    components?: {
+      rawP1: number;
+      scoreS: number;
+      distanceD: number;
+      reliability: number;
+      statsCoverage: number;
+      varianceStability: number;
+      signConsensus: number;
+      distanceConfidence: number;
+    };
+    warnings: string[];
+  };
+  matchupShadow?: {
+    p1: number;
+    p2: number;
+    winner?: string;
+    source: "stable14_matchup_cross_v1";
+    components?: {
+      rawP1: number;
+      scoreS: number;
+      reliability: number;
+      statsCoverage: number;
+      componentAgreement: number;
+      stabilityConfidence: number;
+      edgeMagnitude: number;
+      serveMatch: number;
+      returnMatch: number;
+      pressureMatch: number;
+      controlMatch: number;
+    };
+    warnings: string[];
+  };
+  marketResidualShadow?: {
+    p1: number;
+    p2: number;
+    winner?: string;
+    source: "market_residual_oppadj_v1";
+    components?: {
+      marketP1?: number;
+      marketRel: number;
+      residualScoreR: number;
+      residualAdjRaw: number;
+      gate: number;
+      residRel: number;
+      statsCoverage: number;
+      stabilityConf: number;
+      edgeCoherence: number;
+      marketStrength?: number;
+      marketStatsDisagreement?: number;
+      serveEdge?: number;
+      returnEdge?: number;
+      controlEdge?: number;
+      pressureEdge?: number;
+      oppQualityEdge?: number;
+    };
+    warnings: string[];
   };
 }

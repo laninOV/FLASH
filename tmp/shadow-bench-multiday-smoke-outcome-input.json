@@ -1,0 +1,21 @@
+[
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/buse-ignacio-A1LQjAPb/tirante-thiago-agustin-jBkGDj34/?mid=pdy0EnJF",
+    "mainPick": "Тиранте Т. А.",
+    "novaPick": "Тиранте Т. А.",
+    "hybridShadowPick": "Тиранте Т. А.",
+    "hybridShadowP1": 55.2,
+    "mahalShadowPick": "Тиранте Т. А.",
+    "mahalShadowP1": 61.4,
+    "matchupShadowPick": "Тиранте Т. А.",
+    "matchupShadowP1": 52.9,
+    "marketResidualShadowPick": "Тиранте Т. А.",
+    "marketResidualShadowP1": 60.6,
+    "mainModelProbabilities": {
+      "logRegP1": 55.96732934627071,
+      "markovP1": 53.99781208902114,
+      "bradleyP1": 61.42857142857142,
+      "pcaP1": 82.47542538650345
+    }
+  }
+]

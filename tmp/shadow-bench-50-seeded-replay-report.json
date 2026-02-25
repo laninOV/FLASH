@@ -1,0 +1,100 @@
+{
+  "startedAt": "2026-02-24T22:04:33.277Z",
+  "finishedAt": "2026-02-24T22:05:49.060Z",
+  "durationSec": 75.78,
+  "config": {
+    "entryUrl": "https://www.flashscore.com.ua/tennis/",
+    "status": "finished",
+    "seedPredictionsFile": "tmp/shadow-bench-50-prodlike-predictions.json",
+    "historyStatsMissBudget": 3,
+    "timeoutMs": 60000,
+    "maxGotoRetries": 4,
+    "outcomeTimeoutMs": 25000,
+    "outcomeRetries": 2,
+    "requiredHistoryCount": 5,
+    "targetPredictions": 50,
+    "candidateScanLimit": 300,
+    "artifactPrefix": "shadow-bench-50-seeded-replay"
+  },
+  "collection": {
+    "processedFinishedCandidates": 5,
+    "acceptedPredictions": 5,
+    "parserErrors": 0,
+    "skippedDoubles": 0,
+    "skippedStrict5": 0,
+    "skippedFastStrict5": 0
+  },
+  "hitRate": {
+    "main": {
+      "hit": 2,
+      "total": 5,
+      "rate": 40
+    },
+    "nova": {
+      "hit": 3,
+      "total": 5,
+      "rate": 60
+    },
+    "hybridShadow": {
+      "hit": 3,
+      "total": 5,
+      "rate": 60
+    },
+    "mahalShadow": {
+      "hit": 3,
+      "total": 5,
+      "rate": 60
+    },
+    "matchupShadow": {
+      "hit": 3,
+      "total": 5,
+      "rate": 60
+    }
+  },
+  "outcomeSummary": {
+    "fetchedMatches": 5,
+    "singles": 5,
+    "unmatchedPredictionMatchUrls": 0
+  },
+  "disagreements": {
+    "compared": 5,
+    "hybridVsHistoryDiff": 1,
+    "hybridVsNovaDiff": 0,
+    "mahalVsHistoryDiff": 1,
+    "mahalVsNovaDiff": 0,
+    "matchupVsHistoryDiff": 1,
+    "matchupVsNovaDiff": 0,
+    "allThreeDifferent": 0,
+    "allFourDifferent": 0,
+    "allFiveDifferent": 0,
+    "hybridOnlyCorrect": 0,
+    "mahalOnlyCorrect": 0,
+    "matchupOnlyCorrect": 0,
+    "historyOnlyCorrect": 0,
+    "novaOnlyCorrect": 0,
+    "hybridAndHistoryCorrectNovaWrong": 0,
+    "hybridAndNovaCorrectHistoryWrong": 1,
+    "mahalAndHistoryCorrectNovaWrong": 0,
+    "mahalAndNovaCorrectHistoryWrong": 1,
+    "matchupAndHistoryCorrectNovaWrong": 0,
+    "matchupAndNovaCorrectHistoryWrong": 1
+  },
+  "sampleDivergences": [
+    {
+      "matchUrl": "https://www.flashscore.com.ua/match/tennis/linette-magda-vXvzyRlq/maria-tatjana-OGYNaUZG?mid=259In5CT",
+      "label": "Линетт М. vs Мария Т.",
+      "winnerName": "Линетт М.",
+      "winnerSide": "A",
+      "mainPick": "Мария Т.",
+      "novaPick": "Линетт М.",
+      "hybridPick": "Линетт М.",
+      "mahalPick": "Линетт М.",
+      "matchupPick": "Линетт М.",
+      "mainCorrect": false,
+      "novaCorrect": true,
+      "hybridCorrect": true,
+      "mahalCorrect": true,
+      "matchupCorrect": true
+    }
+  ]
+}

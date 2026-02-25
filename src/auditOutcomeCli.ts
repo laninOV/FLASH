@@ -7,7 +7,7 @@ async function main(): Promise<void> {
   const matchUrlsArg = readArg(argv, "match-urls");
   if (!matchUrlsArg) {
     throw new Error(
-      "Usage: npm run audit:outcome -- --match-urls https://www.flashscore.com.ua/match/.../?mid=...[,https://...] [--predictions-file ./predictions.json]",
+      "Usage: npm run audit:outcome -- --match-urls https://www.flashscore.co.ke/match/.../?mid=...[,https://...] [--predictions-file ./predictions.json]",
     );
   }
 
@@ -66,7 +66,9 @@ async function readPredictionsFile(path: string): Promise<OutcomePredictionInput
   if (!Array.isArray(parsed)) {
     throw new Error(`predictions-file must contain a JSON array: ${path}`);
   }
-  return parsed.filter((item): item is OutcomePredictionInput => isPredictionInput(item));
+  return parsed
+    .map((item) => normalizePredictionInput(item))
+    .filter((item): item is OutcomePredictionInput => Boolean(item));
 }
 
 function isPredictionInput(value: unknown): value is OutcomePredictionInput {
@@ -75,6 +77,127 @@ function isPredictionInput(value: unknown): value is OutcomePredictionInput {
   }
   const matchUrl = (value as { matchUrl?: unknown }).matchUrl;
   return typeof matchUrl === "string" && matchUrl.trim().length > 0;
+}
+
+function normalizePredictionInput(value: unknown): OutcomePredictionInput | undefined {
+  if (!value || typeof value !== "object") {
+    return undefined;
+  }
+
+  const record = value as Record<string, unknown>;
+  const matchUrl = stringOrUndefined(record.matchUrl);
+  if (!matchUrl) {
+    return undefined;
+  }
+
+  const looksLikeFullPrediction =
+    typeof record.predictedWinner === "string" || typeof record.modelSummary === "object";
+  if (!looksLikeFullPrediction && isPredictionInput(value)) {
+    return {
+      matchUrl,
+      mainPick: stringOrUndefined(record.mainPick),
+      novaPick: stringOrUndefined(record.novaPick),
+      hybridShadowPick: stringOrUndefined(record.hybridShadowPick),
+      mahalShadowPick: stringOrUndefined(record.mahalShadowPick),
+      matchupShadowPick: stringOrUndefined(record.matchupShadowPick),
+      marketResidualShadowPick: stringOrUndefined(record.marketResidualShadowPick),
+      mainOdds: numberOrUndefined(record.mainOdds),
+      hybridShadowP1: numberOrUndefined(record.hybridShadowP1),
+      mahalShadowP1: numberOrUndefined(record.mahalShadowP1),
+      matchupShadowP1: numberOrUndefined(record.matchupShadowP1),
+      marketResidualShadowP1: numberOrUndefined(record.marketResidualShadowP1),
+      mainModelProbabilities: normalizeMainModelProbabilities(record.mainModelProbabilities),
+    };
+  }
+
+  const modelSummary = asRecord(record.modelSummary);
+  const dirt = asRecord(modelSummary?.dirt);
+  const modelProbabilities = asRecord(dirt?.modelProbabilities);
+  const novaEdge = asRecord(modelSummary?.novaEdge);
+  const hybridShadow = asRecord(modelSummary?.hybridShadow);
+  const mahalShadow = asRecord(modelSummary?.mahalShadow);
+  const matchupShadow = asRecord(modelSummary?.matchupShadow);
+  const marketResidualShadow = asRecord(modelSummary?.marketResidualShadow);
+
+  return {
+    matchUrl,
+    mainPick: stringOrUndefined(record.predictedWinner),
+    novaPick: stringOrUndefined(novaEdge?.winner),
+    hybridShadowPick: stringOrUndefined(hybridShadow?.winner),
+    mahalShadowPick: stringOrUndefined(mahalShadow?.winner),
+    matchupShadowPick: stringOrUndefined(matchupShadow?.winner),
+    marketResidualShadowPick: stringOrUndefined(marketResidualShadow?.winner),
+    hybridShadowP1: numberOrUndefined(hybridShadow?.p1),
+    mahalShadowP1: numberOrUndefined(mahalShadow?.p1),
+    matchupShadowP1: numberOrUndefined(matchupShadow?.p1),
+    marketResidualShadowP1: numberOrUndefined(marketResidualShadow?.p1),
+    mainOdds: inferMainOdd(record),
+    mainModelProbabilities: normalizeMainModelProbabilities(modelProbabilities),
+  };
+}
+
+function normalizeMainModelProbabilities(value: unknown): OutcomePredictionInput["mainModelProbabilities"] {
+  const record = asRecord(value);
+  if (!record) {
+    return undefined;
+  }
+  const out = {
+    logRegP1: numberOrUndefined(record.logRegP1),
+    markovP1: numberOrUndefined(record.markovP1),
+    bradleyP1: numberOrUndefined(record.bradleyP1),
+    pcaP1: numberOrUndefined(record.pcaP1),
+  };
+  if (
+    out.logRegP1 === undefined &&
+    out.markovP1 === undefined &&
+    out.bradleyP1 === undefined &&
+    out.pcaP1 === undefined
+  ) {
+    return undefined;
+  }
+  return out;
+}
+
+function inferMainOdd(record: Record<string, unknown>): number | undefined {
+  const predictedWinner = normalizeLooseName(stringOrUndefined(record.predictedWinner));
+  if (!predictedWinner) {
+    return undefined;
+  }
+  const playerA = normalizeLooseName(stringOrUndefined(record.playerAName));
+  const playerB = normalizeLooseName(stringOrUndefined(record.playerBName));
+  const marketOdds = asRecord(record.marketOdds);
+  const home = numberOrUndefined(marketOdds?.home);
+  const away = numberOrUndefined(marketOdds?.away);
+
+  if (playerA && predictedWinner === playerA) {
+    return home;
+  }
+  if (playerB && predictedWinner === playerB) {
+    return away;
+  }
+  return undefined;
+}
+
+function asRecord(value: unknown): Record<string, unknown> | undefined {
+  if (!value || typeof value !== "object") {
+    return undefined;
+  }
+  return value as Record<string, unknown>;
+}
+
+function stringOrUndefined(value: unknown): string | undefined {
+  return typeof value === "string" && value.trim().length > 0 ? value : undefined;
+}
+
+function numberOrUndefined(value: unknown): number | undefined {
+  return typeof value === "number" && Number.isFinite(value) ? value : undefined;
+}
+
+function normalizeLooseName(value: string | undefined): string {
+  return String(value || "")
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}]+/gu, " ")
+    .trim();
 }
 
 main().catch((error) => {

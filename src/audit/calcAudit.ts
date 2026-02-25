@@ -15,6 +15,7 @@ import type {
   RunConfig,
 } from "../types.js";
 import { oracleAggregateIndexPairs } from "./oracleDirt.js";
+import { buildPlayerRecentFormSummary } from "../orchestrator/playerForm.js";
 
 const REQUIRED_HISTORY_COUNT = 5;
 const DEFAULT_LIVE_LIMIT = 30;
@@ -445,10 +446,13 @@ async function collectPlayerStatsForAudit(
     needCount: REQUIRED_HISTORY_COUNT,
     scanLimit,
   });
+  stats.recentForm = buildPlayerRecentFormSummary(profileHistory.matches);
   stats.historyScanStats = {
     candidatePool: profileHistory.candidatePool,
     scanned: 0,
     accepted: 0,
+    statsMissBudget: config.historyStatsMissBudget,
+    statsMissesForBudget: 0,
     filtered: {
       sameAsTargetMatch: profileHistory.filtered.sameAsTargetMatch,
       nonSingles: profileHistory.filtered.nonSingles,
@@ -471,6 +475,7 @@ async function collectPlayerStatsForAudit(
     playerName: player.name,
     candidates: profileHistory.matches,
     needCount: REQUIRED_HISTORY_COUNT,
+    statsMissBudget: config.historyStatsMissBudget,
     logger,
     parseMatch: async (candidate) =>
       extractTechStatsFromMatch(page, candidate.url, player.name, config, logger),
@@ -480,6 +485,8 @@ async function collectPlayerStatsForAudit(
   stats.errors.push(...scanResult.errors);
   stats.historyScanStats.scanned = scanResult.scanned;
   stats.historyScanStats.accepted = scanResult.parsedMatches.length;
+  stats.historyScanStats.statsMissesForBudget = scanResult.statsMissesForBudget;
+  stats.historyScanStats.earlyStopReason = scanResult.earlyStopReason;
   stats.historyScanStats.filtered.techMissing = scanResult.techMissing;
   stats.historyScanStats.filtered.nonSinglesHistory = scanResult.nonSinglesHistory;
   stats.historyScanStats.filtered.metricsIncomplete = scanResult.metricsIncomplete;

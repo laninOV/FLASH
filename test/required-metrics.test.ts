@@ -164,3 +164,122 @@ test("extractDirtFeatureRow supports 1st/2nd aliases for stable14 keys", () => {
   assert.equal(out?.first_serve_points_won, 70);
   assert.equal(out?.second_serve_return_points_won, 50);
 });
+
+test("extractDirtFeatureRow supports Flashscore .co.ke English labels via metricLabel aliases", () => {
+  const rows: TechStatRow[] = [
+    {
+      section: "Serving",
+      metricLabel: "1st serve percentage",
+      metricKey: "1st_serve_percentage",
+      playerValue: { raw: "66%", percent: 66 },
+      opponentValue: { raw: "34%", percent: 34 },
+    },
+    {
+      section: "Serving",
+      metricLabel: "1st serve points won",
+      metricKey: "1st_serve_points_won",
+      playerValue: { raw: "70%", percent: 70 },
+      opponentValue: { raw: "30%", percent: 30 },
+    },
+    {
+      section: "Serving",
+      metricLabel: "2nd serve points won",
+      metricKey: "2nd_serve_points_won",
+      playerValue: { raw: "58%", percent: 58 },
+      opponentValue: { raw: "42%", percent: 42 },
+    },
+    {
+      section: "Serving",
+      metricLabel: "Break Points Saved",
+      metricKey: "break_points_saved",
+      playerValue: { raw: "75%", percent: 75 },
+      opponentValue: { raw: "25%", percent: 25 },
+    },
+    {
+      section: "Serving",
+      metricLabel: "Double Faults",
+      metricKey: "double_faults",
+      playerValue: { raw: "3", percent: 3 },
+      opponentValue: { raw: "5", percent: 5 },
+    },
+    {
+      section: "Return",
+      metricLabel: "1st return points won",
+      metricKey: "1st_return_points_won",
+      playerValue: { raw: "35%", percent: 35 },
+      opponentValue: { raw: "65%", percent: 65 },
+    },
+    {
+      section: "Return",
+      metricLabel: "2nd return points won",
+      metricKey: "2nd_return_points_won",
+      playerValue: { raw: "50%", percent: 50 },
+      opponentValue: { raw: "50%", percent: 50 },
+    },
+    {
+      section: "Return",
+      metricLabel: "Break Points Converted",
+      metricKey: "break_points_converted",
+      playerValue: { raw: "40%", percent: 40 },
+      opponentValue: { raw: "60%", percent: 60 },
+    },
+    {
+      section: "Points",
+      metricLabel: "Service Points Won",
+      metricKey: "service_points_won",
+      playerValue: { raw: "62%", percent: 62 },
+      opponentValue: { raw: "38%", percent: 38 },
+    },
+    {
+      section: "Points",
+      metricLabel: "Return Points Won",
+      metricKey: "return_points_won",
+      playerValue: { raw: "38%", percent: 38 },
+      opponentValue: { raw: "62%", percent: 62 },
+    },
+    {
+      section: "Points",
+      metricLabel: "Total Points Won",
+      metricKey: "total_points_won",
+      playerValue: { raw: "54%", percent: 54 },
+      opponentValue: { raw: "46%", percent: 46 },
+    },
+    {
+      section: "Games",
+      metricLabel: "Service games won",
+      metricKey: "service_games_won",
+      playerValue: { raw: "80%", percent: 80 },
+      opponentValue: { raw: "20%", percent: 20 },
+    },
+    {
+      section: "Games",
+      metricLabel: "Return games won",
+      metricKey: "return_games_won",
+      playerValue: { raw: "35%", percent: 35 },
+      opponentValue: { raw: "65%", percent: 65 },
+    },
+    {
+      section: "Games",
+      metricLabel: "Total games won",
+      metricKey: "total_games_won",
+      playerValue: { raw: "57%", percent: 57 },
+      opponentValue: { raw: "43%", percent: 43 },
+    },
+  ];
+
+  const match: HistoricalMatchTechStats = {
+    matchUrl: "https://www.flashscore.co.ke/match/tennis/example/?mid=abc",
+    playerName: "Player",
+    sourcePlayerSide: "left",
+    rows,
+    warnings: [],
+  };
+
+  const out = extractDirtFeatureRow(match);
+  const diagnostics = extractDirtFeatureRowDiagnostics(match);
+  assert.ok(out);
+  assert.deepEqual(diagnostics.missingKeys, []);
+  assert.equal(out?.first_serve, 66);
+  assert.equal(out?.first_serve_return_points_won, 35);
+  assert.equal(out?.total_service_points_won, 62);
+});

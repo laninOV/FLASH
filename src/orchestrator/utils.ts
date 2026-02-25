@@ -73,6 +73,8 @@ export function formatHistoryScanStats(stats: PlayerRecentStats): string {
   }
   return (
     `pool=${scan.candidatePool}, scanned=${scan.scanned}, accepted=${scan.accepted}, ` +
+    `stats_miss_budget=${scan.statsMissBudget ?? "-"}, stats_misses=${scan.statsMissesForBudget ?? "-"}, ` +
+    `early_stop=${scan.earlyStopReason ?? "none"}, ` +
     `filtered[same_match=${scan.filtered.sameAsTargetMatch}, ` +
     `doubles=${scan.filtered.nonSingles}, non_singles_history=${scan.filtered.nonSinglesHistory}, ` +
     `not_finished=${scan.filtered.notFinished}, ` +

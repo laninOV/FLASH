@@ -1,0 +1,19 @@
+[
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/krueger-ashlyn-O81eud9p/mcnally-caty-YDHquro6/?mid=jwOrMGRF",
+    "mainPick": "Макналли К.",
+    "novaPick": "Макналли К.",
+    "hybridShadowPick": "Макналли К.",
+    "hybridShadowP1": 42.2,
+    "mahalShadowPick": "Макналли К.",
+    "mahalShadowP1": 36.3,
+    "matchupShadowPick": "Макналли К.",
+    "matchupShadowP1": 46.8,
+    "mainModelProbabilities": {
+      "logRegP1": 42.79630851265224,
+      "markovP1": 43.84123653126686,
+      "bradleyP1": 30.71428571428571,
+      "pcaP1": 8.410860291403564
+    }
+  }
+]

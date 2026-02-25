@@ -88,11 +88,31 @@ test("predict uses DirtTennis formulas and returns stable winner/confidence", ()
   assert.equal(prediction.modelSummary?.dirt?.pclass?.dep, 7941);
   assert.equal(prediction.modelSummary?.dirt?.pclass?.source, "match_dv_data");
   assert.ok(prediction.modelSummary?.novaEdge);
+  assert.ok(prediction.modelSummary?.hybridShadow);
+  assert.ok(prediction.modelSummary?.mahalShadow);
+  assert.ok(prediction.modelSummary?.matchupShadow);
+  assert.ok(prediction.modelSummary?.marketResidualShadow);
   assert.ok(typeof prediction.modelSummary?.novaEdge?.p1 === "number");
   assert.ok(typeof prediction.modelSummary?.novaEdge?.p2 === "number");
+  assert.equal(prediction.modelSummary?.hybridShadow?.source, "form_stats_hybrid_v2");
+  assert.equal(prediction.modelSummary?.mahalShadow?.source, "stable14_mahal_edge_v2");
+  assert.equal(prediction.modelSummary?.matchupShadow?.source, "stable14_matchup_cross_v1");
+  assert.equal(prediction.modelSummary?.marketResidualShadow?.source, "market_residual_oppadj_v1");
   assert.ok(
     prediction.modelSummary?.novaEdge?.winner === "Player A" ||
       prediction.modelSummary?.novaEdge?.winner === "Player B",
+  );
+  assert.ok(
+    prediction.modelSummary?.mahalShadow?.winner === "Player A" ||
+      prediction.modelSummary?.mahalShadow?.winner === "Player B",
+  );
+  assert.ok(
+    prediction.modelSummary?.matchupShadow?.winner === "Player A" ||
+      prediction.modelSummary?.matchupShadow?.winner === "Player B",
+  );
+  assert.ok(
+    prediction.modelSummary?.marketResidualShadow?.winner === "Player A" ||
+      prediction.modelSummary?.marketResidualShadow?.winner === "Player B",
   );
   assert.equal(
     ((prediction.modelSummary as unknown as Record<string, unknown>)?.thirdSetLegacy),

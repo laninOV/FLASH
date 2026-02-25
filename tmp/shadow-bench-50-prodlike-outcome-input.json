@@ -1,0 +1,87 @@
+[
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/krueger-ashlyn-O81eud9p/mcnally-caty-YDHquro6/?mid=jwOrMGRF",
+    "mainPick": "Макналли К.",
+    "novaPick": "Макналли К.",
+    "hybridShadowPick": "Макналли К.",
+    "hybridShadowP1": 42.2,
+    "mahalShadowPick": "Макналли К.",
+    "mahalShadowP1": 36.3,
+    "matchupShadowPick": "Макналли К.",
+    "matchupShadowP1": 46.8,
+    "mainModelProbabilities": {
+      "logRegP1": 42.79630851265224,
+      "markovP1": 43.84123653126686,
+      "bradleyP1": 30.71428571428571,
+      "pcaP1": 8.410860291403564
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/birrell-kimberly-S4ljFw3g/petra-marcinko-2J180sTE/?mid=bPUmI7Qs",
+    "mainPick": "Биррелл К.",
+    "novaPick": "Биррелл К.",
+    "hybridShadowPick": "Биррелл К.",
+    "hybridShadowP1": 42.4,
+    "mahalShadowPick": "Биррелл К.",
+    "mahalShadowP1": 38.7,
+    "matchupShadowPick": "Биррелл К.",
+    "matchupShadowP1": 47.5,
+    "mainModelProbabilities": {
+      "logRegP1": 44.49914690864167,
+      "markovP1": 46.08921278696585,
+      "bradleyP1": 42.14285714285714,
+      "pcaP1": 18.277830236530658
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/linette-magda-vXvzyRlq/maria-tatjana-OGYNaUZG/?mid=259In5CT",
+    "mainPick": "Мария Т.",
+    "novaPick": "Линетт М.",
+    "hybridShadowPick": "Линетт М.",
+    "hybridShadowP1": 54.2,
+    "mahalShadowPick": "Линетт М.",
+    "mahalShadowP1": 58.4,
+    "matchupShadowPick": "Линетт М.",
+    "matchupShadowP1": 52.1,
+    "mainModelProbabilities": {
+      "logRegP1": 55.04326859255674,
+      "markovP1": 49.244765055836524,
+      "bradleyP1": 50,
+      "pcaP1": 20.583419042996816
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/osorio-serrano-maria-camila-rysUUciD/tjen-janice-ngVYO2lo/?mid=SAZXlegc",
+    "mainPick": "Осорио Серрано М.-К.",
+    "novaPick": "Осорио Серрано М.-К.",
+    "hybridShadowPick": "Осорио Серрано М.-К.",
+    "hybridShadowP1": 51.7,
+    "mahalShadowPick": "Осорио Серрано М.-К.",
+    "mahalShadowP1": 53.7,
+    "matchupShadowPick": "Осорио Серрано М.-К.",
+    "matchupShadowP1": 50.7,
+    "mainModelProbabilities": {
+      "logRegP1": 51.53638757519548,
+      "markovP1": 55.2371547340119,
+      "bradleyP1": 48.57142857142857,
+      "pcaP1": 62.55255386381402
+    }
+  },
+  {
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/aboian-valerio-6BsiXzTM/la-serna-juan-manuel-OUerK0bc/?mid=hYdiCUvO",
+    "mainPick": "Абоян В.",
+    "novaPick": "Абоян В.",
+    "hybridShadowPick": "Абоян В.",
+    "hybridShadowP1": 45.9,
+    "mahalShadowPick": "Абоян В.",
+    "mahalShadowP1": 39.7,
+    "matchupShadowPick": "Абоян В.",
+    "matchupShadowP1": 47.2,
+    "mainModelProbabilities": {
+      "logRegP1": 45.28950833466638,
+      "markovP1": 47.20479497624487,
+      "bradleyP1": 35.71428571428571,
+      "pcaP1": 28.19471444366682
+    }
+  }
+]

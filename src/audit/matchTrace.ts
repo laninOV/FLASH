@@ -84,6 +84,38 @@ export interface MatchTraceSummary {
       p2?: number;
       winner?: string;
     };
+    hybridShadow?: {
+      p1?: number;
+      p2?: number;
+      winner?: string;
+      source?: string;
+      components?: unknown;
+      warnings?: string[];
+    };
+    mahalShadow?: {
+      p1?: number;
+      p2?: number;
+      winner?: string;
+      source?: string;
+      components?: unknown;
+      warnings?: string[];
+    };
+    matchupShadow?: {
+      p1?: number;
+      p2?: number;
+      winner?: string;
+      source?: string;
+      components?: unknown;
+      warnings?: string[];
+    };
+    marketResidualShadow?: {
+      p1?: number;
+      p2?: number;
+      winner?: string;
+      source?: string;
+      components?: unknown;
+      warnings?: string[];
+    };
   };
   warnings: string[];
   dataStatus?: string;
@@ -205,6 +237,46 @@ export async function runMatchTrace(
               winner: prediction.modelSummary.novaEdge.winner,
             }
           : undefined,
+        hybridShadow: prediction.modelSummary?.hybridShadow
+          ? {
+              p1: prediction.modelSummary.hybridShadow.p1,
+              p2: prediction.modelSummary.hybridShadow.p2,
+              winner: prediction.modelSummary.hybridShadow.winner,
+              source: prediction.modelSummary.hybridShadow.source,
+              components: prediction.modelSummary.hybridShadow.components,
+              warnings: prediction.modelSummary.hybridShadow.warnings,
+            }
+          : undefined,
+        mahalShadow: prediction.modelSummary?.mahalShadow
+          ? {
+              p1: prediction.modelSummary.mahalShadow.p1,
+              p2: prediction.modelSummary.mahalShadow.p2,
+              winner: prediction.modelSummary.mahalShadow.winner,
+              source: prediction.modelSummary.mahalShadow.source,
+              components: prediction.modelSummary.mahalShadow.components,
+              warnings: prediction.modelSummary.mahalShadow.warnings,
+            }
+          : undefined,
+        matchupShadow: prediction.modelSummary?.matchupShadow
+          ? {
+              p1: prediction.modelSummary.matchupShadow.p1,
+              p2: prediction.modelSummary.matchupShadow.p2,
+              winner: prediction.modelSummary.matchupShadow.winner,
+              source: prediction.modelSummary.matchupShadow.source,
+              components: prediction.modelSummary.matchupShadow.components,
+              warnings: prediction.modelSummary.matchupShadow.warnings,
+            }
+          : undefined,
+        marketResidualShadow: prediction.modelSummary?.marketResidualShadow
+          ? {
+              p1: prediction.modelSummary.marketResidualShadow.p1,
+              p2: prediction.modelSummary.marketResidualShadow.p2,
+              winner: prediction.modelSummary.marketResidualShadow.winner,
+              source: prediction.modelSummary.marketResidualShadow.source,
+              components: prediction.modelSummary.marketResidualShadow.components,
+              warnings: prediction.modelSummary.marketResidualShadow.warnings,
+            }
+          : undefined,
       },
       warnings: prediction.warnings,
       dataStatus: prediction.dataStatus,
@@ -258,6 +330,10 @@ export function formatMatchTrace(summary: MatchTraceSummary): string {
   );
   lines.push("");
   lines.push(`NOVA model: ${JSON.stringify(summary.models.nova || {})}`);
+  lines.push(`HYBRID shadow: ${JSON.stringify(summary.models.hybridShadow || {})}`);
+  lines.push(`MAHAL shadow: ${JSON.stringify(summary.models.mahalShadow || {})}`);
+  lines.push(`MATCHUP shadow: ${JSON.stringify(summary.models.matchupShadow || {})}`);
+  lines.push(`MROA shadow: ${JSON.stringify(summary.models.marketResidualShadow || {})}`);
   lines.push("");
   lines.push(`Data status: ${summary.dataStatus || "-"}`);
   lines.push(`Warnings: ${summary.warnings.length > 0 ? summary.warnings.join(" | ") : "-"}`);

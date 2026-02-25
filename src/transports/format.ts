@@ -49,6 +49,7 @@ export function formatShortPredictionMessage(
       formatPercentPair(probs?.finalP1),
     )}`,
     `NOVA: ${formatMethodSummary(novaEdge?.winner, formatNovaEdgePair(novaEdge?.p1, novaEdge?.p2))}`,
+    formatNovaFilterLabelLine(prediction),
     SEPARATOR,
   ];
 
@@ -76,6 +77,59 @@ function hasConsensusCheckmarks(
   const a = canonicalWinnerName(historyWinner);
   const b = canonicalWinnerName(novaWinner);
   return Boolean(a && b && a === b);
+}
+
+function resolveSideFromP1(p1?: number): "A" | "B" | "neutral" | undefined {
+  if (!isFiniteNumber(p1)) {
+    return undefined;
+  }
+  if (p1 > 50) {
+    return "A";
+  }
+  if (p1 < 50) {
+    return "B";
+  }
+  return "neutral";
+}
+
+function computeNovaFilterLabel(prediction: PredictionResult): "HIGH" | "NORMAL" | "SKIP" {
+  const novaP1 = prediction.modelSummary?.novaEdge?.p1;
+  if (!isFiniteNumber(novaP1)) {
+    return "NORMAL";
+  }
+
+  const logRegP1 = prediction.modelSummary?.dirt?.modelProbabilities?.logRegP1;
+  const confidenceRaw = prediction.confidence;
+  const confidencePct = Number.isFinite(confidenceRaw) ? confidenceRaw * 100 : 50;
+  const novaMargin = Math.abs(novaP1 - 50);
+  const novaSide = resolveSideFromP1(novaP1);
+  const logisticSide = resolveSideFromP1(logRegP1);
+  const novaLogisticAgree = Boolean(
+    novaSide &&
+      logisticSide &&
+      novaSide !== "neutral" &&
+      logisticSide !== "neutral" &&
+      novaSide === logisticSide,
+  );
+
+  if (novaLogisticAgree && novaMargin >= 4 && confidencePct >= 50) {
+    return "HIGH";
+  }
+  if (confidencePct < 50 || (!novaLogisticAgree && novaMargin < 4)) {
+    return "SKIP";
+  }
+  return "NORMAL";
+}
+
+function formatNovaFilterLabelLine(prediction: PredictionResult): string {
+  const label = computeNovaFilterLabel(prediction);
+  if (label === "HIGH") {
+    return "NOVA FILTER: 🟢 HIGH";
+  }
+  if (label === "SKIP") {
+    return "NOVA FILTER: 🔴 SKIP";
+  }
+  return "NOVA FILTER: 🟡 NORMAL";
 }
 
 function resolvePlayerNames(prediction: PredictionResult): { playerA: string; playerB: string } {

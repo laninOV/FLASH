@@ -1,0 +1,847 @@
+[
+  {
+    "createdAt": "2026-02-24T22:02:39.206Z",
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/krueger-ashlyn-O81eud9p/mcnally-caty-YDHquro6/?mid=jwOrMGRF",
+    "matchLabel": "Крюгер Э. vs Макналли К.",
+    "tournament": "Austin, хард - 1/16",
+    "matchStatus": "upcoming",
+    "scheduledStartText": "25.02.2026 00:30",
+    "playerAName": "Крюгер Э.",
+    "playerBName": "Макналли К.",
+    "predictedWinner": "Макналли К.",
+    "confidence": 0.7096578682312714,
+    "reason": "DirtTennis formulas (pair-by-index, strict 5 full Tech histories, stable14)",
+    "statsCoverage": {
+      "requestedPerPlayer": 5,
+      "playerACollected": 5,
+      "playerBCollected": 5
+    },
+    "dataStatus": "metrics_policy=stable14, coverage A 5/5, B 5/5, valid_pairs=5/5, scan_count: A 5/30 accepted=5, B 5/30 accepted=5, rejected_incomplete_metrics: A=0 B=0, non_singles_history: A=0 B=0, tech_missing: A=0 B=0, weights: logreg=22% markov=29% bradley=14% pca=35%, model_probs: logreg=42.8 markov=43.8 bradley=30.7 pca=8.4 final=29.4",
+    "modelSummary": {
+      "modules": [
+        {
+          "name": "LOGREG",
+          "side": "away",
+          "strength": 1.4407382974695522,
+          "explain": [
+            "P1=42.8 P2=57.2"
+          ],
+          "flags": []
+        },
+        {
+          "name": "MARKOV",
+          "side": "away",
+          "strength": 1.2317526937466283,
+          "explain": [
+            "P1=43.8 P2=56.2"
+          ],
+          "flags": []
+        },
+        {
+          "name": "BRADLEY",
+          "side": "away",
+          "strength": 3.8571428571428585,
+          "explain": [
+            "P1=30.7 P2=69.3"
+          ],
+          "flags": []
+        },
+        {
+          "name": "PCA",
+          "side": "away",
+          "strength": 8.317827941719287,
+          "explain": [
+            "P1=8.4 P2=91.6"
+          ],
+          "flags": []
+        }
+      ],
+      "ensemble": {
+        "finalSide": "away",
+        "score": -4.94486802346907,
+        "votesHome": 0,
+        "votesAway": 4,
+        "strongHome": 0,
+        "strongAway": 2,
+        "active": 4
+      },
+      "rating5": {
+        "playerA": 29.396383235545542,
+        "playerB": 70.60361676445446
+      },
+      "reliability": {
+        "playerA": 1,
+        "playerB": 1
+      },
+      "dirt": {
+        "validPairs": 5,
+        "requestedPairs": 5,
+        "modelProbabilities": {
+          "logRegP1": 42.79630851265224,
+          "markovP1": 43.84123653126686,
+          "bradleyP1": 30.71428571428571,
+          "pcaP1": 8.410860291403564,
+          "finalP1": 29.396383235545542
+        },
+        "weights": {
+          "logReg": 0.21805203683809202,
+          "markov": 0.2948921220161607,
+          "bradley": 0.1362825230238075,
+          "pca": 0.35077331812193974
+        },
+        "stability": {
+          "logReg": 0.25,
+          "markov": 0.38639809664872926,
+          "bradley": 0.25,
+          "pca": 0.6434671708797584
+        },
+        "pclass": {
+          "source": "missing"
+        }
+      },
+      "novaEdge": {
+        "p1": 37.42850718893762,
+        "p2": 62.57149281106238,
+        "winner": "Макналли К.",
+        "source": "stable14_nova_v1"
+      },
+      "hybridShadow": {
+        "p1": 42.2,
+        "p2": 57.8,
+        "winner": "Макналли К.",
+        "source": "form_stats_hybrid_v2",
+        "components": {
+          "statsP1": 32.6,
+          "formP1": 50,
+          "hybridRawP1": 36.1,
+          "statsWeight": 0.8,
+          "formWeight": 0.2,
+          "statsReliability": 1,
+          "formReliability": 0,
+          "hybridReliability": 0.563
+        },
+        "warnings": [
+          "hybrid_form_unavailable_a",
+          "hybrid_form_unavailable_b",
+          "hybrid_form_low_coverage"
+        ]
+      },
+      "mahalShadow": {
+        "p1": 36.3,
+        "p2": 63.7,
+        "winner": "Макналли К.",
+        "source": "stable14_mahal_edge_v2",
+        "components": {
+          "rawP1": 32.427,
+          "scoreS": -0.734,
+          "distanceD": 0.915,
+          "reliability": 0.78,
+          "statsCoverage": 1,
+          "varianceStability": 0.476,
+          "signConsensus": 0.7,
+          "distanceConfidence": 0.61
+        },
+        "warnings": []
+      },
+      "matchupShadow": {
+        "p1": 46.8,
+        "p2": 53.2,
+        "winner": "Макналли К.",
+        "source": "stable14_matchup_cross_v1",
+        "components": {
+          "rawP1": 46.018,
+          "scoreS": -0.055,
+          "reliability": 0.8,
+          "statsCoverage": 1,
+          "componentAgreement": 0.798,
+          "stabilityConfidence": 0.97,
+          "edgeMagnitude": 0.1,
+          "serveMatch": 0.058,
+          "returnMatch": -0.175,
+          "pressureMatch": -0.075,
+          "controlMatch": -0.066
+        },
+        "warnings": []
+      }
+    },
+    "warnings": [
+      "pclass_missing_dv_data"
+    ]
+  },
+  {
+    "createdAt": "2026-02-24T22:02:56.848Z",
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/birrell-kimberly-S4ljFw3g/petra-marcinko-2J180sTE/?mid=bPUmI7Qs",
+    "matchLabel": "Марцинко П. vs Биррелл К.",
+    "tournament": "Austin, хард - 1/16",
+    "matchStatus": "finished",
+    "scheduledStartText": "25.02.2026 00:30",
+    "playerAName": "Марцинко П.",
+    "playerBName": "Биррелл К.",
+    "predictedWinner": "Биррелл К.",
+    "confidence": 0.6041557367848366,
+    "reason": "DirtTennis formulas (pair-by-index, strict 5 full Tech histories, stable14)",
+    "statsCoverage": {
+      "requestedPerPlayer": 5,
+      "playerACollected": 5,
+      "playerBCollected": 5
+    },
+    "dataStatus": "metrics_policy=stable14, coverage A 5/5, B 5/5, valid_pairs=5/5, scan_count: A 5/30 accepted=5, B 5/30 accepted=5, rejected_incomplete_metrics: A=0 B=0, non_singles_history: A=0 B=0, tech_missing: A=0 B=0, weights: logreg=29% markov=25% bradley=13% pca=33%, model_probs: logreg=44.5 markov=46.1 bradley=42.1 pca=18.3 final=36.0",
+    "modelSummary": {
+      "modules": [
+        {
+          "name": "LOGREG",
+          "side": "away",
+          "strength": 1.100170618271666,
+          "explain": [
+            "P1=44.5 P2=55.5"
+          ],
+          "flags": []
+        },
+        {
+          "name": "MARKOV",
+          "side": "away",
+          "strength": 0.7821574426068295,
+          "explain": [
+            "P1=46.1 P2=53.9"
+          ],
+          "flags": []
+        },
+        {
+          "name": "BRADLEY",
+          "side": "away",
+          "strength": 1.5714285714285723,
+          "explain": [
+            "P1=42.1 P2=57.9"
+          ],
+          "flags": []
+        },
+        {
+          "name": "PCA",
+          "side": "away",
+          "strength": 6.344433952693867,
+          "explain": [
+            "P1=18.3 P2=81.7"
+          ],
+          "flags": []
+        }
+      ],
+      "ensemble": {
+        "finalSide": "away",
+        "score": -3.362336051772549,
+        "votesHome": 0,
+        "votesAway": 4,
+        "strongHome": 0,
+        "strongAway": 1,
+        "active": 4
+      },
+      "rating5": {
+        "playerA": 35.990266450947715,
+        "playerB": 64.00973354905229
+      },
+      "reliability": {
+        "playerA": 1,
+        "playerB": 1
+      },
+      "dirt": {
+        "validPairs": 5,
+        "requestedPairs": 5,
+        "modelProbabilities": {
+          "logRegP1": 44.49914690864167,
+          "markovP1": 46.08921278696585,
+          "bradleyP1": 42.14285714285714,
+          "pcaP1": 18.277830236530658,
+          "finalP1": 35.990266450947715
+        },
+        "weights": {
+          "logReg": 0.2936807506216904,
+          "markov": 0.25055629481755665,
+          "bradley": 0.12752649717168202,
+          "pca": 0.32823645738907087
+        },
+        "stability": {
+          "logReg": 0.3598281008445101,
+          "markov": 0.3508462672106576,
+          "bradley": 0.25,
+          "pca": 0.6434671708797584
+        },
+        "pclass": {
+          "source": "missing"
+        }
+      },
+      "novaEdge": {
+        "p1": 46.160078010475864,
+        "p2": 53.839921989524136,
+        "winner": "Биррелл К.",
+        "source": "stable14_nova_v1"
+      },
+      "hybridShadow": {
+        "p1": 42.4,
+        "p2": 57.6,
+        "winner": "Биррелл К.",
+        "source": "form_stats_hybrid_v2",
+        "components": {
+          "statsP1": 33.3,
+          "formP1": 50,
+          "hybridRawP1": 36.6,
+          "statsWeight": 0.8,
+          "formWeight": 0.2,
+          "statsReliability": 1,
+          "formReliability": 0,
+          "hybridReliability": 0.566
+        },
+        "warnings": [
+          "hybrid_form_unavailable_a",
+          "hybrid_form_unavailable_b",
+          "hybrid_form_low_coverage"
+        ]
+      },
+      "mahalShadow": {
+        "p1": 38.7,
+        "p2": 61.3,
+        "winner": "Биррелл К.",
+        "source": "stable14_mahal_edge_v2",
+        "components": {
+          "rawP1": 35.474,
+          "scoreS": -0.598,
+          "distanceD": 0.699,
+          "reliability": 0.78,
+          "statsCoverage": 1,
+          "varianceStability": 0.379,
+          "signConsensus": 0.96,
+          "distanceConfidence": 0.466
+        },
+        "warnings": []
+      },
+      "matchupShadow": {
+        "p1": 47.5,
+        "p2": 52.5,
+        "winner": "Биррелл К.",
+        "source": "stable14_matchup_cross_v1",
+        "components": {
+          "rawP1": 46.902,
+          "scoreS": -0.043,
+          "reliability": 0.8,
+          "statsCoverage": 1,
+          "componentAgreement": 0.714,
+          "stabilityConfidence": 0.95,
+          "edgeMagnitude": 0.078,
+          "serveMatch": 0.121,
+          "returnMatch": -0.221,
+          "pressureMatch": -0.068,
+          "controlMatch": -0.069
+        },
+        "warnings": []
+      }
+    },
+    "warnings": [
+      "pclass_missing_dv_data"
+    ]
+  },
+  {
+    "createdAt": "2026-02-24T22:03:13.853Z",
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/linette-magda-vXvzyRlq/maria-tatjana-OGYNaUZG/?mid=259In5CT",
+    "matchLabel": "Линетт М. vs Мария Т.",
+    "tournament": "Мерида, хард - 1/16",
+    "matchStatus": "finished",
+    "scheduledStartText": "25.02.2026 00:10",
+    "playerAName": "Линетт М.",
+    "playerBName": "Мария Т.",
+    "predictedWinner": "Мария Т.",
+    "confidence": 0.5,
+    "reason": "DirtTennis formulas (pair-by-index, strict 5 full Tech histories, stable14)",
+    "statsCoverage": {
+      "requestedPerPlayer": 5,
+      "playerACollected": 5,
+      "playerBCollected": 5
+    },
+    "dataStatus": "metrics_policy=stable14, coverage A 5/5, B 5/5, valid_pairs=5/5, scan_count: A 5/30 accepted=5, B 5/30 accepted=5, rejected_incomplete_metrics: A=0 B=0, non_singles_history: A=0 B=0, tech_missing: A=0 B=0, weights: logreg=36% markov=29% bradley=10% pca=26%, model_probs: logreg=55.0 markov=49.2 bradley=50.0 pca=20.6 final=44.0",
+    "modelSummary": {
+      "modules": [
+        {
+          "name": "LOGREG",
+          "side": "home",
+          "strength": 1.0086537185113484,
+          "explain": [
+            "P1=55.0 P2=45.0"
+          ],
+          "flags": []
+        },
+        {
+          "name": "MARKOV",
+          "side": "away",
+          "strength": 0.1510469888326952,
+          "explain": [
+            "P1=49.2 P2=50.8"
+          ],
+          "flags": []
+        },
+        {
+          "name": "BRADLEY",
+          "side": "neutral",
+          "strength": 0,
+          "explain": [
+            "P1=50.0 P2=50.0"
+          ],
+          "flags": []
+        },
+        {
+          "name": "PCA",
+          "side": "away",
+          "strength": 5.883316191400637,
+          "explain": [
+            "P1=20.6 P2=79.4"
+          ],
+          "flags": []
+        }
+      ],
+      "ensemble": {
+        "finalSide": "away",
+        "score": -1.4365148449081966,
+        "votesHome": 1,
+        "votesAway": 2,
+        "strongHome": 0,
+        "strongAway": 1,
+        "active": 3
+      },
+      "rating5": {
+        "playerA": 44.01452147954918,
+        "playerB": 55.98547852045082
+      },
+      "reliability": {
+        "playerA": 1,
+        "playerB": 1
+      },
+      "dirt": {
+        "validPairs": 5,
+        "requestedPairs": 5,
+        "modelProbabilities": {
+          "logRegP1": 55.04326859255674,
+          "markovP1": 49.244765055836524,
+          "bradleyP1": 50,
+          "pcaP1": 20.583419042996816,
+          "finalP1": 44.01452147954918
+        },
+        "weights": {
+          "logReg": 0.3553188841365127,
+          "markov": 0.2878311559978449,
+          "bradley": 0.09984976826688208,
+          "pca": 0.2570001915987603
+        },
+        "stability": {
+          "logReg": 0.5560210765631228,
+          "markov": 0.5147575363071581,
+          "bradley": 0.25,
+          "pca": 0.6434671708797584
+        },
+        "pclass": {
+          "source": "missing"
+        }
+      },
+      "novaEdge": {
+        "p1": 56.55942914870585,
+        "p2": 43.44057085129415,
+        "winner": "Линетт М.",
+        "source": "stable14_nova_v1"
+      },
+      "hybridShadow": {
+        "p1": 54.2,
+        "p2": 45.8,
+        "winner": "Линетт М.",
+        "source": "form_stats_hybrid_v2",
+        "components": {
+          "statsP1": 58.6,
+          "formP1": 50,
+          "hybridRawP1": 56.9,
+          "statsWeight": 0.8,
+          "formWeight": 0.2,
+          "statsReliability": 1,
+          "formReliability": 0,
+          "hybridReliability": 0.607
+        },
+        "warnings": [
+          "hybrid_form_unavailable_a",
+          "hybrid_form_unavailable_b",
+          "hybrid_form_low_coverage"
+        ]
+      },
+      "mahalShadow": {
+        "p1": 58.4,
+        "p2": 41.6,
+        "winner": "Линетт М.",
+        "source": "stable14_mahal_edge_v2",
+        "components": {
+          "rawP1": 60.71,
+          "scoreS": 0.435,
+          "distanceD": 0.697,
+          "reliability": 0.78,
+          "statsCoverage": 1,
+          "varianceStability": 0.509,
+          "signConsensus": 0.68,
+          "distanceConfidence": 0.465
+        },
+        "warnings": []
+      },
+      "matchupShadow": {
+        "p1": 52.1,
+        "p2": 47.9,
+        "winner": "Линетт М.",
+        "source": "stable14_matchup_cross_v1",
+        "components": {
+          "rawP1": 52.671,
+          "scoreS": 0.037,
+          "reliability": 0.8,
+          "statsCoverage": 1,
+          "componentAgreement": 0.59,
+          "stabilityConfidence": 0.972,
+          "edgeMagnitude": 0.067,
+          "serveMatch": 0.261,
+          "returnMatch": -0.195,
+          "pressureMatch": 0.078,
+          "controlMatch": 0.042
+        },
+        "warnings": []
+      }
+    },
+    "warnings": [
+      "pclass_missing_dv_data"
+    ]
+  },
+  {
+    "createdAt": "2026-02-24T22:03:30.801Z",
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/osorio-serrano-maria-camila-rysUUciD/tjen-janice-ngVYO2lo/?mid=SAZXlegc",
+    "matchLabel": "Осорио Серрано М.-К. vs Tjen J.",
+    "tournament": "Мерида, хард - 1/16",
+    "matchStatus": "finished",
+    "scheduledStartText": "25.02.2026 00:10",
+    "playerAName": "Осорио Серрано М.-К.",
+    "playerBName": "Tjen J.",
+    "predictedWinner": "Осорио Серрано М.-К.",
+    "confidence": 0.5,
+    "reason": "DirtTennis formulas (pair-by-index, strict 5 full Tech histories, stable14)",
+    "statsCoverage": {
+      "requestedPerPlayer": 5,
+      "playerACollected": 5,
+      "playerBCollected": 5
+    },
+    "dataStatus": "metrics_policy=stable14, coverage A 5/5, B 5/5, valid_pairs=5/5, scan_count: A 5/30 accepted=5, B 5/30 accepted=5, rejected_incomplete_metrics: A=0 B=0, non_singles_history: A=0 B=0, tech_missing: A=0 B=0, weights: logreg=20% markov=37% bradley=12% pca=31%, model_probs: logreg=51.5 markov=55.2 bradley=48.6 pca=62.6 final=56.0",
+    "modelSummary": {
+      "modules": [
+        {
+          "name": "LOGREG",
+          "side": "home",
+          "strength": 0.3072775150390953,
+          "explain": [
+            "P1=51.5 P2=48.5"
+          ],
+          "flags": []
+        },
+        {
+          "name": "MARKOV",
+          "side": "home",
+          "strength": 1.0474309468023804,
+          "explain": [
+            "P1=55.2 P2=44.8"
+          ],
+          "flags": []
+        },
+        {
+          "name": "BRADLEY",
+          "side": "away",
+          "strength": 0.28571428571428614,
+          "explain": [
+            "P1=48.6 P2=51.4"
+          ],
+          "flags": []
+        },
+        {
+          "name": "PCA",
+          "side": "home",
+          "strength": 2.510510772762804,
+          "explain": [
+            "P1=62.6 P2=37.4"
+          ],
+          "flags": []
+        }
+      ],
+      "ensemble": {
+        "finalSide": "home",
+        "score": 1.439781662040366,
+        "votesHome": 3,
+        "votesAway": 1,
+        "strongHome": 1,
+        "strongAway": 0,
+        "active": 4
+      },
+      "rating5": {
+        "playerA": 55.999090258501525,
+        "playerB": 44.000909741498475
+      },
+      "reliability": {
+        "playerA": 1,
+        "playerB": 1
+      },
+      "dirt": {
+        "validPairs": 5,
+        "requestedPairs": 5,
+        "modelProbabilities": {
+          "logRegP1": 51.53638757519548,
+          "markovP1": 55.2371547340119,
+          "bradleyP1": 48.57142857142857,
+          "pcaP1": 62.55255386381402,
+          "finalP1": 55.999090258501525
+        },
+        "weights": {
+          "logReg": 0.19530789109604504,
+          "markov": 0.36843913663376665,
+          "bradley": 0.12206743193502817,
+          "pca": 0.3141855403351601
+        },
+        "stability": {
+          "logReg": 0.25,
+          "markov": 0.5389865415153029,
+          "bradley": 0.25,
+          "pca": 0.6434671708797584
+        },
+        "pclass": {
+          "source": "missing"
+        }
+      },
+      "novaEdge": {
+        "p1": 58.886360805778594,
+        "p2": 41.113639194221406,
+        "winner": "Осорио Серрано М.-К.",
+        "source": "stable14_nova_v1"
+      },
+      "hybridShadow": {
+        "p1": 51.7,
+        "p2": 48.3,
+        "winner": "Осорио Серрано М.-К.",
+        "source": "form_stats_hybrid_v2",
+        "components": {
+          "statsP1": 53.4,
+          "formP1": 50,
+          "hybridRawP1": 52.7,
+          "statsWeight": 0.8,
+          "formWeight": 0.2,
+          "statsReliability": 1,
+          "formReliability": 0,
+          "hybridReliability": 0.633
+        },
+        "warnings": [
+          "hybrid_form_unavailable_a",
+          "hybrid_form_unavailable_b",
+          "hybrid_form_low_coverage"
+        ]
+      },
+      "mahalShadow": {
+        "p1": 53.7,
+        "p2": 46.3,
+        "winner": "Осорио Серрано М.-К.",
+        "source": "stable14_mahal_edge_v2",
+        "components": {
+          "rawP1": 55.144,
+          "scoreS": 0.207,
+          "distanceD": 0.726,
+          "reliability": 0.712,
+          "statsCoverage": 1,
+          "varianceStability": 0.373,
+          "signConsensus": 0.36,
+          "distanceConfidence": 0.484
+        },
+        "warnings": []
+      },
+      "matchupShadow": {
+        "p1": 50.7,
+        "p2": 49.3,
+        "winner": "Осорио Серрано М.-К.",
+        "source": "stable14_matchup_cross_v1",
+        "components": {
+          "rawP1": 50.924,
+          "scoreS": 0.013,
+          "reliability": 0.8,
+          "statsCoverage": 1,
+          "componentAgreement": 0.787,
+          "stabilityConfidence": 0.954,
+          "edgeMagnitude": 0.023,
+          "serveMatch": 0.12,
+          "returnMatch": -0.103,
+          "pressureMatch": 0.045,
+          "controlMatch": 0.013
+        },
+        "warnings": []
+      }
+    },
+    "warnings": [
+      "pclass_missing_dv_data"
+    ]
+  },
+  {
+    "createdAt": "2026-02-24T22:04:21.266Z",
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/aboian-valerio-6BsiXzTM/la-serna-juan-manuel-OUerK0bc/?mid=hYdiCUvO",
+    "matchLabel": "La Serna J. M. vs Абоян В.",
+    "tournament": "Tigre 2, грунт - 1/16",
+    "matchStatus": "finished",
+    "scheduledStartText": "25.02.2026 00:10",
+    "playerAName": "La Serna J. M.",
+    "playerBName": "Абоян В.",
+    "predictedWinner": "Абоян В.",
+    "confidence": 0.5533272105479867,
+    "reason": "DirtTennis formulas (pair-by-index, strict 5 full Tech histories, stable14)",
+    "statsCoverage": {
+      "requestedPerPlayer": 5,
+      "playerACollected": 5,
+      "playerBCollected": 5
+    },
+    "dataStatus": "metrics_policy=stable14, coverage A 5/5, B 5/5, valid_pairs=5/5, scan_count: A 5/30 accepted=5, B 5/30 accepted=5, rejected_incomplete_metrics: A=0 B=0, non_singles_history: A=0 B=0, tech_missing: A=0 B=0, weights: logreg=24% markov=32% bradley=13% pca=32%, model_probs: logreg=45.3 markov=47.2 bradley=35.7 pca=28.2 final=39.2",
+    "modelSummary": {
+      "modules": [
+        {
+          "name": "LOGREG",
+          "side": "away",
+          "strength": 0.9420983330667241,
+          "explain": [
+            "P1=45.3 P2=54.7"
+          ],
+          "flags": []
+        },
+        {
+          "name": "MARKOV",
+          "side": "away",
+          "strength": 0.5590410047510261,
+          "explain": [
+            "P1=47.2 P2=52.8"
+          ],
+          "flags": []
+        },
+        {
+          "name": "BRADLEY",
+          "side": "away",
+          "strength": 2.8571428571428585,
+          "explain": [
+            "P1=35.7 P2=64.3"
+          ],
+          "flags": []
+        },
+        {
+          "name": "PCA",
+          "side": "away",
+          "strength": 4.361057111266637,
+          "explain": [
+            "P1=28.2 P2=71.8"
+          ],
+          "flags": []
+        }
+      ],
+      "ensemble": {
+        "finalSide": "away",
+        "score": -2.599908158219801,
+        "votesHome": 0,
+        "votesAway": 4,
+        "strongHome": 0,
+        "strongAway": 2,
+        "active": 4
+      },
+      "rating5": {
+        "playerA": 39.16704934075083,
+        "playerB": 60.83295065924917
+      },
+      "reliability": {
+        "playerA": 1,
+        "playerB": 1
+      },
+      "dirt": {
+        "validPairs": 5,
+        "requestedPairs": 5,
+        "modelProbabilities": {
+          "logRegP1": 45.28950833466638,
+          "markovP1": 47.20479497624487,
+          "bradleyP1": 35.71428571428571,
+          "pcaP1": 28.19471444366682,
+          "finalP1": 39.16704934075083
+        },
+        "weights": {
+          "logReg": 0.23610680037957002,
+          "markov": 0.31520537703133766,
+          "bradley": 0.12554681280211138,
+          "pca": 0.32314100978698096
+        },
+        "stability": {
+          "logReg": 0.29384806141958375,
+          "markov": 0.4483321656169922,
+          "bradley": 0.25,
+          "pca": 0.6434671708797584
+        },
+        "pclass": {
+          "source": "missing"
+        }
+      },
+      "novaEdge": {
+        "p1": 41.01372589548167,
+        "p2": 58.98627410451833,
+        "winner": "Абоян В.",
+        "source": "stable14_nova_v1"
+      },
+      "hybridShadow": {
+        "p1": 45.9,
+        "p2": 54.1,
+        "winner": "Абоян В.",
+        "source": "form_stats_hybrid_v2",
+        "components": {
+          "statsP1": 41.6,
+          "formP1": 50,
+          "hybridRawP1": 43.3,
+          "statsWeight": 0.8,
+          "formWeight": 0.2,
+          "statsReliability": 1,
+          "formReliability": 0,
+          "hybridReliability": 0.608
+        },
+        "warnings": [
+          "hybrid_form_unavailable_a",
+          "hybrid_form_unavailable_b",
+          "hybrid_form_low_coverage"
+        ]
+      },
+      "mahalShadow": {
+        "p1": 39.7,
+        "p2": 60.3,
+        "winner": "Абоян В.",
+        "source": "stable14_mahal_edge_v2",
+        "components": {
+          "rawP1": 36.751,
+          "scoreS": -0.543,
+          "distanceD": 0.674,
+          "reliability": 0.774,
+          "statsCoverage": 1,
+          "varianceStability": 0.431,
+          "signConsensus": 0.8,
+          "distanceConfidence": 0.45
+        },
+        "warnings": []
+      },
+      "matchupShadow": {
+        "p1": 47.2,
+        "p2": 52.8,
+        "winner": "Абоян В.",
+        "source": "stable14_matchup_cross_v1",
+        "components": {
+          "rawP1": 46.505,
+          "scoreS": -0.048,
+          "reliability": 0.8,
+          "statsCoverage": 1,
+          "componentAgreement": 0.678,
+          "stabilityConfidence": 0.949,
+          "edgeMagnitude": 0.088,
+          "serveMatch": 0.15,
+          "returnMatch": -0.235,
+          "pressureMatch": -0.054,
+          "controlMatch": -0.055
+        },
+        "warnings": []
+      }
+    },
+    "warnings": [
+      "pclass_missing_dv_data"
+    ]
+  }
+]

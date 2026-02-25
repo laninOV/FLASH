@@ -636,34 +636,77 @@ function canonicalTechMetricKey(rawMetricKey: string, metricLabel: string): stri
   if (label.includes("% первой подачи") || label.includes("% першої подачі")) {
     return "first_serve";
   }
+  if (label.includes("1st serve percentage") || label.includes("first serve percentage")) {
+    return "first_serve";
+  }
   if (label.includes("подачи навылет") || label.includes("ейси") || label.includes("ейс")) {
+    return "aces";
+  }
+  if (label === "aces") {
     return "aces";
   }
   if (label.includes("двойные ошибки") || label.includes("подвійні помилки")) {
     return "double_faults";
   }
+  if (label === "double faults") {
+    return "double_faults";
+  }
   if (label.includes("очки выигр. на п.п") || label.includes("очки вигр. на п.п")) {
+    return "first_serve_points_won";
+  }
+  if (label.includes("1st serve points won") || label.includes("first serve points won")) {
     return "first_serve_points_won";
   }
   if (label.includes("очки выигр. на в.п") || label.includes("очки вигр. на в.п")) {
     return "second_serve_points_won";
   }
+  if (label.includes("2nd serve points won") || label.includes("second serve points won")) {
+    return "second_serve_points_won";
+  }
   if (label.includes("спасенные брейк") || label.includes("врятовані брейк")) {
+    return "break_points_saved";
+  }
+  if (label.includes("break points saved")) {
     return "break_points_saved";
   }
   if (label.includes("очки выигр. с п.п") || label.includes("очки вигр. з п.п")) {
     return "first_serve_return_points_won";
   }
+  if (
+    label.includes("1st serve return points won") ||
+    label.includes("first serve return points won") ||
+    label.includes("1st return points won") ||
+    label.includes("first return points won")
+  ) {
+    return "first_serve_return_points_won";
+  }
   if (label.includes("очки выигр. со в.п") || label.includes("очки вигр. з в.п")) {
+    return "second_serve_return_points_won";
+  }
+  if (
+    label.includes("2nd serve return points won") ||
+    label.includes("second serve return points won") ||
+    label.includes("2nd return points won") ||
+    label.includes("second return points won")
+  ) {
     return "second_serve_return_points_won";
   }
   if (label.includes("реализованные брейк") || label.includes("реалізовані брейк")) {
     return "break_points_converted";
   }
+  if (label.includes("break points converted")) {
+    return "break_points_converted";
+  }
   if (label.includes("выиграно на подаче") || label.includes("виграно на подачі")) {
     return "total_service_points_won";
   }
+  if (label.includes("service points won")) {
+    return "total_service_points_won";
+  }
   if (label.includes("выиграно на приеме") || label.includes("виграно на прийомі")) {
+    return "return_points_won";
+  }
+  if (label.includes("return points won")) {
     return "return_points_won";
   }
   if (
@@ -676,11 +719,23 @@ function canonicalTechMetricKey(rawMetricKey: string, metricLabel: string): stri
   if (label.includes("геймы выигр. на приеме") || label.includes("гейми вигр. на прийомі")) {
     return "return_games_won";
   }
+  if (label.includes("return games won")) {
+    return "return_games_won";
+  }
   if (label.includes("всего выигранных геймов") || label.includes("усього виграних гейм")) {
+    return "total_games_won";
+  }
+  if (label.includes("total games won")) {
     return "total_games_won";
   }
   if (label.includes("всего выигранных очков") || label.includes("усього виграних очок")) {
     return "total_points_won";
+  }
+  if (label.includes("total points won")) {
+    return "total_points_won";
+  }
+  if (label.includes("service games won")) {
+    return "service_games_won";
   }
 
   if (key === "2nd_serve_points_won") {
@@ -697,6 +752,21 @@ function canonicalTechMetricKey(rawMetricKey: string, metricLabel: string): stri
   }
   if (key === "1st_serve") {
     return "first_serve";
+  }
+  if (key === "1st_serve_percentage" || key === "first_serve_percentage") {
+    return "first_serve";
+  }
+  if (key === "1st_serve_points_won") {
+    return "first_serve_points_won";
+  }
+  if (key === "1st_return_points_won") {
+    return "first_serve_return_points_won";
+  }
+  if (key === "2nd_return_points_won") {
+    return "second_serve_return_points_won";
+  }
+  if (key === "service_points_won" || key === "total_service_points_won") {
+    return "total_service_points_won";
   }
   if (
     key === "break_points_conversion" ||

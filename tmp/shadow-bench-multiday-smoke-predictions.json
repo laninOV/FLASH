@@ -1,0 +1,195 @@
+[
+  {
+    "createdAt": "2026-02-24T22:44:10.294Z",
+    "matchUrl": "https://www.flashscore.com.ua/match/tennis/buse-ignacio-A1LQjAPb/tirante-thiago-agustin-jBkGDj34/?mid=pdy0EnJF",
+    "matchLabel": "Тиранте Т. А. vs Бусе И.",
+    "tournament": "Сантьяго, грунт - 1/16",
+    "matchStatus": "upcoming",
+    "scheduledStartText": "25.02.2026 00:35",
+    "playerAName": "Тиранте Т. А.",
+    "playerBName": "Бусе И.",
+    "predictedWinner": "Тиранте Т. А.",
+    "confidence": 0.5764053125651906,
+    "reason": "DirtTennis formulas (pair-by-index, strict 5 full Tech histories, stable14)",
+    "statsCoverage": {
+      "requestedPerPlayer": 5,
+      "playerACollected": 5,
+      "playerBCollected": 5
+    },
+    "dataStatus": "metrics_policy=stable14, coverage A 5/5, B 5/5, valid_pairs=5/5, scan_count: A 5/30 accepted=5, B 5/30 accepted=5, rejected_incomplete_metrics: A=0 B=0, non_singles_history: A=0 B=0, tech_missing: A=0 B=0, weights: logreg=34% markov=33% bradley=9% pca=24%, model_probs: logreg=56.0 markov=54.0 bradley=61.4 pca=82.5 final=62.3",
+    "modelSummary": {
+      "modules": [
+        {
+          "name": "LOGREG",
+          "side": "home",
+          "strength": 1.1934658692541418,
+          "explain": [
+            "P1=56.0 P2=44.0"
+          ],
+          "flags": []
+        },
+        {
+          "name": "MARKOV",
+          "side": "home",
+          "strength": 0.7995624178042278,
+          "explain": [
+            "P1=54.0 P2=46.0"
+          ],
+          "flags": []
+        },
+        {
+          "name": "BRADLEY",
+          "side": "home",
+          "strength": 2.2857142857142847,
+          "explain": [
+            "P1=61.4 P2=38.6"
+          ],
+          "flags": []
+        },
+        {
+          "name": "PCA",
+          "side": "home",
+          "strength": 6.495085077300689,
+          "explain": [
+            "P1=82.5 P2=17.5"
+          ],
+          "flags": []
+        }
+      ],
+      "ensemble": {
+        "finalSide": "home",
+        "score": 2.9460796884778584,
+        "votesHome": 4,
+        "votesAway": 0,
+        "strongHome": 2,
+        "strongAway": 0,
+        "active": 4
+      },
+      "rating5": {
+        "playerA": 62.27533203532441,
+        "playerB": 37.72466796467559
+      },
+      "reliability": {
+        "playerA": 1,
+        "playerB": 1
+      },
+      "dirt": {
+        "validPairs": 5,
+        "requestedPairs": 5,
+        "modelProbabilities": {
+          "logRegP1": 55.96732934627071,
+          "markovP1": 53.99781208902114,
+          "bradleyP1": 61.42857142857142,
+          "pcaP1": 82.47542538650345,
+          "finalP1": 62.27533203532441
+        },
+        "weights": {
+          "logReg": 0.33628728223222054,
+          "markov": 0.3265858462047495,
+          "bradley": 0.09433107408722018,
+          "pca": 0.2427957974758098
+        },
+        "stability": {
+          "logReg": 0.557026285953243,
+          "markov": 0.618236373033008,
+          "bradley": 0.25,
+          "pca": 0.6434671708797584
+        },
+        "pclass": {
+          "source": "missing"
+        }
+      },
+      "novaEdge": {
+        "p1": 61.99214237371376,
+        "p2": 38.00785762628624,
+        "winner": "Тиранте Т. А.",
+        "source": "stable14_nova_v1"
+      },
+      "hybridShadow": {
+        "p1": 55.2,
+        "p2": 44.8,
+        "winner": "Тиранте Т. А.",
+        "source": "form_stats_hybrid_v2",
+        "components": {
+          "statsP1": 60.9,
+          "formP1": 50,
+          "hybridRawP1": 58.7,
+          "statsWeight": 0.8,
+          "formWeight": 0.2,
+          "statsReliability": 1,
+          "formReliability": 0,
+          "hybridReliability": 0.595
+        },
+        "warnings": [
+          "hybrid_form_unavailable_a",
+          "hybrid_form_unavailable_b",
+          "hybrid_form_low_coverage"
+        ]
+      },
+      "mahalShadow": {
+        "p1": 61.4,
+        "p2": 38.6,
+        "winner": "Тиранте Т. А.",
+        "source": "stable14_mahal_edge_v2",
+        "components": {
+          "rawP1": 64.678,
+          "scoreS": 0.605,
+          "distanceD": 0.742,
+          "reliability": 0.78,
+          "statsCoverage": 1,
+          "varianceStability": 0.507,
+          "signConsensus": 0.88,
+          "distanceConfidence": 0.494
+        },
+        "warnings": []
+      },
+      "matchupShadow": {
+        "p1": 52.9,
+        "p2": 47.1,
+        "winner": "Тиранте Т. А.",
+        "source": "stable14_matchup_cross_v1",
+        "components": {
+          "rawP1": 53.647,
+          "scoreS": 0.05,
+          "reliability": 0.785,
+          "statsCoverage": 1,
+          "componentAgreement": 0.507,
+          "stabilityConfidence": 0.961,
+          "edgeMagnitude": 0.092,
+          "serveMatch": 0.343,
+          "returnMatch": -0.243,
+          "pressureMatch": 0.059,
+          "controlMatch": 0.055
+        },
+        "warnings": []
+      },
+      "marketResidualShadow": {
+        "p1": 60.6,
+        "p2": 39.4,
+        "winner": "Тиранте Т. А.",
+        "source": "market_residual_oppadj_v1",
+        "components": {
+          "marketRel": 0,
+          "residualScoreR": 0.61,
+          "residualAdjRaw": 0.601,
+          "gate": 0.714,
+          "residRel": 0.714,
+          "statsCoverage": 1,
+          "stabilityConf": 0,
+          "edgeCoherence": 0.618,
+          "serveEdge": 9.463,
+          "returnEdge": 9.769,
+          "controlEdge": 11.129,
+          "pressureEdge": 0.425,
+          "oppQualityEdge": -0.179
+        },
+        "warnings": [
+          "mroa_market_unavailable"
+        ]
+      }
+    },
+    "warnings": [
+      "pclass_missing_dv_data"
+    ]
+  }
+]
