@@ -308,16 +308,22 @@ export type StateDecisionReasonTag =
   | "MOMENTUM_DOWN"
   | "CONSENSUS"
   | "MIXED"
-  | "LOW_COVERAGE";
+  | "LOW_COVERAGE"
+  | "LOW_EDGE";
 
 export interface StateDecisionSummary {
-  source: "player_state_decision_v2";
+  source: "player_state_decision_v3";
   winner?: string;
   p1?: number;
   p2?: number;
   reliability: number;
   scoreA?: number;
   scoreB?: number;
+  conflictIndex?: number;
+  anchorDiff?: number;
+  formDiff?: number;
+  effectiveDiff?: number;
+  abstained?: boolean;
   reasonTags: StateDecisionReasonTag[];
   votes: {
     playerA: number;

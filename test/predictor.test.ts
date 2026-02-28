@@ -136,7 +136,7 @@ test("predict uses DirtTennis formulas and returns stable winner/confidence", ()
   assert.equal(prediction.modelSummary?.playerState?.playerA.hasW10, false);
   assert.equal(prediction.modelSummary?.playerState?.playerA.hasW5, true);
   assert.equal(prediction.modelSummary?.playerState?.playerA.hasW3, true);
-  assert.equal(prediction.modelSummary?.stateDecision?.source, "player_state_decision_v2");
+  assert.equal(prediction.modelSummary?.stateDecision?.source, "player_state_decision_v3");
   assert.ok(
     prediction.modelSummary?.stateDecision?.winner === "Player A" ||
       prediction.modelSummary?.stateDecision?.winner === "Player B" ||

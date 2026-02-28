@@ -21,34 +21,36 @@ function makeSide(overrides: Partial<PlayerStatePlayerSummary> = {}): PlayerStat
   };
 }
 
-test("computeStateDecision picks Birrell-like side with realistic probability band", () => {
+test("computeStateDecision returns decisive winner on aligned state drivers", () => {
   const playerA = makeSide({
-    stability: { w10: 86, w5: 89, w3: 78 },
-    formTech: { w10: 65, w5: 62, w3: 42 },
-    formPlus: { w10: 61, w5: 57, w3: 43 },
-    strength: { w10: 45, w5: 47, w3: 48 },
+    stability: { w10: 72, w5: 75, w3: 78 },
+    formTech: { w10: 64, w5: 70, w3: 74 },
+    formPlus: { w10: 62, w5: 72, w3: 78 },
+    strength: { w10: 58, w5: 60, w3: 63 },
   });
   const playerB = makeSide({
-    stability: { w10: 86, w5: 84, w3: 97 },
-    formTech: { w10: 53, w5: 93, w3: 83 },
-    formPlus: { w10: 53, w5: 87, w3: 81 },
-    strength: { w10: 40, w5: 40, w3: 43 },
+    stability: { w10: 55, w5: 56, w3: 57 },
+    formTech: { w10: 48, w5: 46, w3: 45 },
+    formPlus: { w10: 46, w5: 45, w3: 44 },
+    strength: { w10: 43, w5: 42, w3: 41 },
   });
 
   const state = computeStateDecision({
-    playerAName: "Stearns P.",
-    playerBName: "Birrell K.",
+    playerAName: "A",
+    playerBName: "B",
     playerA,
     playerB,
   });
 
-  assert.equal(state.winner, "Birrell K.");
-  assert.ok(typeof state.p2 === "number");
-  assert.ok((state.p2 as number) >= 66);
-  assert.ok((state.p2 as number) <= 76);
+  assert.equal(state.source, "player_state_decision_v3");
+  assert.equal(state.winner, "A");
+  assert.equal(state.abstained, false);
+  assert.ok(typeof state.p1 === "number" && state.p1 > 50);
+  assert.ok(typeof state.p2 === "number" && state.p2 < 50);
+  assert.ok(state.reasonTags.includes("FORM_PLUS") || state.reasonTags.includes("FORM_TECH"));
 });
 
-test("computeStateDecision returns LOW_COVERAGE fallback for weak windows", () => {
+test("computeStateDecision returns LOW_COVERAGE abstain for weak window coverage", () => {
   const lowA = makeSide({
     nTech: 2,
     hasW10: false,
@@ -80,29 +82,59 @@ test("computeStateDecision returns LOW_COVERAGE fallback for weak windows", () =
   assert.equal(state.winner, undefined);
   assert.equal(state.p1, undefined);
   assert.equal(state.p2, undefined);
+  assert.equal(state.abstained, true);
   assert.ok(state.reasonTags.includes("LOW_COVERAGE"));
 });
 
-test("computeStateDecision marks MIXED when metric votes are split", () => {
-  const sideA = makeSide({
-    stability: { w10: 72, w5: 74, w3: 76 },
-    formTech: { w10: 42, w5: 44, w3: 46 },
-    formPlus: { w10: 40, w5: 42, w3: 44 },
-    strength: { w10: 62, w5: 63, w3: 64 },
+test("computeStateDecision returns LOW_EDGE abstain on near-neutral edge", () => {
+  const playerA = makeSide({
+    stability: { w10: 62, w5: 60, w3: 59 },
+    formTech: { w10: 54, w5: 53, w3: 52 },
+    formPlus: { w10: 53, w5: 52, w3: 52 },
+    strength: { w10: 51, w5: 51, w3: 50 },
   });
-  const sideB = makeSide({
-    stability: { w10: 62, w5: 61, w3: 60 },
-    formTech: { w10: 56, w5: 58, w3: 60 },
-    formPlus: { w10: 58, w5: 60, w3: 62 },
-    strength: { w10: 50, w5: 49, w3: 48 },
+  const playerB = makeSide({
+    stability: { w10: 61, w5: 60, w3: 60 },
+    formTech: { w10: 53, w5: 53, w3: 52 },
+    formPlus: { w10: 53, w5: 52, w3: 51 },
+    strength: { w10: 51, w5: 50, w3: 50 },
   });
 
   const state = computeStateDecision({
     playerAName: "A",
     playerBName: "B",
-    playerA: sideA,
-    playerB: sideB,
+    playerA,
+    playerB,
   });
 
+  assert.equal(state.winner, undefined);
+  assert.equal(state.abstained, true);
+  assert.ok(state.reasonTags.includes("LOW_EDGE"));
+});
+
+test("computeStateDecision returns MIXED abstain on strong anchor-vs-form conflict", () => {
+  const playerA = makeSide({
+    stability: { w10: 90, w5: 88, w3: 86 },
+    formTech: { w10: 40, w5: 38, w3: 36 },
+    formPlus: { w10: 42, w5: 39, w3: 35 },
+    strength: { w10: 86, w5: 84, w3: 82 },
+  });
+  const playerB = makeSide({
+    stability: { w10: 50, w5: 52, w3: 54 },
+    formTech: { w10: 86, w5: 88, w3: 90 },
+    formPlus: { w10: 84, w5: 87, w3: 89 },
+    strength: { w10: 48, w5: 50, w3: 52 },
+  });
+
+  const state = computeStateDecision({
+    playerAName: "A",
+    playerBName: "B",
+    playerA,
+    playerB,
+  });
+
+  assert.equal(state.winner, undefined);
+  assert.equal(state.abstained, true);
   assert.ok(state.reasonTags.includes("MIXED"));
+  assert.ok((state.conflictIndex || 0) >= 0.55);
 });

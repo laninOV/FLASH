@@ -19,27 +19,49 @@ interface StateMetricSideScore {
   strength?: number;
 }
 
+interface StateMetricAnchorScore {
+  stability?: number;
+  formTech?: number;
+  formPlus?: number;
+  strength?: number;
+}
+
 interface StateSideComputation {
   score?: number;
   reliability: number;
   metricScores: StateMetricSideScore;
+  metricAnchors: StateMetricAnchorScore;
 }
 
-const WINDOW_WEIGHTS = {
+const RELIABILITY_WINDOW_WEIGHTS = {
   w10: 0.25,
   w5: 0.35,
   w3: 0.4,
 } as const;
 
 const METRIC_WEIGHTS = {
-  stability: 0.3,
-  formTech: 0.25,
+  stability: 0.18,
+  formTech: 0.27,
   formPlus: 0.3,
-  strength: 0.15,
+  strength: 0.25,
 } as const;
 
 const METRIC_KEYS = ["stability", "formTech", "formPlus", "strength"] as const;
 type MetricKey = (typeof METRIC_KEYS)[number];
+
+const WINDOW_ANCHOR_WEIGHTS = {
+  w10: 0.5,
+  w5: 0.35,
+  w3: 0.15,
+} as const;
+
+const WINDOW_RECENT_WEIGHTS = {
+  w10: 0.2,
+  w5: 0.35,
+  w3: 0.45,
+} as const;
+
+const LOW_EDGE_THRESHOLD = 2.5;
 
 function isFiniteNumber(value: unknown): value is number {
   return typeof value === "number" && Number.isFinite(value);
@@ -63,14 +85,15 @@ function resolveAvailabilityWeight(hasWindow: boolean, degraded: boolean): numbe
   return 1;
 }
 
-function computeMetricWindowComposite(
+function weightedWindowMean(
   series: PlayerStateWindowSeries,
   availability: { w10: number; w5: number; w3: number },
+  weights: { w10: number; w5: number; w3: number },
 ): number | undefined {
   const entries = [
-    { value: series.w10, weight: WINDOW_WEIGHTS.w10 * availability.w10 },
-    { value: series.w5, weight: WINDOW_WEIGHTS.w5 * availability.w5 },
-    { value: series.w3, weight: WINDOW_WEIGHTS.w3 * availability.w3 },
+    { value: series.w10, weight: weights.w10 * availability.w10 },
+    { value: series.w5, weight: weights.w5 * availability.w5 },
+    { value: series.w3, weight: weights.w3 * availability.w3 },
   ];
   let sum = 0;
   let sumW = 0;
@@ -81,17 +104,34 @@ function computeMetricWindowComposite(
     sum += entry.value * entry.weight;
     sumW += entry.weight;
   }
-  if (sumW <= 0) {
-    return undefined;
+  return sumW > 0 ? sum / sumW : undefined;
+}
+
+function computeMetricWindowComposite(
+  series: PlayerStateWindowSeries,
+  availability: { w10: number; w5: number; w3: number },
+): { score?: number; anchor?: number } {
+  const anchor = weightedWindowMean(series, availability, WINDOW_ANCHOR_WEIGHTS);
+  const recent = weightedWindowMean(series, availability, WINDOW_RECENT_WEIGHTS);
+  if (!isFiniteNumber(anchor) || !isFiniteNumber(recent)) {
+    return {};
   }
-  const base = sum / sumW;
-  let trendBonus = 0;
-  if (isFiniteNumber(series.w10) && isFiniteNumber(series.w3)) {
-    trendBonus = clamp((series.w3 - series.w10) / 24, -1, 1) * 3.5;
-  } else if (isFiniteNumber(series.w5) && isFiniteNumber(series.w3)) {
-    trendBonus = clamp((series.w3 - series.w5) / 18, -1, 1) * 2.5;
-  }
-  return clamp(base + trendBonus, 0, 100);
+
+  const trendFromW10 =
+    isFiniteNumber(series.w3) && isFiniteNumber(series.w10)
+      ? clamp((series.w3 - series.w10) / 28, -1, 1) * 2
+      : 0;
+  const trendFromW5 =
+    isFiniteNumber(series.w3) && isFiniteNumber(series.w5)
+      ? clamp((series.w3 - series.w5) / 18, -1, 1) * 2
+      : 0;
+  const trend = trendFromW10 + trendFromW5;
+  const score = clamp(0.75 * anchor + 0.25 * recent + trend, 0, 100);
+
+  return {
+    score,
+    anchor,
+  };
 }
 
 function computeStateSide(side: PlayerStatePlayerSummary): StateSideComputation {
@@ -101,18 +141,32 @@ function computeStateSide(side: PlayerStatePlayerSummary): StateSideComputation 
     w3: resolveAvailabilityWeight(side.hasW3, side.degradedW3),
   };
   const availabilitySum =
-    WINDOW_WEIGHTS.w10 * availability.w10 +
-    WINDOW_WEIGHTS.w5 * availability.w5 +
-    WINDOW_WEIGHTS.w3 * availability.w3;
-  const windowReliability = availabilitySum / (WINDOW_WEIGHTS.w10 + WINDOW_WEIGHTS.w5 + WINDOW_WEIGHTS.w3);
+    RELIABILITY_WINDOW_WEIGHTS.w10 * availability.w10 +
+    RELIABILITY_WINDOW_WEIGHTS.w5 * availability.w5 +
+    RELIABILITY_WINDOW_WEIGHTS.w3 * availability.w3;
+  const windowReliability =
+    availabilitySum /
+    (RELIABILITY_WINDOW_WEIGHTS.w10 + RELIABILITY_WINDOW_WEIGHTS.w5 + RELIABILITY_WINDOW_WEIGHTS.w3);
   const nTechReliability = clamp(side.nTech / 10, 0, 1);
   const reliability = clamp(0.5 * windowReliability + 0.5 * nTechReliability, 0, 1);
 
+  const stabilityWindow = computeMetricWindowComposite(side.stability, availability);
+  const formTechWindow = computeMetricWindowComposite(side.formTech, availability);
+  const formPlusWindow = computeMetricWindowComposite(side.formPlus, availability);
+  const strengthWindow = computeMetricWindowComposite(side.strength, availability);
+
   const metricScores: StateMetricSideScore = {
-    stability: computeMetricWindowComposite(side.stability, availability),
-    formTech: computeMetricWindowComposite(side.formTech, availability),
-    formPlus: computeMetricWindowComposite(side.formPlus, availability),
-    strength: computeMetricWindowComposite(side.strength, availability),
+    stability: stabilityWindow.score,
+    formTech: formTechWindow.score,
+    formPlus: formPlusWindow.score,
+    strength: strengthWindow.score,
+  };
+
+  const metricAnchors: StateMetricAnchorScore = {
+    stability: stabilityWindow.anchor,
+    formTech: formTechWindow.anchor,
+    formPlus: formPlusWindow.anchor,
+    strength: strengthWindow.anchor,
   };
 
   let weightedSum = 0;
@@ -131,6 +185,7 @@ function computeStateSide(side: PlayerStatePlayerSummary): StateSideComputation 
     score: weightedCount > 0 ? weightedSum / weightedCount : undefined,
     reliability,
     metricScores,
+    metricAnchors,
   };
 }
 
@@ -180,25 +235,87 @@ export function computeStateDecision(input: ComputeStateDecisionInput): StateDec
   }
 
   const minReliability = clamp(Math.min(sideA.reliability, sideB.reliability), 0, 1);
-  if (!isFiniteNumber(sideA.score) || !isFiniteNumber(sideB.score) || minReliability < 0.45) {
+  const anchorBundleA =
+    isFiniteNumber(sideA.metricAnchors.strength) && isFiniteNumber(sideA.metricAnchors.stability)
+      ? 0.55 * sideA.metricAnchors.strength + 0.45 * sideA.metricAnchors.stability
+      : undefined;
+  const anchorBundleB =
+    isFiniteNumber(sideB.metricAnchors.strength) && isFiniteNumber(sideB.metricAnchors.stability)
+      ? 0.55 * sideB.metricAnchors.strength + 0.45 * sideB.metricAnchors.stability
+      : undefined;
+  const formBundleA =
+    isFiniteNumber(sideA.metricScores.formPlus) && isFiniteNumber(sideA.metricScores.formTech)
+      ? 0.55 * sideA.metricScores.formPlus + 0.45 * sideA.metricScores.formTech
+      : undefined;
+  const formBundleB =
+    isFiniteNumber(sideB.metricScores.formPlus) && isFiniteNumber(sideB.metricScores.formTech)
+      ? 0.55 * sideB.metricScores.formPlus + 0.45 * sideB.metricScores.formTech
+      : undefined;
+
+  const rawDiff =
+    isFiniteNumber(sideA.score) && isFiniteNumber(sideB.score) ? sideA.score - sideB.score : undefined;
+  const anchorDiff =
+    isFiniteNumber(anchorBundleA) && isFiniteNumber(anchorBundleB) ? anchorBundleA - anchorBundleB : undefined;
+  const formDiff = isFiniteNumber(formBundleA) && isFiniteNumber(formBundleB) ? formBundleA - formBundleB : undefined;
+
+  const sign = (value: number | undefined): -1 | 0 | 1 => {
+    if (!isFiniteNumber(value)) {
+      return 0;
+    }
+    if (value > 0) {
+      return 1;
+    }
+    if (value < 0) {
+      return -1;
+    }
+    return 0;
+  };
+
+  const signConflict =
+    sign(anchorDiff) !== 0 && sign(formDiff) !== 0 && sign(anchorDiff) !== sign(formDiff) ? 1 : 0;
+  const magnitudeConflict =
+    signConflict === 1 && isFiniteNumber(anchorDiff) && isFiniteNumber(formDiff)
+      ? clamp(Math.min(Math.abs(anchorDiff), Math.abs(formDiff)) / 18, 0, 1)
+      : 0;
+  const conflictIndex = signConflict * magnitudeConflict;
+
+  const effectiveDiff = isFiniteNumber(rawDiff) ? rawDiff * (1 - 0.35 * conflictIndex) : undefined;
+  const rawP1 =
+    isFiniteNumber(effectiveDiff) ? clamp(50 + 22 * Math.tanh(effectiveDiff / 12), 0, 100) : undefined;
+  const p1 =
+    isFiniteNumber(rawP1) ? clamp(50 + (rawP1 - 50) * (0.4 + 0.6 * minReliability), 0, 100) : undefined;
+  const p2 = isFiniteNumber(p1) ? clamp(100 - p1, 0, 100) : undefined;
+
+  const winnerSide = isFiniteNumber(p1) ? (p1 > 50 ? "A" : p1 < 50 ? "B" : undefined) : undefined;
+  const winnerVotes = winnerSide === "A" ? votes.playerA : winnerSide === "B" ? votes.playerB : 0;
+
+  const reasonByPriority: StateDecisionReasonTag[] = [];
+  if (!isFiniteNumber(sideA.score) || !isFiniteNumber(sideB.score) || minReliability < 0.5) {
+    reasonByPriority.push("LOW_COVERAGE");
+  }
+  if (!isFiniteNumber(effectiveDiff) || Math.abs(effectiveDiff) < LOW_EDGE_THRESHOLD) {
+    reasonByPriority.push("LOW_EDGE");
+  }
+  if (conflictIndex >= 0.55 || winnerVotes < 2) {
+    reasonByPriority.push("MIXED");
+  }
+
+  if (reasonByPriority.length > 0) {
     return {
-      source: "player_state_decision_v2",
+      source: "player_state_decision_v3",
       reliability: round3(minReliability),
       scoreA: isFiniteNumber(sideA.score) ? round3(sideA.score) : undefined,
       scoreB: isFiniteNumber(sideB.score) ? round3(sideB.score) : undefined,
-      reasonTags: ["LOW_COVERAGE"],
+      conflictIndex: round3(conflictIndex),
+      anchorDiff: isFiniteNumber(anchorDiff) ? round3(anchorDiff) : undefined,
+      formDiff: isFiniteNumber(formDiff) ? round3(formDiff) : undefined,
+      effectiveDiff: isFiniteNumber(effectiveDiff) ? round3(effectiveDiff) : undefined,
+      abstained: true,
+      reasonTags: reasonByPriority.slice(0, 2),
       votes,
     };
   }
 
-  const rawDiff = sideA.score - sideB.score;
-  const consensus = Math.max(votes.playerA, votes.playerB) / 4;
-  const effDiff = rawDiff * (0.75 + 0.25 * consensus);
-  const rawP1 = clamp(50 + 23 * Math.tanh(effDiff / 13), 0, 100);
-  const p1 = clamp(50 + (rawP1 - 50) * (0.38 + 0.62 * minReliability), 0, 100);
-  const p2 = clamp(100 - p1, 0, 100);
-
-  const winnerSide = p1 > 50 ? "A" : p1 < 50 ? "B" : undefined;
   const winner = winnerSide === "A" ? input.playerAName : winnerSide === "B" ? input.playerBName : undefined;
 
   const reasonTags: StateDecisionReasonTag[] = [];
@@ -213,18 +330,17 @@ export function computeStateDecision(input: ComputeStateDecisionInput): StateDec
     const winnerFormPlus = winnerSide === "A" ? input.playerA.formPlus : input.playerB.formPlus;
     if (isFiniteNumber(winnerFormPlus.w3) && isFiniteNumber(winnerFormPlus.w10)) {
       const delta = winnerFormPlus.w3 - winnerFormPlus.w10;
-      if (delta >= 6) {
+      if (delta >= 8) {
         pushUnique(reasonTags, "MOMENTUM_UP");
-      } else if (delta <= -6) {
+      } else if (delta <= -8) {
         pushUnique(reasonTags, "MOMENTUM_DOWN");
       }
     }
   }
 
-  const winnerVotes = winnerSide === "A" ? votes.playerA : winnerSide === "B" ? votes.playerB : 0;
   if (winnerVotes >= 3) {
     pushUnique(reasonTags, "CONSENSUS");
-  } else if (winnerVotes === 2 || (!winnerSide && Math.max(votes.playerA, votes.playerB) === 2)) {
+  } else if (winnerVotes === 2) {
     pushUnique(reasonTags, "MIXED");
   }
   if (!reasonTags.length) {
@@ -232,13 +348,18 @@ export function computeStateDecision(input: ComputeStateDecisionInput): StateDec
   }
 
   return {
-    source: "player_state_decision_v2",
+    source: "player_state_decision_v3",
     winner,
-    p1: round3(p1),
-    p2: round3(p2),
+    p1: round3(p1 as number),
+    p2: round3(p2 as number),
     reliability: round3(minReliability),
-    scoreA: round3(sideA.score),
-    scoreB: round3(sideB.score),
+    scoreA: round3(sideA.score as number),
+    scoreB: round3(sideB.score as number),
+    conflictIndex: round3(conflictIndex),
+    anchorDiff: isFiniteNumber(anchorDiff) ? round3(anchorDiff) : undefined,
+    formDiff: isFiniteNumber(formDiff) ? round3(formDiff) : undefined,
+    effectiveDiff: isFiniteNumber(effectiveDiff) ? round3(effectiveDiff) : undefined,
+    abstained: false,
     reasonTags: reasonTags.slice(0, 3),
     votes,
   };

@@ -18,6 +18,10 @@ export function formatShortPredictionMessage(
   const novaEdge = prediction.modelSummary?.novaEdge;
   const playerState = prediction.modelSummary?.playerState;
   const stateDecision = prediction.modelSummary?.stateDecision;
+  const stateWinner = stateDecision?.abstained ? undefined : stateDecision?.winner;
+  const statePair = stateDecision?.abstained
+    ? "- / -"
+    : formatNovaEdgePair(stateDecision?.p1, stateDecision?.p2);
   const methodsSummary = computeMethodsAgreement(
     prediction.predictedWinner,
     names.playerA,
@@ -56,10 +60,7 @@ export function formatShortPredictionMessage(
       formatPercentPair(probs?.finalP1),
     )}`,
     `NOVA: ${formatMethodSummary(novaEdge?.winner, formatNovaEdgePair(novaEdge?.p1, novaEdge?.p2))}`,
-    `STATE: ${formatMethodSummary(
-      stateDecision?.winner,
-      formatNovaEdgePair(stateDecision?.p1, stateDecision?.p2),
-    )}`,
+    `STATE: ${formatMethodSummary(stateWinner, statePair)}`,
     formatStateReasonLine(stateDecision),
     formatNovaFilterLabelLine(prediction),
     SEPARATOR,
@@ -274,6 +275,9 @@ function formatStateReasonTag(tag: StateDecisionDisplay["reasonTags"][number]): 
   }
   if (tag === "MIXED") {
     return "MIXED";
+  }
+  if (tag === "LOW_EDGE") {
+    return "LOW_EDGE";
   }
   return "LOW_COVERAGE";
 }

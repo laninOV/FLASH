@@ -160,7 +160,7 @@ const basePrediction: PredictionResult = {
       },
     },
     stateDecision: {
-      source: "player_state_decision_v2",
+      source: "player_state_decision_v3",
       winner: "Mirra Andreeva",
       p1: 64.2,
       p2: 35.8,
@@ -231,7 +231,7 @@ test("formatShortPredictionMessage uses modelSummary.stateDecision values in SHO
     modelSummary: {
       ...basePrediction.modelSummary!,
       stateDecision: {
-        source: "player_state_decision_v2",
+        source: "player_state_decision_v3",
         winner: "Birrell K.",
         p1: 29,
         p2: 71,
@@ -250,6 +250,38 @@ test("formatShortPredictionMessage uses modelSummary.stateDecision values in SHO
   const text = formatShortPredictionMessage(prediction);
   assert.match(text, /STATE: Birrell K\. \| 29% \/ 71%/);
   assert.match(text, /STATE REASON: FORM\+ \+ MOMENTUM↑/);
+});
+
+test("formatShortPredictionMessage renders abstained STATE as placeholder with LOW_EDGE reason", () => {
+  const prediction: PredictionResult = {
+    ...basePrediction,
+    modelSummary: {
+      ...basePrediction.modelSummary!,
+      stateDecision: {
+        source: "player_state_decision_v3",
+        winner: "Mirra Andreeva",
+        p1: 57,
+        p2: 43,
+        reliability: 0.81,
+        scoreA: 53,
+        scoreB: 52,
+        conflictIndex: 0.2,
+        anchorDiff: 1.1,
+        formDiff: 2.2,
+        effectiveDiff: 2.8,
+        abstained: true,
+        reasonTags: ["LOW_EDGE", "MIXED"],
+        votes: {
+          playerA: 2,
+          playerB: 1,
+        },
+      },
+    },
+  };
+
+  const text = formatShortPredictionMessage(prediction);
+  assert.match(text, /STATE: - \| - \/ -/);
+  assert.match(text, /STATE REASON: LOW_EDGE \+ MIXED/);
 });
 
 test("formatShortPredictionMessage keeps placeholders and still hides PCLASS", () => {
