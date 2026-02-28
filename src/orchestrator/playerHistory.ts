@@ -1,8 +1,16 @@
 import type { Page } from "playwright";
 import type { Logger } from "../logger.js";
 import { extractRecentMatchesFromProfile } from "../extract/playerProfile.js";
+import { extractFlashscoreMid } from "../extract/shared.js";
 import { extractTechStatsFromMatch } from "../extract/techStats.js";
-import type { PlayerRecentStats, RunConfig } from "../types.js";
+import { buildPlayerStateFeature } from "../predict/playerStateIndices.js";
+import type {
+  HistoricalMatchTechStats,
+  PlayerRecentStats,
+  RecentMatchRef,
+  RunConfig,
+} from "../types.js";
+import { STATE_HISTORY_TARGET } from "./constants.js";
 import { scanTechHistoryCandidates } from "./historyScan.js";
 import { buildPlayerRecentFormSummary } from "./playerForm.js";
 import { throwIfAborted } from "./utils.js";
@@ -25,15 +33,17 @@ export async function collectPlayerStats(input: CollectPlayerStatsInput): Promis
     playerName: player.name,
     profileUrl: player.profileUrl,
     parsedMatches: [],
+    stateFeatures: [],
     missingStatsCount: 0,
     errors: [],
   };
 
-  const scanLimit = Math.max(requiredHistoryCount * 6, 30);
+  const scanNeedCount = Math.max(requiredHistoryCount, STATE_HISTORY_TARGET);
+  const scanLimit = Math.max(scanNeedCount * 8, 80);
   throwIfAborted(signal);
   const profileHistory = await extractRecentMatchesFromProfile(page, player, config, logger, {
     excludeMatchUrl: targetMatchUrl,
-    needCount: requiredHistoryCount,
+    needCount: scanNeedCount,
     scanLimit,
   });
   const recentMatches = profileHistory.matches;
@@ -65,7 +75,8 @@ export async function collectPlayerStats(input: CollectPlayerStatsInput): Promis
   const scanResult = await scanTechHistoryCandidates({
     playerName: player.name,
     candidates: recentMatches,
-    needCount: requiredHistoryCount,
+    needCount: scanNeedCount,
+    budgetNeedCount: requiredHistoryCount,
     statsMissBudget: config.historyStatsMissBudget,
     logger,
     signal,
@@ -73,6 +84,7 @@ export async function collectPlayerStats(input: CollectPlayerStatsInput): Promis
       extractTechStatsFromMatch(page, candidate.url, player.name, config, logger),
   });
   stats.parsedMatches.push(...scanResult.parsedMatches);
+  stats.stateFeatures = buildStateFeatures(scanResult.parsedMatches, recentMatches);
   stats.missingStatsCount = scanResult.techMissing;
   stats.errors.push(...scanResult.errors);
   if (stats.historyScanStats) {
@@ -90,7 +102,7 @@ export async function collectPlayerStats(input: CollectPlayerStatsInput): Promis
     logger.warn(
       `Player ${player.name}: early stop (${scanResult.earlyStopReason} ` +
         `${scanResult.statsMissesForBudget}/${scanResult.earlyStopBudget ?? config.historyStatsMissBudget}), ` +
-        `accepted=${scanResult.parsedMatches.length}/${requiredHistoryCount}.`,
+        `accepted=${scanResult.parsedMatches.length}/${scanNeedCount}.`,
     );
   }
 
@@ -107,4 +119,90 @@ export async function collectPlayerStats(input: CollectPlayerStatsInput): Promis
   }
 
   return stats;
+}
+
+interface RecentMatchMeta {
+  candidateIndex: number;
+  tournament?: string;
+  resultText?: string;
+  scoreText?: string;
+}
+
+function buildStateFeatures(
+  parsedMatches: HistoricalMatchTechStats[],
+  recentMatches: RecentMatchRef[],
+): PlayerRecentStats["stateFeatures"] {
+  const byKey = new Map<string, RecentMatchMeta>();
+  for (let index = 0; index < recentMatches.length; index += 1) {
+    const recent = recentMatches[index];
+    const meta: RecentMatchMeta = {
+      candidateIndex: index,
+      tournament: recent.tournament,
+      resultText: recent.resultText,
+      scoreText: recent.scoreText,
+    };
+    for (const key of resolveHistoryUrlKeys(recent.url)) {
+      if (!byKey.has(key)) {
+        byKey.set(key, meta);
+      }
+    }
+  }
+
+  const out: PlayerRecentStats["stateFeatures"] = [];
+  for (let index = 0; index < parsedMatches.length; index += 1) {
+    const parsed = parsedMatches[index];
+    let meta: RecentMatchMeta | undefined;
+    for (const key of resolveHistoryUrlKeys(parsed.matchUrl)) {
+      const found = byKey.get(key);
+      if (found) {
+        meta = found;
+        break;
+      }
+    }
+    const feature = buildPlayerStateFeature(parsed, {
+      candidateIndex: meta?.candidateIndex ?? index,
+      tournament: meta?.tournament,
+      resultText: meta?.resultText,
+      scoreText: meta?.scoreText,
+    });
+    if (feature) {
+      out.push(feature);
+    }
+  }
+
+  out.sort((a, b) => a.candidateIndex - b.candidateIndex);
+  return out;
+}
+
+function resolveHistoryUrlKeys(url: string | undefined): string[] {
+  const keys: string[] = [];
+  const text = String(url || "").trim();
+  if (!text) {
+    return keys;
+  }
+  const mid = extractFlashscoreMid(text);
+  if (mid) {
+    keys.push(`mid:${mid}`);
+  }
+  const normalized = normalizeUrl(text);
+  if (normalized) {
+    keys.push(`url:${normalized}`);
+  }
+  return keys;
+}
+
+function normalizeUrl(url: string): string | undefined {
+  try {
+    const parsed = new URL(url);
+    const mid = extractFlashscoreMid(url);
+    parsed.hash = "";
+    parsed.pathname = parsed.pathname.replace(/\/+$/, "");
+    parsed.search = "";
+    if (mid) {
+      parsed.searchParams.set("mid", mid);
+    }
+    return parsed.toString();
+  } catch {
+    return undefined;
+  }
 }

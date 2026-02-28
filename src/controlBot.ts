@@ -7,6 +7,7 @@ import {
   acknowledgeOffset,
   bootstrapOffset,
   getUpdates,
+  isGetUpdatesConflictError,
   type TelegramUpdate,
 } from "./control-bot/telegramPoll.js";
 import { extractDayMatches } from "./extract/dayMatches.js";
@@ -22,39 +23,109 @@ interface ActiveTask {
   promise: Promise<void>;
 }
 
+interface ControlBotTransport {
+  sendText(
+    text: string,
+    options?: {
+      replyMarkup?: unknown;
+      disableWebPagePreview?: boolean;
+    },
+  ): Promise<void>;
+}
+
+export interface TelegramControlBotDeps {
+  getUpdatesFn?: typeof getUpdates;
+  bootstrapOffsetFn?: typeof bootstrapOffset;
+  acknowledgeOffsetFn?: typeof acknowledgeOffset;
+  sleepFn?: (ms: number) => Promise<void>;
+  transport?: ControlBotTransport;
+}
+
+const POLLING_RETRY_MS = 1_200;
+const POLLING_CONFLICT_RETRY_MS = 4_000;
+const POLLING_CONFLICT_FATAL_STREAK = 6;
+
 export class TelegramControlBot {
   private readonly logger = new Logger({ debugEnabled: false });
   private readonly token: string;
   private readonly chatId: string;
-  private readonly transport: TelegramTransport;
+  private readonly transport: ControlBotTransport;
+  private readonly deps: Required<
+    Pick<
+      TelegramControlBotDeps,
+      "getUpdatesFn" | "bootstrapOffsetFn" | "acknowledgeOffsetFn" | "sleepFn"
+    >
+  >;
   private offset = 0;
   private shuttingDown = false;
   private activeTask?: ActiveTask;
 
-  constructor(private readonly baseConfig: RunConfig) {
+  constructor(
+    private readonly baseConfig: RunConfig,
+    deps: TelegramControlBotDeps = {},
+  ) {
     if (!baseConfig.telegramToken || !baseConfig.telegramChatId) {
       throw new Error("TG_BOT_TOKEN and TG_CHAT_ID are required for control bot.");
     }
     this.token = baseConfig.telegramToken;
     this.chatId = String(baseConfig.telegramChatId);
-    this.transport = new TelegramTransport({
-      token: this.token,
-      chatId: this.chatId,
-      maxRequestsPerMinute: baseConfig.tgSendMaxRpm,
-    });
+    this.transport =
+      deps.transport ||
+      new TelegramTransport({
+        token: this.token,
+        chatId: this.chatId,
+        maxRequestsPerMinute: baseConfig.tgSendMaxRpm,
+      });
+    this.deps = {
+      getUpdatesFn: deps.getUpdatesFn ?? getUpdates,
+      bootstrapOffsetFn: deps.bootstrapOffsetFn ?? bootstrapOffset,
+      acknowledgeOffsetFn: deps.acknowledgeOffsetFn ?? acknowledgeOffset,
+      sleepFn: deps.sleepFn ?? sleep,
+    };
   }
 
   async run(): Promise<void> {
-    this.offset = await bootstrapOffset(this.token, this.offset, this.logger);
+    this.offset = await this.deps.bootstrapOffsetFn(this.token, this.offset, this.logger);
     await this.send("Бот управления запущен. Выберите действие из меню.", true);
+    let conflictStreak = 0;
+    let conflictAlertSent = false;
 
     while (!this.shuttingDown) {
       let updates: TelegramUpdate[] = [];
       try {
-        updates = await getUpdates(this.token, { offset: this.offset, timeoutSec: 15 });
+        updates = await this.deps.getUpdatesFn(this.token, {
+          offset: this.offset,
+          timeoutSec: 15,
+        });
+        conflictStreak = 0;
+        conflictAlertSent = false;
       } catch (error) {
-        await this.send(`Ошибка Telegram polling: ${stringifyError(error)}`);
-        await sleep(1200);
+        if (isGetUpdatesConflictError(error)) {
+          conflictStreak += 1;
+          const details = stringifyError(error);
+          this.logger.warn(
+            `Telegram polling conflict ${conflictStreak}/${POLLING_CONFLICT_FATAL_STREAK}: ${details}`,
+          );
+          if (!conflictAlertSent) {
+            conflictAlertSent = true;
+            await this.safeNotify(
+              "Ошибка Telegram polling (409): обнаружен второй polling-инстанс. " +
+                "Останови дубликат процесса.",
+            );
+          }
+          if (conflictStreak >= POLLING_CONFLICT_FATAL_STREAK) {
+            throw new Error(
+              `Telegram polling conflict persisted (${conflictStreak} attempts): ${details}`,
+            );
+          }
+          await this.deps.sleepFn(POLLING_CONFLICT_RETRY_MS);
+          continue;
+        }
+
+        conflictStreak = 0;
+        conflictAlertSent = false;
+        await this.safeNotify(`Ошибка Telegram polling: ${stringifyError(error)}`);
+        await this.deps.sleepFn(POLLING_RETRY_MS);
         continue;
       }
 
@@ -73,7 +144,7 @@ export class TelegramControlBot {
       }
     }
 
-    await acknowledgeOffset(this.token, this.offset, this.logger);
+    await this.deps.acknowledgeOffsetFn(this.token, this.offset, this.logger);
 
     if (this.activeTask) {
       this.activeTask.abortController.abort();
@@ -221,6 +292,14 @@ export class TelegramControlBot {
       replyMarkup: withMenu ? MENU_KEYBOARD : undefined,
       disableWebPagePreview: true,
     });
+  }
+
+  private async safeNotify(text: string): Promise<void> {
+    try {
+      await this.send(text);
+    } catch {
+      // no-op
+    }
   }
 }
 

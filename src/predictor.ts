@@ -1,10 +1,13 @@
 import { clamp, ratio } from "./common/math.js";
+import { STATE_HISTORY_TARGET } from "./orchestrator/constants.js";
 import { aggregateIndexPairs } from "./predict/dirtPairs.js";
 import { computeFormStatsHybrid } from "./predict/formStatsHybrid.js";
 import { computeMahalEdgeShadow } from "./predict/mahalEdge.js";
 import { computeMarketResidualShadow } from "./predict/marketResidual.js";
 import { computeMatchupCrossShadow } from "./predict/matchupCross.js";
 import { computeNovaEdge } from "./predict/novaEdge.js";
+import { applyPairStateContrast, buildPlayerStateSeries } from "./predict/playerStateIndices.js";
+import { computeStateDecision } from "./predict/stateDecision.js";
 import { extractDirtFeatureRow, type DirtFeatureRow } from "./predict/requiredMetrics.js";
 import { pickByOddsOrSeed } from "./predict/tieBreak.js";
 import type {
@@ -142,6 +145,52 @@ export function predict(
   if (pclass.source === "missing") {
     warnings.push("pclass_missing_dv_data");
   }
+  const playerAStateRaw = buildPlayerStateSeries(playerAStats.stateFeatures);
+  const playerBStateRaw = buildPlayerStateSeries(playerBStats.stateFeatures);
+  const contrastedState = applyPairStateContrast(playerAStateRaw, playerBStateRaw, {
+    gain: { w10: 0.45, w5: 0.38, w3: 0.3 },
+    capShift: 5.5,
+    fullCoverageGapTarget: 4,
+    nearZeroDiff: 0.35,
+  });
+  const playerAState = contrastedState.playerA;
+  const playerBState = contrastedState.playerB;
+  const playerStateSummary = {
+    source: "trend_strength_windows_v1" as const,
+    historyTechTarget: STATE_HISTORY_TARGET,
+    playerA: {
+      nTech: playerAState.nTech,
+      hasW10: playerAState.hasW10,
+      hasW5: playerAState.hasW5,
+      hasW3: playerAState.hasW3,
+      degradedW10: playerAState.degradedW10,
+      degradedW5: playerAState.degradedW5,
+      degradedW3: playerAState.degradedW3,
+      stability: playerAState.stability,
+      formTech: playerAState.formTech,
+      formPlus: playerAState.formPlus,
+      strength: playerAState.strength,
+    },
+    playerB: {
+      nTech: playerBState.nTech,
+      hasW10: playerBState.hasW10,
+      hasW5: playerBState.hasW5,
+      hasW3: playerBState.hasW3,
+      degradedW10: playerBState.degradedW10,
+      degradedW5: playerBState.degradedW5,
+      degradedW3: playerBState.degradedW3,
+      stability: playerBState.stability,
+      formTech: playerBState.formTech,
+      formPlus: playerBState.formPlus,
+      strength: playerBState.strength,
+    },
+  };
+  const stateDecision = computeStateDecision({
+    playerAName: context.playerAName,
+    playerBName: context.playerBName,
+    playerA: playerStateSummary.playerA,
+    playerB: playerStateSummary.playerB,
+  });
 
   return {
     createdAt: new Date().toISOString(),
@@ -219,6 +268,8 @@ export function predict(
         components: marketResidualShadow.components,
         warnings: marketResidualShadow.warnings,
       },
+      playerState: playerStateSummary,
+      stateDecision,
     },
     warnings,
   };

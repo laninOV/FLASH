@@ -40,6 +40,7 @@ function makePlayer(
     parsedMatches: matches.map((match, index) =>
       makeTechMatch(`https://x/${name}/${index + 1}`, match.player, match.opponent),
     ),
+    stateFeatures: [],
     missingStatsCount: 0,
     errors: [],
   };

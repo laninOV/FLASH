@@ -102,10 +102,28 @@ export interface HistoricalMatchTechStats {
   warnings: string[];
 }
 
+export interface PlayerStateFeature {
+  matchUrl: string;
+  candidateIndex: number;
+  tournament?: string;
+  resultText?: string;
+  scoreText?: string;
+  serveCore: number;
+  returnCore: number;
+  controlCore: number;
+  disciplineCore: number;
+  tpwCore: number;
+  oppStatsQ01?: number;
+  oppStrengthComposite?: number;
+  tierScore: number;
+  qualifying: boolean;
+}
+
 export interface PlayerRecentStats {
   playerName: string;
   profileUrl?: string;
   parsedMatches: HistoricalMatchTechStats[];
+  stateFeatures: PlayerStateFeature[];
   recentForm?: PlayerRecentFormSummary;
   missingStatsCount: number;
   historyScanStats?: HistoryScanStats;
@@ -254,6 +272,59 @@ export interface TPW12HistoryScore {
   values: number[];
 }
 
+export interface PlayerStateWindowSeries {
+  w10?: number;
+  w5?: number;
+  w3?: number;
+}
+
+export interface PlayerStatePlayerSummary {
+  nTech: number;
+  hasW10: boolean;
+  hasW5: boolean;
+  hasW3: boolean;
+  degradedW10: boolean;
+  degradedW5: boolean;
+  degradedW3: boolean;
+  stability: PlayerStateWindowSeries;
+  formTech: PlayerStateWindowSeries;
+  formPlus: PlayerStateWindowSeries;
+  strength: PlayerStateWindowSeries;
+}
+
+export interface PlayerStateSummary {
+  source: "trend_strength_windows_v1";
+  historyTechTarget: number;
+  playerA: PlayerStatePlayerSummary;
+  playerB: PlayerStatePlayerSummary;
+}
+
+export type StateDecisionReasonTag =
+  | "FORM_PLUS"
+  | "FORM_TECH"
+  | "STABILITY"
+  | "STRENGTH"
+  | "MOMENTUM_UP"
+  | "MOMENTUM_DOWN"
+  | "CONSENSUS"
+  | "MIXED"
+  | "LOW_COVERAGE";
+
+export interface StateDecisionSummary {
+  source: "player_state_decision_v2";
+  winner?: string;
+  p1?: number;
+  p2?: number;
+  reliability: number;
+  scoreA?: number;
+  scoreB?: number;
+  reasonTags: StateDecisionReasonTag[];
+  votes: {
+    playerA: number;
+    playerB: number;
+  };
+}
+
 export interface PredictionModelSummary {
   modules: HistoryModuleResult[];
   ensemble: EnsembleMeta;
@@ -378,4 +449,6 @@ export interface PredictionModelSummary {
     };
     warnings: string[];
   };
+  playerState?: PlayerStateSummary;
+  stateDecision?: StateDecisionSummary;
 }

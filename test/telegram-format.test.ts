@@ -129,6 +129,50 @@ const basePrediction: PredictionResult = {
       },
       warnings: [],
     },
+    playerState: {
+      source: "trend_strength_windows_v1",
+      historyTechTarget: 10,
+      playerA: {
+        nTech: 8,
+        hasW10: true,
+        hasW5: true,
+        hasW3: true,
+        degradedW10: true,
+        degradedW5: false,
+        degradedW3: false,
+        stability: { w10: 61.3, w5: 64.4, w3: 68.2 },
+        formTech: { w10: 47.8, w5: 52.1, w3: 57.7 },
+        formPlus: { w10: 49.5, w5: 53.7, w3: 59.1 },
+        strength: { w10: 66.2, w5: 63.4, w3: 60.1 },
+      },
+      playerB: {
+        nTech: 6,
+        hasW10: true,
+        hasW5: true,
+        hasW3: true,
+        degradedW10: true,
+        degradedW5: false,
+        degradedW3: false,
+        stability: { w10: 55.4, w5: 54.2, w3: 54.9 },
+        formTech: { w10: 53.2, w5: 51.4, w3: 49.8 },
+        formPlus: { w10: 54.5, w5: 52.1, w3: 50.4 },
+        strength: { w10: 58.9, w5: 60.2, w3: 61.1 },
+      },
+    },
+    stateDecision: {
+      source: "player_state_decision_v2",
+      winner: "Mirra Andreeva",
+      p1: 64.2,
+      p2: 35.8,
+      reliability: 0.72,
+      scoreA: 57.4,
+      scoreB: 50.2,
+      reasonTags: ["FORM_PLUS", "CONSENSUS"],
+      votes: {
+        playerA: 3,
+        playerB: 1,
+      },
+    },
   },
   warnings: ["x"],
 };
@@ -137,7 +181,7 @@ test("formatShortPredictionMessage renders no-YTD short message with NOVA and HI
   const text = formatShortPredictionMessage(basePrediction);
   const lines = text.split("\n");
 
-  assert.equal(lines.length, 23);
+  assert.equal(lines.length, 39);
   assert.equal(lines[0], "✅✅✅");
   assert.equal(lines[1], "TENNIS SIGNAL");
   assert.equal(lines[3], "Mirra Andreeva vs Amanda Anisimova");
@@ -149,8 +193,24 @@ test("formatShortPredictionMessage renders no-YTD short message with NOVA and HI
   assert.equal(lines[18], "SHORT SUMMARY");
   assert.match(lines[19] || "", /^HISTORY-5: Mirra Andreeva \| 65% \/ 35%$/);
   assert.match(lines[20] || "", /^NOVA: Mirra Andreeva \| 62% \/ 38%$/);
-  assert.equal(lines[21], "NOVA FILTER: 🟢 HIGH");
-  assert.equal(lines[22], "==================");
+  assert.equal(lines[21], "STATE: Mirra Andreeva | 64% / 36%");
+  assert.equal(lines[22], "STATE REASON: FORM+ + CONSENSUS");
+  assert.equal(lines[23], "NOVA FILTER: 🟢 HIGH");
+  assert.equal(lines[24], "==================");
+  assert.equal(lines[25], "PLAYER STATE (10/5/3)");
+  assert.equal(lines[26], "Mirra Andreeva:");
+  assert.match(lines[27] || "", /^Stability: \d+ \/ \d+ \/ \d+ [↗↘→]$/);
+  assert.match(lines[28] || "", /^Form-TECH: \d+ \/ \d+ \/ \d+ [↗↘→]$/);
+  assert.match(lines[29] || "", /^Form-PLUS: \d+ \/ \d+ \/ \d+ [↗↘→]$/);
+  assert.match(lines[30] || "", /^Strength: \d+ \/ \d+ \/ \d+ [↗↘→]$/);
+  assert.match(lines[31] || "", /^Coverage: tech 8\/10 \| W10~ W5✓ W3✓$/);
+  assert.equal(lines[32], "Amanda Anisimova:");
+  assert.match(lines[33] || "", /^Stability: \d+ \/ \d+ \/ \d+ [↗↘→]$/);
+  assert.match(lines[34] || "", /^Form-TECH: \d+ \/ \d+ \/ \d+ [↗↘→]$/);
+  assert.match(lines[35] || "", /^Form-PLUS: \d+ \/ \d+ \/ \d+ [↗↘→]$/);
+  assert.match(lines[36] || "", /^Strength: \d+ \/ \d+ \/ \d+ [↗↘→]$/);
+  assert.match(lines[37] || "", /^Coverage: tech 6\/10 \| W10~ W5✓ W3✓$/);
+  assert.equal(lines[38], "==================");
 
   assert.doesNotMatch(text, /YTD SIGNAL/);
   assert.doesNotMatch(text, /\bYTD:/);
@@ -160,6 +220,36 @@ test("formatShortPredictionMessage renders no-YTD short message with NOVA and HI
   assert.doesNotMatch(text, /HYBRID \(shadow\):/);
   assert.doesNotMatch(text, /MAHAL \(shadow\):/);
   assert.doesNotMatch(text, /MATCHUP \(shadow\):/);
+});
+
+test("formatShortPredictionMessage uses modelSummary.stateDecision values in SHORT SUMMARY", () => {
+  const prediction: PredictionResult = {
+    ...basePrediction,
+    matchLabel: "Stearns P. vs Birrell K.",
+    playerAName: "Stearns P.",
+    playerBName: "Birrell K.",
+    modelSummary: {
+      ...basePrediction.modelSummary!,
+      stateDecision: {
+        source: "player_state_decision_v2",
+        winner: "Birrell K.",
+        p1: 29,
+        p2: 71,
+        reliability: 1,
+        scoreA: 45,
+        scoreB: 58,
+        reasonTags: ["FORM_PLUS", "MOMENTUM_UP"],
+        votes: {
+          playerA: 1,
+          playerB: 3,
+        },
+      },
+    },
+  };
+
+  const text = formatShortPredictionMessage(prediction);
+  assert.match(text, /STATE: Birrell K\. \| 29% \/ 71%/);
+  assert.match(text, /STATE REASON: FORM\+ \+ MOMENTUM↑/);
 });
 
 test("formatShortPredictionMessage keeps placeholders and still hides PCLASS", () => {
@@ -177,6 +267,8 @@ test("formatShortPredictionMessage keeps placeholders and still hides PCLASS", (
       hybridShadow: undefined,
       mahalShadow: undefined,
       matchupShadow: undefined,
+      playerState: undefined,
+      stateDecision: undefined,
     },
   };
 
@@ -187,6 +279,8 @@ test("formatShortPredictionMessage keeps placeholders and still hides PCLASS", (
   assert.match(text, /PCA: - \/ -/);
   assert.match(text, /SHORT SUMMARY/);
   assert.match(text, /NOVA: - \| - \/ -/);
+  assert.match(text, /STATE: - \| - \/ -/);
+  assert.match(text, /STATE REASON: -/);
   assert.match(text, /NOVA FILTER: 🟡 NORMAL/);
   assert.match(text, /Methods: 0/);
   assert.match(text, /Agreement: -\/-/);
@@ -197,6 +291,12 @@ test("formatShortPredictionMessage keeps placeholders and still hides PCLASS", (
   assert.doesNotMatch(text, /HYBRID \(shadow\):/);
   assert.doesNotMatch(text, /MAHAL \(shadow\):/);
   assert.doesNotMatch(text, /MATCHUP \(shadow\):/);
+  assert.match(text, /PLAYER STATE \(10\/5\/3\)/);
+  assert.match(text, /Stability: - \/ - \/ -/);
+  assert.match(text, /Form-TECH: - \/ - \/ -/);
+  assert.match(text, /Form-PLUS: - \/ - \/ -/);
+  assert.match(text, /Strength: - \/ - \/ -/);
+  assert.match(text, /Coverage: tech 0\/10 \| W10x W5x W3x/);
 });
 
 test("formatShortPredictionMessage renders Telegram HTML link when requested", () => {

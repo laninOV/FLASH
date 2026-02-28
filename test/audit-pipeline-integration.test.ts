@@ -36,6 +36,7 @@ function makePlayer(name: string, bases: number[]): PlayerRecentStats {
   return {
     playerName: name,
     parsedMatches: bases.map((base, i) => makeMatch(`https://m/${name}/${i}`, base)),
+    stateFeatures: [],
     missingStatsCount: 0,
     errors: [],
     historyScanStats: {

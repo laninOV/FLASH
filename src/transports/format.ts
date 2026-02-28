@@ -16,6 +16,8 @@ export function formatShortPredictionMessage(
   const names = resolvePlayerNames(prediction);
   const probs = prediction.modelSummary?.dirt?.modelProbabilities;
   const novaEdge = prediction.modelSummary?.novaEdge;
+  const playerState = prediction.modelSummary?.playerState;
+  const stateDecision = prediction.modelSummary?.stateDecision;
   const methodsSummary = computeMethodsAgreement(
     prediction.predictedWinner,
     names.playerA,
@@ -54,7 +56,16 @@ export function formatShortPredictionMessage(
       formatPercentPair(probs?.finalP1),
     )}`,
     `NOVA: ${formatMethodSummary(novaEdge?.winner, formatNovaEdgePair(novaEdge?.p1, novaEdge?.p2))}`,
+    `STATE: ${formatMethodSummary(
+      stateDecision?.winner,
+      formatNovaEdgePair(stateDecision?.p1, stateDecision?.p2),
+    )}`,
+    formatStateReasonLine(stateDecision),
     formatNovaFilterLabelLine(prediction),
+    SEPARATOR,
+    "PLAYER STATE (10/5/3)",
+    ...formatPlayerStateLines(names.playerA, playerState?.playerA),
+    ...formatPlayerStateLines(names.playerB, playerState?.playerB),
     SEPARATOR,
   ];
 
@@ -158,6 +169,113 @@ function formatNovaFilterLabelLine(prediction: PredictionResult): string {
     return "NOVA FILTER: 🔴 SKIP";
   }
   return "NOVA FILTER: 🟡 NORMAL";
+}
+
+type PlayerStateDisplay = NonNullable<
+  NonNullable<PredictionResult["modelSummary"]>["playerState"]
+>["playerA"];
+
+type PlayerStateMetricSeries = PlayerStateDisplay["stability"];
+type StateDecisionDisplay = NonNullable<
+  NonNullable<PredictionResult["modelSummary"]>["stateDecision"]
+>;
+
+function formatPlayerStateLines(playerName: string, state: PlayerStateDisplay | undefined): string[] {
+  return [
+    `${playerName}:`,
+    `Stability: ${formatStateSeries(state?.stability)}`,
+    `Form-TECH: ${formatStateSeries(state?.formTech)}`,
+    `Form-PLUS: ${formatStateSeries(state?.formPlus)}`,
+    `Strength: ${formatStateSeries(state?.strength)}`,
+    `Coverage: ${formatStateCoverage(state)}`,
+  ];
+}
+
+function formatStateSeries(series: PlayerStateMetricSeries | undefined): string {
+  const w10 = formatStateValue(series?.w10);
+  const w5 = formatStateValue(series?.w5);
+  const w3 = formatStateValue(series?.w3);
+  const arrow = formatTrendArrow(series?.w10, series?.w3);
+  return `${w10} / ${w5} / ${w3}${arrow ? ` ${arrow}` : ""}`;
+}
+
+function formatStateValue(value: number | undefined): string {
+  if (!isFiniteNumber(value)) {
+    return "-";
+  }
+  return String(Math.round(clamp(value, 0, 100)));
+}
+
+function formatTrendArrow(w10: number | undefined, w3: number | undefined): string {
+  if (!isFiniteNumber(w10) || !isFiniteNumber(w3)) {
+    return "";
+  }
+  const delta = w3 - w10;
+  if (delta >= 2) {
+    return "↗";
+  }
+  if (delta <= -2) {
+    return "↘";
+  }
+  return "→";
+}
+
+function formatStateCoverage(state: PlayerStateDisplay | undefined): string {
+  const nTech = Number.isFinite(state?.nTech) ? Math.max(0, Math.trunc(state?.nTech || 0)) : 0;
+  const markerW10 = formatWindowMarker("W10", state?.hasW10, state?.degradedW10);
+  const markerW5 = formatWindowMarker("W5", state?.hasW5, state?.degradedW5);
+  const markerW3 = formatWindowMarker("W3", state?.hasW3, state?.degradedW3);
+  return `tech ${nTech}/10 | ${markerW10} ${markerW5} ${markerW3}`;
+}
+
+function formatWindowMarker(
+  label: string,
+  hasWindow: boolean | undefined,
+  degraded: boolean | undefined,
+): string {
+  if (hasWindow !== true) {
+    return `${label}x`;
+  }
+  if (degraded === true) {
+    return `${label}~`;
+  }
+  return `${label}✓`;
+}
+
+function formatStateReasonLine(stateDecision: StateDecisionDisplay | undefined): string {
+  const tags = stateDecision?.reasonTags || [];
+  if (!tags.length) {
+    return "STATE REASON: -";
+  }
+  return `STATE REASON: ${tags.slice(0, 2).map(formatStateReasonTag).join(" + ")}`;
+}
+
+function formatStateReasonTag(tag: StateDecisionDisplay["reasonTags"][number]): string {
+  if (tag === "FORM_PLUS") {
+    return "FORM+";
+  }
+  if (tag === "FORM_TECH") {
+    return "FORM-TECH";
+  }
+  if (tag === "STABILITY") {
+    return "STABILITY";
+  }
+  if (tag === "STRENGTH") {
+    return "STRENGTH";
+  }
+  if (tag === "MOMENTUM_UP") {
+    return "MOMENTUM↑";
+  }
+  if (tag === "MOMENTUM_DOWN") {
+    return "MOMENTUM↓";
+  }
+  if (tag === "CONSENSUS") {
+    return "CONSENSUS";
+  }
+  if (tag === "MIXED") {
+    return "MIXED";
+  }
+  return "LOW_COVERAGE";
 }
 
 function resolvePlayerNames(prediction: PredictionResult): { playerA: string; playerB: string } {

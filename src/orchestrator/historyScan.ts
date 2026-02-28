@@ -28,6 +28,7 @@ export interface TechHistoryScanInput {
   playerName: string;
   candidates: RecentMatchRef[];
   needCount: number;
+  budgetNeedCount?: number;
   statsMissBudget?: number;
   logger?: Pick<Logger, "debug" | "warn">;
   signal?: AbortSignal;
@@ -65,10 +66,16 @@ export async function scanTechHistoryCandidates(
   let earlyStopBudget: number | undefined;
   let metricsIncompleteDiagnosticsLogged = 0;
   const statsMissBudget = Math.max(0, Number(input.statsMissBudget || 0));
+  const budgetNeedCount = Math.max(
+    0,
+    Number.isFinite(input.budgetNeedCount)
+      ? Math.trunc(input.budgetNeedCount as number)
+      : Math.trunc(input.needCount),
+  );
 
   const shouldStopForBudget = (): boolean =>
     statsMissBudget > 0 &&
-    parsedMatches.length < input.needCount &&
+    parsedMatches.length < budgetNeedCount &&
     statsMissesForBudget >= statsMissBudget;
 
   const logMetricsIncompleteDetails = (parsed: HistoricalMatchTechStats, recentUrl: string): void => {

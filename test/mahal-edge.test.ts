@@ -27,6 +27,7 @@ function makePlayer(name: string, rows: Array<Record<string, number>>): PlayerRe
   return {
     playerName: name,
     parsedMatches: rows.map((values, index) => makeTechMatch(`https://x/${name}/${index + 1}`, values)),
+    stateFeatures: [],
     missingStatsCount: 0,
     errors: [],
   };

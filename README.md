@@ -27,8 +27,10 @@ The runtime builds predictions from strict history-only `Tech Statistics` (`stab
 - Optional first line: `✅✅✅` when `HISTORY-5` winner and `NOVA` winner are the same player
 - Main block: `Logistic`, `Markov`, `Bradley-Terry`, `PCA`
 - Summary: `Winner`, `Odds`, `Methods`, `Agreement`, `Confidence`
-- Extra block: `NOVA EDGE`, `NOVA PICK`
-- Short summary: `HISTORY-5`, `NOVA`
+- Short summary: `HISTORY-5`, `NOVA`, `STATE`, `STATE REASON`, `NOVA FILTER`
+- Player state block: `PLAYER STATE (10/5/3)` for each player
+- Player state metrics: `Stability`, `Form-TECH`, `Form-PLUS`, `Strength`, `Coverage`
+- `STATE`/`STATE REASON` are informational only and do not change main `Winner`/`Confidence`
 - No `YTD SIGNAL`
 - No `PCLASS` lines
 
@@ -112,6 +114,38 @@ npm run control-bot -- \
   --slow-mo 0 \
   --timeout-ms 30000
 ```
+
+### Ошибка 409 getUpdates
+
+Симптом:
+
+```text
+Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+```
+
+Что это значит:
+- один Telegram token нельзя polling-ить из двух процессов одновременно;
+- обычно запущен дубликат `control-bot` (второй терминал/повторный старт).
+
+Как проверить локально:
+
+```bash
+ps aux | rg -i "controlBotCli|control-bot"
+```
+
+Как остановить дубликат:
+
+```bash
+pkill -f "dist/src/controlBotCli.js"
+# или точечно:
+kill <pid>
+```
+
+Runtime-защита в проекте:
+- при старте ставится process-lock в `/tmp/flash-control-bot-{tokenHash}.lock`;
+- второй процесс с тем же token завершится сразу (fail-fast);
+- если polling 409 идёт подряд, бот делает backoff и завершает процесс после порога конфликтов;
+- stale lock после падения автоматически очищается при следующем старте.
 
 ## Server Deployment (Ubuntu + systemd)
 

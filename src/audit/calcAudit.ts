@@ -437,6 +437,7 @@ async function collectPlayerStatsForAudit(
     playerName: player.name,
     profileUrl: player.profileUrl,
     parsedMatches: [],
+    stateFeatures: [],
     missingStatsCount: 0,
     errors: [],
   };

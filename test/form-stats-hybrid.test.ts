@@ -40,6 +40,7 @@ function makePlayer(
     parsedMatches: Array.from({ length: count }, (_, index) =>
       makeTechMatch(`https://x/${name}/${index + 1}`, metricValues),
     ),
+    stateFeatures: [],
     recentForm: recentForm
       ? ({
           windowRequested: 8,

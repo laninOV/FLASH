@@ -65,6 +65,7 @@ function makePlayer(name: string, urls: string[], metrics: Stable14[]): PlayerRe
   return {
     playerName: name,
     parsedMatches: urls.map((url, index) => makeMatch(url, metrics[index]!)),
+    stateFeatures: [],
     missingStatsCount: 0,
     errors: [],
   };

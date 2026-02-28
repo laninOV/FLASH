@@ -34,6 +34,21 @@ export async function getUpdates(
   return parsed.result;
 }
 
+export function isGetUpdatesConflictError(error: unknown): boolean {
+  const message = String(error instanceof Error ? error.message : error || "")
+    .toLowerCase()
+    .trim();
+  if (!message) {
+    return false;
+  }
+  return (
+    message.includes("getupdates failed (409)") ||
+    message.includes('"error_code":409') ||
+    message.includes("terminated by other getupdates request") ||
+    message.includes("conflict:")
+  );
+}
+
 export function nextOffset(currentOffset: number, updates: TelegramUpdate[]): number {
   let offset = currentOffset;
   for (const update of updates) {

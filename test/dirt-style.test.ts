@@ -60,6 +60,7 @@ function player(
     playerName: name,
     profileUrl,
     parsedMatches: matches,
+    stateFeatures: [],
     missingStatsCount: 0,
     errors: [],
   };

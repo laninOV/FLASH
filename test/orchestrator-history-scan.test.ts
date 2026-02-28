@@ -47,6 +47,7 @@ function makePlayer(name: string, parsedCount: number): PlayerRecentStats {
   return {
     playerName: name,
     parsedMatches,
+    stateFeatures: [],
     missingStatsCount: 0,
     errors: [],
   };
@@ -314,6 +315,32 @@ test("scanTechHistoryCandidates budget=0 keeps current deep-scan behavior", asyn
   assert.equal(result.techMissing, 2);
   assert.equal(result.statsMissesForBudget, 2);
   assert.equal(result.earlyStopReason, undefined);
+});
+
+test("scanTechHistoryCandidates applies budget only until budgetNeedCount is reached", async () => {
+  const candidates: RecentMatchRef[] = Array.from({ length: 12 }, (_, index) =>
+    makeCandidate(801 + index),
+  );
+  const acceptedIndexes = new Set([1, 3, 4, 5, 6, 10, 11]);
+
+  const result = await scanTechHistoryCandidates({
+    playerName: "Player I",
+    candidates,
+    needCount: 10,
+    budgetNeedCount: 5,
+    statsMissBudget: 3,
+    parseMatch: async (candidate, index) => {
+      if (acceptedIndexes.has(index)) {
+        return makeParsed(candidate.url);
+      }
+      return null;
+    },
+  });
+
+  assert.equal(result.earlyStopReason, undefined);
+  assert.equal(result.scanned, 12);
+  assert.equal(result.parsedMatches.length, 7);
+  assert.equal(result.statsMissesForBudget, 5);
 });
 
 test("hasRequiredHistoryCoverage enforces strict needCount for both players", () => {
