@@ -217,17 +217,17 @@ test("formatShortPredictionMessage renders no-YTD short message with NOVA and HI
   assert.equal(lines[25], "==================");
   assert.equal(lines[26], "PLAYER STATE (10/5/3)");
   assert.equal(lines[27], "Mirra Andreeva:");
-  assert.match(lines[28] || "", /^Stability: \d+ \/ \d+ \/ \d+ [↗↘→]$/);
-  assert.match(lines[29] || "", /^Form-TECH: \d+ \/ \d+ \/ \d+ [↗↘→]$/);
-  assert.match(lines[30] || "", /^Form-PLUS: \d+ \/ \d+ \/ \d+ [↗↘→]$/);
-  assert.match(lines[31] || "", /^Strength: \d+ \/ \d+ \/ \d+ [↗↘→]$/);
+  assert.match(lines[28] || "", /^Stability: \d+ \/ \d+ \/ \d+ [↗↘→] \| avg \d+\.\d \| sum \d+$/);
+  assert.match(lines[29] || "", /^Form-TECH: \d+ \/ \d+ \/ \d+ [↗↘→] \| avg \d+\.\d \| sum \d+$/);
+  assert.match(lines[30] || "", /^Form-PLUS: \d+ \/ \d+ \/ \d+ [↗↘→] \| avg \d+\.\d \| sum \d+$/);
+  assert.match(lines[31] || "", /^Strength: \d+ \/ \d+ \/ \d+ [↗↘→] \| avg \d+\.\d \| sum \d+$/);
   assert.match(lines[32] || "", /^Coverage: tech 8\/10 \| W10~ W5✓ W3✓$/);
   assert.match(lines[33] || "", /^Quality: rel 0\.80\/1\.00\/1\.00 \| score 0\.70\/0\.80\/1\.00 \| opp 1\.00\/1\.00\/1\.00 \| q=0\.89$/);
   assert.equal(lines[34], "Amanda Anisimova:");
-  assert.match(lines[35] || "", /^Stability: \d+ \/ \d+ \/ \d+ [↗↘→]$/);
-  assert.match(lines[36] || "", /^Form-TECH: \d+ \/ \d+ \/ \d+ [↗↘→]$/);
-  assert.match(lines[37] || "", /^Form-PLUS: \d+ \/ \d+ \/ \d+ [↗↘→]$/);
-  assert.match(lines[38] || "", /^Strength: \d+ \/ \d+ \/ \d+ [↗↘→]$/);
+  assert.match(lines[35] || "", /^Stability: \d+ \/ \d+ \/ \d+ [↗↘→] \| avg \d+\.\d \| sum \d+$/);
+  assert.match(lines[36] || "", /^Form-TECH: \d+ \/ \d+ \/ \d+ [↗↘→] \| avg \d+\.\d \| sum \d+$/);
+  assert.match(lines[37] || "", /^Form-PLUS: \d+ \/ \d+ \/ \d+ [↗↘→] \| avg \d+\.\d \| sum \d+$/);
+  assert.match(lines[38] || "", /^Strength: \d+ \/ \d+ \/ \d+ [↗↘→] \| avg \d+\.\d \| sum \d+$/);
   assert.match(lines[39] || "", /^Coverage: tech 6\/10 \| W10~ W5✓ W3✓$/);
   assert.match(lines[40] || "", /^Quality: rel 0\.60\/1\.00\/1\.00 \| score 0\.60\/0\.60\/1\.00 \| opp 1\.00\/1\.00\/1\.00 \| q=0\.82$/);
   assert.equal(lines[41], "==================");
@@ -347,10 +347,10 @@ test("formatShortPredictionMessage keeps placeholders and still hides PCLASS", (
   assert.doesNotMatch(text, /MAHAL \(shadow\):/);
   assert.doesNotMatch(text, /MATCHUP \(shadow\):/);
   assert.match(text, /PLAYER STATE \(10\/5\/3\)/);
-  assert.match(text, /Stability: - \/ - \/ -/);
-  assert.match(text, /Form-TECH: - \/ - \/ -/);
-  assert.match(text, /Form-PLUS: - \/ - \/ -/);
-  assert.match(text, /Strength: - \/ - \/ -/);
+  assert.match(text, /Stability: - \/ - \/ - \| avg - \| sum -/);
+  assert.match(text, /Form-TECH: - \/ - \/ - \| avg - \| sum -/);
+  assert.match(text, /Form-PLUS: - \/ - \/ - \| avg - \| sum -/);
+  assert.match(text, /Strength: - \/ - \/ - \| avg - \| sum -/);
   assert.match(text, /Coverage: tech 0\/10 \| W10x W5x W3x/);
   assert.match(text, /Quality: rel -\/-\/- \| score -\/-\/- \| opp -\/-\/- \| q=-/);
 });
@@ -375,13 +375,13 @@ test("formatShortPredictionMessage uses LIVE date for live matches", () => {
   assert.match(text, /Date: LIVE/);
 });
 
-test("formatShortPredictionMessage uses '-' for missing winner odds", () => {
+test("formatShortPredictionMessage hides Odds line for missing winner odds", () => {
   const prediction: PredictionResult = {
     ...basePrediction,
     predictedWinner: "Unknown Winner",
   };
   const text = formatShortPredictionMessage(prediction);
-  assert.match(text, /Odds: -/);
+  assert.doesNotMatch(text, /Odds:/);
 });
 
 test("formatShortPredictionMessage does not add checkmarks when HISTORY-5 and NOVA winners differ", () => {

@@ -34,6 +34,8 @@ export function formatShortPredictionMessage(
     prediction.confidence,
     methodsSummary,
   );
+  const winnerOddText = formatWinnerOddComma(prediction, names.playerA, names.playerB);
+  const oddsLine = winnerOddText ? `Odds: ${winnerOddText}` : undefined;
 
   const lines = [
     ...(showConsensusCheckmarks ? ["✅✅✅"] : []),
@@ -49,7 +51,7 @@ export function formatShortPredictionMessage(
     `PCA: ${formatPercentPair(probs?.pcaP1)}`,
     SEPARATOR,
     `Winner: ${prediction.predictedWinner}`,
-    `Odds: ${formatWinnerOddComma(prediction, names.playerA, names.playerB)}`,
+    ...(oddsLine ? [oddsLine] : []),
     `Methods: ${methodsSummary.methods}`,
     formatAgreementLine(methodsSummary),
     formatConfidenceLine(prediction.confidence),
@@ -199,7 +201,8 @@ function formatStateSeries(series: PlayerStateMetricSeries | undefined): string 
   const w5 = formatStateValue(series?.w5);
   const w3 = formatStateValue(series?.w3);
   const arrow = formatTrendArrow(series?.w10, series?.w3);
-  return `${w10} / ${w5} / ${w3}${arrow ? ` ${arrow}` : ""}`;
+  const avgSum = formatStateAvgSum(series);
+  return `${w10} / ${w5} / ${w3}${arrow ? ` ${arrow}` : ""} | avg ${avgSum.avg} | sum ${avgSum.sum}`;
 }
 
 function formatStateValue(value: number | undefined): string {
@@ -207,6 +210,34 @@ function formatStateValue(value: number | undefined): string {
     return "-";
   }
   return String(Math.round(clamp(value, 0, 100)));
+}
+
+function normalizeRoundedStateValue(value: number | undefined): number | undefined {
+  if (!isFiniteNumber(value)) {
+    return undefined;
+  }
+  return Math.round(clamp(value, 0, 100));
+}
+
+function formatStateAvgSum(
+  series: PlayerStateMetricSeries | undefined,
+): { avg: string; sum: string } {
+  const values = [
+    normalizeRoundedStateValue(series?.w10),
+    normalizeRoundedStateValue(series?.w5),
+    normalizeRoundedStateValue(series?.w3),
+  ].filter((value): value is number => typeof value === "number");
+
+  if (!values.length) {
+    return { avg: "-", sum: "-" };
+  }
+
+  const sum = values.reduce((acc, value) => acc + value, 0);
+  const avg = (sum / values.length).toFixed(1);
+  return {
+    avg,
+    sum: String(sum),
+  };
 }
 
 function formatTrendArrow(w10: number | undefined, w3: number | undefined): string {
@@ -434,10 +465,10 @@ function formatWinnerOddComma(
   prediction: PredictionResult,
   playerAName: string,
   playerBName: string,
-): string {
+): string | undefined {
   const odds = prediction.marketOdds;
   if (!odds) {
-    return "-";
+    return undefined;
   }
 
   const winner = normalizeName(prediction.predictedWinner).toLowerCase();
@@ -450,7 +481,7 @@ function formatWinnerOddComma(
   if (winner && winner === b && isFiniteNumber(odds.away)) {
     return formatCommaDecimal(odds.away, 1);
   }
-  return "-";
+  return undefined;
 }
 
 function formatConfidence(confidence: number): string {
