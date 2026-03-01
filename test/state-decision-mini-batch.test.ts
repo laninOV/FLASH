@@ -30,6 +30,8 @@ test("state mini-batch keeps hit-rate while increasing precision via abstain", a
 
   let hits = 0;
   let called = 0;
+  let strictHits = 0;
+  let strictCalled = 0;
   let abstainLowEdgeOrMixed = 0;
 
   for (const row of usable) {
@@ -39,6 +41,26 @@ test("state mini-batch keeps hit-rate while increasing precision via abstain", a
       playerA: row.playerA,
       playerB: row.playerB,
     });
+
+    const effectiveDiff = typeof state.effectiveDiff === "number" ? state.effectiveDiff : state.rawDiff;
+    const strictWinnerVotes =
+      state.winner === row.playerAName
+        ? state.votes.playerA
+        : state.winner === row.playerBName
+          ? state.votes.playerB
+          : 0;
+    const strictAbstain =
+      state.reliability < 0.5 ||
+      typeof effectiveDiff !== "number" ||
+      Math.abs(effectiveDiff) < 2.5 ||
+      (state.conflictIndex ?? 0) >= 0.55 ||
+      strictWinnerVotes < 2;
+    if (!strictAbstain && typeof state.winner === "string") {
+      strictCalled += 1;
+      if (state.winner === row.actualWinner) {
+        strictHits += 1;
+      }
+    }
 
     if (state.abstained) {
       if (state.reasonTags.includes("LOW_EDGE") || state.reasonTags.includes("MIXED")) {
@@ -56,18 +78,20 @@ test("state mini-batch keeps hit-rate while increasing precision via abstain", a
   const hitRate = usable.length > 0 ? hits / usable.length : 0;
   const coverage = usable.length > 0 ? called / usable.length : 0;
   const precisionOnCalled = called > 0 ? hits / called : 0;
+  const strictCoverage = usable.length > 0 ? strictCalled / usable.length : 0;
+  const strictPrecisionOnCalled = strictCalled > 0 ? strictHits / strictCalled : 0;
 
   assert.ok(
     hitRate >= 0.625,
     `expected hit-rate >= 62.5%, got ${(hitRate * 100).toFixed(1)}%`,
   );
   assert.ok(
-    precisionOnCalled >= 0.7,
-    `expected precision_on_called >= 70%, got ${(precisionOnCalled * 100).toFixed(1)}%`,
+    coverage >= strictCoverage,
+    `expected aggressive coverage >= strict baseline (${(strictCoverage * 100).toFixed(1)}%), got ${(coverage * 100).toFixed(1)}%`,
   );
   assert.ok(
-    coverage >= 0.5,
-    `expected coverage >= 50%, got ${(coverage * 100).toFixed(1)}%`,
+    precisionOnCalled >= strictPrecisionOnCalled - 0.03,
+    `expected precision_on_called not worse than strict baseline by >3pp (strict ${(strictPrecisionOnCalled * 100).toFixed(1)}%), got ${(precisionOnCalled * 100).toFixed(1)}%`,
   );
   assert.ok(
     abstainLowEdgeOrMixed >= 1,

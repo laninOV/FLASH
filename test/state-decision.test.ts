@@ -88,16 +88,16 @@ test("computeStateDecision returns LOW_COVERAGE abstain for weak window coverage
 
 test("computeStateDecision returns LOW_EDGE abstain on near-neutral edge", () => {
   const playerA = makeSide({
-    stability: { w10: 62, w5: 60, w3: 59 },
-    formTech: { w10: 54, w5: 53, w3: 52 },
-    formPlus: { w10: 53, w5: 52, w3: 52 },
-    strength: { w10: 51, w5: 51, w3: 50 },
+    stability: { w10: 60, w5: 60, w3: 60 },
+    formTech: { w10: 50, w5: 50, w3: 50 },
+    formPlus: { w10: 50, w5: 50, w3: 50 },
+    strength: { w10: 50, w5: 50, w3: 50 },
   });
   const playerB = makeSide({
-    stability: { w10: 61, w5: 60, w3: 60 },
-    formTech: { w10: 53, w5: 53, w3: 52 },
-    formPlus: { w10: 53, w5: 52, w3: 51 },
-    strength: { w10: 51, w5: 50, w3: 50 },
+    stability: { w10: 60, w5: 60, w3: 60 },
+    formTech: { w10: 50, w5: 50, w3: 50 },
+    formPlus: { w10: 50, w5: 50, w3: 50 },
+    strength: { w10: 50, w5: 50, w3: 50 },
   });
 
   const state = computeStateDecision({
@@ -110,20 +110,21 @@ test("computeStateDecision returns LOW_EDGE abstain on near-neutral edge", () =>
   assert.equal(state.winner, undefined);
   assert.equal(state.abstained, true);
   assert.ok(state.reasonTags.includes("LOW_EDGE"));
+  assert.ok(state.reasonTags.includes("MIXED"));
 });
 
-test("computeStateDecision returns MIXED abstain on strong anchor-vs-form conflict", () => {
+test("computeStateDecision returns LOW_EDGE+MIXED abstain on strong anchor-vs-form conflict", () => {
   const playerA = makeSide({
-    stability: { w10: 90, w5: 88, w3: 86 },
-    formTech: { w10: 40, w5: 38, w3: 36 },
-    formPlus: { w10: 42, w5: 39, w3: 35 },
-    strength: { w10: 86, w5: 84, w3: 82 },
+    stability: { w10: 80, w5: 80, w3: 80 },
+    formTech: { w10: 50, w5: 50, w3: 50 },
+    formPlus: { w10: 50, w5: 50, w3: 50 },
+    strength: { w10: 70, w5: 70, w3: 70 },
   });
   const playerB = makeSide({
-    stability: { w10: 50, w5: 52, w3: 54 },
-    formTech: { w10: 86, w5: 88, w3: 90 },
-    formPlus: { w10: 84, w5: 87, w3: 89 },
-    strength: { w10: 48, w5: 50, w3: 52 },
+    stability: { w10: 62, w5: 62, w3: 62 },
+    formTech: { w10: 63, w5: 63, w3: 63 },
+    formPlus: { w10: 63, w5: 63, w3: 63 },
+    strength: { w10: 52, w5: 52, w3: 52 },
   });
 
   const state = computeStateDecision({
@@ -135,6 +136,33 @@ test("computeStateDecision returns MIXED abstain on strong anchor-vs-form confli
 
   assert.equal(state.winner, undefined);
   assert.equal(state.abstained, true);
+  assert.ok(state.reasonTags.includes("LOW_EDGE"));
   assert.ok(state.reasonTags.includes("MIXED"));
-  assert.ok((state.conflictIndex || 0) >= 0.55);
+  assert.ok((state.conflictIndex || 0) >= 0.72);
+});
+
+test("computeStateDecision keeps winner in aggressive mode on normal edge", () => {
+  const playerA = makeSide({
+    stability: { w10: 72, w5: 74, w3: 73 },
+    formTech: { w10: 61, w5: 65, w3: 67 },
+    formPlus: { w10: 60, w5: 64, w3: 66 },
+    strength: { w10: 56, w5: 57, w3: 58 },
+  });
+  const playerB = makeSide({
+    stability: { w10: 66, w5: 67, w3: 68 },
+    formTech: { w10: 50, w5: 52, w3: 53 },
+    formPlus: { w10: 49, w5: 51, w3: 52 },
+    strength: { w10: 49, w5: 50, w3: 51 },
+  });
+
+  const state = computeStateDecision({
+    playerAName: "A",
+    playerBName: "B",
+    playerA,
+    playerB,
+  });
+
+  assert.equal(state.abstained, false);
+  assert.equal(state.winner, "A");
+  assert.ok(typeof state.rawDiff === "number");
 });

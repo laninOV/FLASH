@@ -170,6 +170,7 @@ export function predict(
       formTech: playerAState.formTech,
       formPlus: playerAState.formPlus,
       strength: playerAState.strength,
+      quality: playerAState.quality,
     },
     playerB: {
       nTech: playerBState.nTech,
@@ -183,6 +184,7 @@ export function predict(
       formTech: playerBState.formTech,
       formPlus: playerBState.formPlus,
       strength: playerBState.strength,
+      quality: playerBState.quality,
     },
   };
   const stateDecision = computeStateDecision({

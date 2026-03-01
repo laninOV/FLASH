@@ -278,6 +278,19 @@ export interface PlayerStateWindowSeries {
   w3?: number;
 }
 
+export interface PlayerStateQualitySeries {
+  w10?: number;
+  w5?: number;
+  w3?: number;
+}
+
+export interface PlayerStateQualitySummary {
+  windowReliability: PlayerStateQualitySeries;
+  scoreCoverage: PlayerStateQualitySeries;
+  oppCoverage: PlayerStateQualitySeries;
+  composite?: number;
+}
+
 export interface PlayerStatePlayerSummary {
   nTech: number;
   hasW10: boolean;
@@ -290,6 +303,7 @@ export interface PlayerStatePlayerSummary {
   formTech: PlayerStateWindowSeries;
   formPlus: PlayerStateWindowSeries;
   strength: PlayerStateWindowSeries;
+  quality?: PlayerStateQualitySummary;
 }
 
 export interface PlayerStateSummary {
@@ -317,6 +331,7 @@ export interface StateDecisionSummary {
   p1?: number;
   p2?: number;
   reliability: number;
+  rawDiff?: number;
   scoreA?: number;
   scoreB?: number;
   conflictIndex?: number;

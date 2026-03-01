@@ -61,7 +61,13 @@ const WINDOW_RECENT_WEIGHTS = {
   w3: 0.45,
 } as const;
 
-const LOW_EDGE_THRESHOLD = 2.5;
+const AGGRESSIVE_POLICY = {
+  lowCoverageThreshold: 0.48,
+  lowEdgeThreshold: 1.8,
+  hardLowEdgeThreshold: 0.9,
+  mixedConflictThreshold: 0.72,
+  minWinnerVotes: 1,
+} as const;
 
 function isFiniteNumber(value: unknown): value is number {
   return typeof value === "number" && Number.isFinite(value);
@@ -290,20 +296,33 @@ export function computeStateDecision(input: ComputeStateDecisionInput): StateDec
   const winnerVotes = winnerSide === "A" ? votes.playerA : winnerSide === "B" ? votes.playerB : 0;
 
   const reasonByPriority: StateDecisionReasonTag[] = [];
-  if (!isFiniteNumber(sideA.score) || !isFiniteNumber(sideB.score) || minReliability < 0.5) {
+  const lowCoverage =
+    !isFiniteNumber(sideA.score) ||
+    !isFiniteNumber(sideB.score) ||
+    minReliability < AGGRESSIVE_POLICY.lowCoverageThreshold;
+  const lowEdge =
+    !isFiniteNumber(effectiveDiff) || Math.abs(effectiveDiff) < AGGRESSIVE_POLICY.lowEdgeThreshold;
+  const mixed =
+    conflictIndex >= AGGRESSIVE_POLICY.mixedConflictThreshold ||
+    winnerVotes < AGGRESSIVE_POLICY.minWinnerVotes;
+  const hardLowEdge =
+    isFiniteNumber(effectiveDiff) && Math.abs(effectiveDiff) < AGGRESSIVE_POLICY.hardLowEdgeThreshold;
+  if (lowCoverage) {
     reasonByPriority.push("LOW_COVERAGE");
   }
-  if (!isFiniteNumber(effectiveDiff) || Math.abs(effectiveDiff) < LOW_EDGE_THRESHOLD) {
+  if (lowEdge) {
     reasonByPriority.push("LOW_EDGE");
   }
-  if (conflictIndex >= 0.55 || winnerVotes < 2) {
+  if (mixed) {
     reasonByPriority.push("MIXED");
   }
+  const shouldAbstain = lowCoverage || (lowEdge && (mixed || hardLowEdge));
 
-  if (reasonByPriority.length > 0) {
+  if (shouldAbstain) {
     return {
       source: "player_state_decision_v3",
       reliability: round3(minReliability),
+      rawDiff: isFiniteNumber(rawDiff) ? round3(rawDiff) : undefined,
       scoreA: isFiniteNumber(sideA.score) ? round3(sideA.score) : undefined,
       scoreB: isFiniteNumber(sideB.score) ? round3(sideB.score) : undefined,
       conflictIndex: round3(conflictIndex),
@@ -353,6 +372,7 @@ export function computeStateDecision(input: ComputeStateDecisionInput): StateDec
     p1: round3(p1 as number),
     p2: round3(p2 as number),
     reliability: round3(minReliability),
+    rawDiff: isFiniteNumber(rawDiff) ? round3(rawDiff) : undefined,
     scoreA: round3(sideA.score as number),
     scoreB: round3(sideB.score as number),
     conflictIndex: round3(conflictIndex),

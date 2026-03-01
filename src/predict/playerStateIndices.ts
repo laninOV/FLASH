@@ -84,6 +84,19 @@ export interface PlayerStateWindowSeries {
   w3?: number;
 }
 
+export interface PlayerStateQualitySeries {
+  w10?: number;
+  w5?: number;
+  w3?: number;
+}
+
+export interface PlayerStateQualitySummary {
+  windowReliability: PlayerStateQualitySeries;
+  scoreCoverage: PlayerStateQualitySeries;
+  oppCoverage: PlayerStateQualitySeries;
+  composite?: number;
+}
+
 export interface PlayerStateSeriesResult {
   nTech: number;
   hasW10: boolean;
@@ -96,6 +109,7 @@ export interface PlayerStateSeriesResult {
   formTech: PlayerStateWindowSeries;
   formPlus: PlayerStateWindowSeries;
   strength: PlayerStateWindowSeries;
+  quality?: PlayerStateQualitySummary;
 }
 
 export interface PairStateContrastOptions {
@@ -1023,13 +1037,25 @@ export function buildPlayerStateSeries(features: PlayerStateFeature[]): PlayerSt
     .sort((a, b) => a.candidateIndex - b.candidateIndex);
   const nTech = ordered.length;
 
+  interface WindowQualityComputation {
+    windowReliability?: number;
+    scoreCoverage?: number;
+    oppCoverage?: number;
+    composite?: number;
+  }
+
   const computeWindow = (
     windowName: "w10" | "w5" | "w3",
     target: number,
     minEnable: number,
-  ): { enabled: boolean; degraded: boolean; indices: PerPlayerIndices } => {
+  ): {
+    enabled: boolean;
+    degraded: boolean;
+    indices: PerPlayerIndices;
+    quality: WindowQualityComputation;
+  } => {
     if (nTech < minEnable) {
-      return { enabled: false, degraded: false, indices: {} };
+      return { enabled: false, degraded: false, indices: {}, quality: {} };
     }
     const used = Math.min(target, nTech);
     const subset = ordered.slice(0, used);
@@ -1041,16 +1067,36 @@ export function buildPlayerStateSeries(features: PlayerStateFeature[]): PlayerSt
       degraded: used < target,
     };
     const aggregate = windowAggregate(subset, windowName, spec);
+    const indices = computeWindowLocalIndices(aggregate, spec);
+    const windowReliability = spec.reliability;
+    const scoreCoverage = isFiniteNumber(indices.scoreCoverage) ? indices.scoreCoverage : 0;
+    const oppCoverage = subset.length
+      ? round3(subset.filter((record) => isFiniteNumber(record.oppStrengthComposite)).length / subset.length)
+      : undefined;
+    const composite = round3(
+      clamp(0.45 * windowReliability + 0.3 * scoreCoverage + 0.25 * (oppCoverage ?? 0), 0, 1),
+    );
     return {
       enabled: true,
       degraded: spec.degraded,
-      indices: computeWindowLocalIndices(aggregate, spec),
+      indices,
+      quality: {
+        windowReliability,
+        scoreCoverage,
+        oppCoverage,
+        composite,
+      },
     };
   };
 
   const w10 = computeWindow("w10", 10, 6);
   const w5 = computeWindow("w5", 5, 4);
   const w3 = computeWindow("w3", 3, 2);
+  const qualityComposite = normalizeWindowMix([
+    { value: w10.quality.composite, weight: 0.25 },
+    { value: w5.quality.composite, weight: 0.35 },
+    { value: w3.quality.composite, weight: 0.4 },
+  ]);
 
   return {
     nTech,
@@ -1079,6 +1125,24 @@ export function buildPlayerStateSeries(features: PlayerStateFeature[]): PlayerSt
       w10: w10.indices.strength,
       w5: w5.indices.strength,
       w3: w3.indices.strength,
+    },
+    quality: {
+      windowReliability: {
+        w10: w10.quality.windowReliability,
+        w5: w5.quality.windowReliability,
+        w3: w3.quality.windowReliability,
+      },
+      scoreCoverage: {
+        w10: w10.quality.scoreCoverage,
+        w5: w5.quality.scoreCoverage,
+        w3: w3.quality.scoreCoverage,
+      },
+      oppCoverage: {
+        w10: w10.quality.oppCoverage,
+        w5: w5.quality.oppCoverage,
+        w3: w3.quality.oppCoverage,
+      },
+      composite: qualityComposite,
     },
   };
 }
@@ -1160,6 +1224,14 @@ function clonePlayerStateSeries(state: PlayerStateSeriesResult): PlayerStateSeri
     formTech: { ...state.formTech },
     formPlus: { ...state.formPlus },
     strength: { ...state.strength },
+    quality: state.quality
+      ? {
+          windowReliability: { ...state.quality.windowReliability },
+          scoreCoverage: { ...state.quality.scoreCoverage },
+          oppCoverage: { ...state.quality.oppCoverage },
+          composite: state.quality.composite,
+        }
+      : undefined,
   };
 }
 

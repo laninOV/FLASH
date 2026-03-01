@@ -136,6 +136,14 @@ test("predict uses DirtTennis formulas and returns stable winner/confidence", ()
   assert.equal(prediction.modelSummary?.playerState?.playerA.hasW10, false);
   assert.equal(prediction.modelSummary?.playerState?.playerA.hasW5, true);
   assert.equal(prediction.modelSummary?.playerState?.playerA.hasW3, true);
+  assert.ok(prediction.modelSummary?.playerState?.playerA.quality);
+  assert.ok(prediction.modelSummary?.playerState?.playerB.quality);
+  assert.ok(
+    typeof prediction.modelSummary?.playerState?.playerA.quality?.windowReliability.w5 === "number",
+  );
+  assert.ok(
+    typeof prediction.modelSummary?.playerState?.playerA.quality?.composite === "number",
+  );
   assert.equal(prediction.modelSummary?.stateDecision?.source, "player_state_decision_v3");
   assert.ok(
     prediction.modelSummary?.stateDecision?.winner === "Player A" ||
@@ -293,6 +301,8 @@ test("predict applies pair-contrast to PLAYER STATE and yields readable gaps on 
   assert.ok(stateDecision);
   assert.equal(state?.playerA.nTech, 10);
   assert.equal(state?.playerB.nTech, 10);
+  assert.ok(typeof state?.playerA.quality?.composite === "number");
+  assert.ok(typeof state?.playerB.quality?.composite === "number");
   assert.ok(typeof stateDecision?.reliability === "number");
   assert.ok(Array.isArray(stateDecision?.reasonTags));
 

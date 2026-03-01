@@ -27,10 +27,13 @@ The runtime builds predictions from strict history-only `Tech Statistics` (`stab
 - Optional first line: `✅✅✅` when `HISTORY-5` winner and `NOVA` winner are the same player
 - Main block: `Logistic`, `Markov`, `Bradley-Terry`, `PCA`
 - Summary: `Winner`, `Odds`, `Methods`, `Agreement`, `Confidence`
-- Short summary: `HISTORY-5`, `NOVA`, `STATE`, `STATE REASON`, `NOVA FILTER`
+- Short summary: `HISTORY-5`, `NOVA`, `STATE`, `STATE REASON`, `STATE DIAG`, `NOVA FILTER`
 - Player state block: `PLAYER STATE (10/5/3)` for each player
-- Player state metrics: `Stability`, `Form-TECH`, `Form-PLUS`, `Strength`, `Coverage`
-- `STATE`/`STATE REASON` are informational only and do not change main `Winner`/`Confidence`
+- Player state metrics: `Stability`, `Form-TECH`, `Form-PLUS`, `Strength`, `Coverage`, `Quality`
+- `Coverage` = completeness (`tech n/10` and availability markers `W10/W5/W3`)
+- `Quality` = signal quality by windows (`windowReliability`, `scoreCoverage`, `oppCoverage`, composite `q`)
+- `STATE DIAG` = compact pair diagnostics (`EDGE`, `CONFLICT`, `VOTES`, `REL`)
+- `STATE`/`STATE REASON`/`STATE DIAG` are informational only and do not change main `Winner`/`Confidence`
 - No `YTD SIGNAL`
 - No `PCLASS` lines
 

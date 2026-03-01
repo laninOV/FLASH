@@ -62,6 +62,7 @@ export function formatShortPredictionMessage(
     `NOVA: ${formatMethodSummary(novaEdge?.winner, formatNovaEdgePair(novaEdge?.p1, novaEdge?.p2))}`,
     `STATE: ${formatMethodSummary(stateWinner, statePair)}`,
     formatStateReasonLine(stateDecision),
+    formatStateDiagLine(stateDecision),
     formatNovaFilterLabelLine(prediction),
     SEPARATOR,
     "PLAYER STATE (10/5/3)",
@@ -189,6 +190,7 @@ function formatPlayerStateLines(playerName: string, state: PlayerStateDisplay | 
     `Form-PLUS: ${formatStateSeries(state?.formPlus)}`,
     `Strength: ${formatStateSeries(state?.strength)}`,
     `Coverage: ${formatStateCoverage(state)}`,
+    `Quality: ${formatStateQuality(state)}`,
   ];
 }
 
@@ -229,6 +231,30 @@ function formatStateCoverage(state: PlayerStateDisplay | undefined): string {
   return `tech ${nTech}/10 | ${markerW10} ${markerW5} ${markerW3}`;
 }
 
+function formatStateQuality(state: PlayerStateDisplay | undefined): string {
+  const rel = formatQualitySeries(state?.quality?.windowReliability);
+  const score = formatQualitySeries(state?.quality?.scoreCoverage);
+  const opp = formatQualitySeries(state?.quality?.oppCoverage);
+  const composite = formatQualityValue(state?.quality?.composite);
+  return `rel ${rel} | score ${score} | opp ${opp} | q=${composite}`;
+}
+
+function formatQualitySeries(
+  series: { w10?: number; w5?: number; w3?: number } | undefined,
+): string {
+  const w10 = formatQualityValue(series?.w10);
+  const w5 = formatQualityValue(series?.w5);
+  const w3 = formatQualityValue(series?.w3);
+  return `${w10}/${w5}/${w3}`;
+}
+
+function formatQualityValue(value: number | undefined): string {
+  if (!isFiniteNumber(value)) {
+    return "-";
+  }
+  return clamp(value, 0, 1).toFixed(2);
+}
+
 function formatWindowMarker(
   label: string,
   hasWindow: boolean | undefined,
@@ -249,6 +275,31 @@ function formatStateReasonLine(stateDecision: StateDecisionDisplay | undefined):
     return "STATE REASON: -";
   }
   return `STATE REASON: ${tags.slice(0, 2).map(formatStateReasonTag).join(" + ")}`;
+}
+
+function formatStateDiagLine(stateDecision: StateDecisionDisplay | undefined): string {
+  if (!stateDecision) {
+    return "STATE DIAG: -";
+  }
+  const edge = formatSignedDiagValue(stateDecision.effectiveDiff ?? stateDecision.rawDiff);
+  const conflict = formatDiagValue(stateDecision.conflictIndex);
+  const rel = formatDiagValue(stateDecision.reliability);
+  const votes = `${stateDecision.votes.playerA}:${stateDecision.votes.playerB}`;
+  return `STATE DIAG: EDGE ${edge} | CONFLICT ${conflict} | VOTES ${votes} | REL ${rel}`;
+}
+
+function formatSignedDiagValue(value: number | undefined): string {
+  if (!isFiniteNumber(value)) {
+    return "-";
+  }
+  return `${value >= 0 ? "+" : ""}${value.toFixed(2)}`;
+}
+
+function formatDiagValue(value: number | undefined): string {
+  if (!isFiniteNumber(value)) {
+    return "-";
+  }
+  return value.toFixed(2);
 }
 
 function formatStateReasonTag(tag: StateDecisionDisplay["reasonTags"][number]): string {

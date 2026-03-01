@@ -144,6 +144,12 @@ const basePrediction: PredictionResult = {
         formTech: { w10: 47.8, w5: 52.1, w3: 57.7 },
         formPlus: { w10: 49.5, w5: 53.7, w3: 59.1 },
         strength: { w10: 66.2, w5: 63.4, w3: 60.1 },
+        quality: {
+          windowReliability: { w10: 0.8, w5: 1, w3: 1 },
+          scoreCoverage: { w10: 0.7, w5: 0.8, w3: 1 },
+          oppCoverage: { w10: 1, w5: 1, w3: 1 },
+          composite: 0.89,
+        },
       },
       playerB: {
         nTech: 6,
@@ -157,6 +163,12 @@ const basePrediction: PredictionResult = {
         formTech: { w10: 53.2, w5: 51.4, w3: 49.8 },
         formPlus: { w10: 54.5, w5: 52.1, w3: 50.4 },
         strength: { w10: 58.9, w5: 60.2, w3: 61.1 },
+        quality: {
+          windowReliability: { w10: 0.6, w5: 1, w3: 1 },
+          scoreCoverage: { w10: 0.6, w5: 0.6, w3: 1 },
+          oppCoverage: { w10: 1, w5: 1, w3: 1 },
+          composite: 0.82,
+        },
       },
     },
     stateDecision: {
@@ -165,8 +177,13 @@ const basePrediction: PredictionResult = {
       p1: 64.2,
       p2: 35.8,
       reliability: 0.72,
+      rawDiff: 8.01,
       scoreA: 57.4,
       scoreB: 50.2,
+      conflictIndex: 0.11,
+      anchorDiff: 6.2,
+      formDiff: 8.7,
+      effectiveDiff: 7.7,
       reasonTags: ["FORM_PLUS", "CONSENSUS"],
       votes: {
         playerA: 3,
@@ -181,7 +198,7 @@ test("formatShortPredictionMessage renders no-YTD short message with NOVA and HI
   const text = formatShortPredictionMessage(basePrediction);
   const lines = text.split("\n");
 
-  assert.equal(lines.length, 39);
+  assert.equal(lines.length, 42);
   assert.equal(lines[0], "✅✅✅");
   assert.equal(lines[1], "TENNIS SIGNAL");
   assert.equal(lines[3], "Mirra Andreeva vs Amanda Anisimova");
@@ -195,22 +212,25 @@ test("formatShortPredictionMessage renders no-YTD short message with NOVA and HI
   assert.match(lines[20] || "", /^NOVA: Mirra Andreeva \| 62% \/ 38%$/);
   assert.equal(lines[21], "STATE: Mirra Andreeva | 64% / 36%");
   assert.equal(lines[22], "STATE REASON: FORM+ + CONSENSUS");
-  assert.equal(lines[23], "NOVA FILTER: 🟢 HIGH");
-  assert.equal(lines[24], "==================");
-  assert.equal(lines[25], "PLAYER STATE (10/5/3)");
-  assert.equal(lines[26], "Mirra Andreeva:");
-  assert.match(lines[27] || "", /^Stability: \d+ \/ \d+ \/ \d+ [↗↘→]$/);
-  assert.match(lines[28] || "", /^Form-TECH: \d+ \/ \d+ \/ \d+ [↗↘→]$/);
-  assert.match(lines[29] || "", /^Form-PLUS: \d+ \/ \d+ \/ \d+ [↗↘→]$/);
-  assert.match(lines[30] || "", /^Strength: \d+ \/ \d+ \/ \d+ [↗↘→]$/);
-  assert.match(lines[31] || "", /^Coverage: tech 8\/10 \| W10~ W5✓ W3✓$/);
-  assert.equal(lines[32], "Amanda Anisimova:");
-  assert.match(lines[33] || "", /^Stability: \d+ \/ \d+ \/ \d+ [↗↘→]$/);
-  assert.match(lines[34] || "", /^Form-TECH: \d+ \/ \d+ \/ \d+ [↗↘→]$/);
-  assert.match(lines[35] || "", /^Form-PLUS: \d+ \/ \d+ \/ \d+ [↗↘→]$/);
-  assert.match(lines[36] || "", /^Strength: \d+ \/ \d+ \/ \d+ [↗↘→]$/);
-  assert.match(lines[37] || "", /^Coverage: tech 6\/10 \| W10~ W5✓ W3✓$/);
-  assert.equal(lines[38], "==================");
+  assert.equal(lines[23], "STATE DIAG: EDGE +7.70 | CONFLICT 0.11 | VOTES 3:1 | REL 0.72");
+  assert.equal(lines[24], "NOVA FILTER: 🟢 HIGH");
+  assert.equal(lines[25], "==================");
+  assert.equal(lines[26], "PLAYER STATE (10/5/3)");
+  assert.equal(lines[27], "Mirra Andreeva:");
+  assert.match(lines[28] || "", /^Stability: \d+ \/ \d+ \/ \d+ [↗↘→]$/);
+  assert.match(lines[29] || "", /^Form-TECH: \d+ \/ \d+ \/ \d+ [↗↘→]$/);
+  assert.match(lines[30] || "", /^Form-PLUS: \d+ \/ \d+ \/ \d+ [↗↘→]$/);
+  assert.match(lines[31] || "", /^Strength: \d+ \/ \d+ \/ \d+ [↗↘→]$/);
+  assert.match(lines[32] || "", /^Coverage: tech 8\/10 \| W10~ W5✓ W3✓$/);
+  assert.match(lines[33] || "", /^Quality: rel 0\.80\/1\.00\/1\.00 \| score 0\.70\/0\.80\/1\.00 \| opp 1\.00\/1\.00\/1\.00 \| q=0\.89$/);
+  assert.equal(lines[34], "Amanda Anisimova:");
+  assert.match(lines[35] || "", /^Stability: \d+ \/ \d+ \/ \d+ [↗↘→]$/);
+  assert.match(lines[36] || "", /^Form-TECH: \d+ \/ \d+ \/ \d+ [↗↘→]$/);
+  assert.match(lines[37] || "", /^Form-PLUS: \d+ \/ \d+ \/ \d+ [↗↘→]$/);
+  assert.match(lines[38] || "", /^Strength: \d+ \/ \d+ \/ \d+ [↗↘→]$/);
+  assert.match(lines[39] || "", /^Coverage: tech 6\/10 \| W10~ W5✓ W3✓$/);
+  assert.match(lines[40] || "", /^Quality: rel 0\.60\/1\.00\/1\.00 \| score 0\.60\/0\.60\/1\.00 \| opp 1\.00\/1\.00\/1\.00 \| q=0\.82$/);
+  assert.equal(lines[41], "==================");
 
   assert.doesNotMatch(text, /YTD SIGNAL/);
   assert.doesNotMatch(text, /\bYTD:/);
@@ -250,6 +270,7 @@ test("formatShortPredictionMessage uses modelSummary.stateDecision values in SHO
   const text = formatShortPredictionMessage(prediction);
   assert.match(text, /STATE: Birrell K\. \| 29% \/ 71%/);
   assert.match(text, /STATE REASON: FORM\+ \+ MOMENTUM↑/);
+  assert.match(text, /STATE DIAG: EDGE - \| CONFLICT - \| VOTES 1:3 \| REL 1\.00/);
 });
 
 test("formatShortPredictionMessage renders abstained STATE as placeholder with LOW_EDGE reason", () => {
@@ -282,6 +303,7 @@ test("formatShortPredictionMessage renders abstained STATE as placeholder with L
   const text = formatShortPredictionMessage(prediction);
   assert.match(text, /STATE: - \| - \/ -/);
   assert.match(text, /STATE REASON: LOW_EDGE \+ MIXED/);
+  assert.match(text, /STATE DIAG: EDGE \+2\.80 \| CONFLICT 0\.20 \| VOTES 2:1 \| REL 0\.81/);
 });
 
 test("formatShortPredictionMessage keeps placeholders and still hides PCLASS", () => {
@@ -313,6 +335,7 @@ test("formatShortPredictionMessage keeps placeholders and still hides PCLASS", (
   assert.match(text, /NOVA: - \| - \/ -/);
   assert.match(text, /STATE: - \| - \/ -/);
   assert.match(text, /STATE REASON: -/);
+  assert.match(text, /STATE DIAG: -/);
   assert.match(text, /NOVA FILTER: 🟡 NORMAL/);
   assert.match(text, /Methods: 0/);
   assert.match(text, /Agreement: -\/-/);
@@ -329,6 +352,7 @@ test("formatShortPredictionMessage keeps placeholders and still hides PCLASS", (
   assert.match(text, /Form-PLUS: - \/ - \/ -/);
   assert.match(text, /Strength: - \/ - \/ -/);
   assert.match(text, /Coverage: tech 0\/10 \| W10x W5x W3x/);
+  assert.match(text, /Quality: rel -\/-\/- \| score -\/-\/- \| opp -\/-\/- \| q=-/);
 });
 
 test("formatShortPredictionMessage renders Telegram HTML link when requested", () => {
