@@ -198,7 +198,7 @@ test("formatShortPredictionMessage renders no-YTD short message with NOVA and HI
   const text = formatShortPredictionMessage(basePrediction);
   const lines = text.split("\n");
 
-  assert.equal(lines.length, 42);
+  assert.equal(lines.length, 38);
   assert.equal(lines[0], "✅✅✅");
   assert.equal(lines[1], "TENNIS SIGNAL");
   assert.equal(lines[3], "Mirra Andreeva vs Amanda Anisimova");
@@ -221,16 +221,12 @@ test("formatShortPredictionMessage renders no-YTD short message with NOVA and HI
   assert.match(lines[29] || "", /^Form-TECH: \d+ \/ \d+ \/ \d+ [↗↘→] \| avg \d+\.\d \| sum \d+$/);
   assert.match(lines[30] || "", /^Form-PLUS: \d+ \/ \d+ \/ \d+ [↗↘→] \| avg \d+\.\d \| sum \d+$/);
   assert.match(lines[31] || "", /^Strength: \d+ \/ \d+ \/ \d+ [↗↘→] \| avg \d+\.\d \| sum \d+$/);
-  assert.match(lines[32] || "", /^Coverage: tech 8\/10 \| W10~ W5✓ W3✓$/);
-  assert.match(lines[33] || "", /^Quality: rel 0\.80\/1\.00\/1\.00 \| score 0\.70\/0\.80\/1\.00 \| opp 1\.00\/1\.00\/1\.00 \| q=0\.89$/);
-  assert.equal(lines[34], "Amanda Anisimova:");
-  assert.match(lines[35] || "", /^Stability: \d+ \/ \d+ \/ \d+ [↗↘→] \| avg \d+\.\d \| sum \d+$/);
-  assert.match(lines[36] || "", /^Form-TECH: \d+ \/ \d+ \/ \d+ [↗↘→] \| avg \d+\.\d \| sum \d+$/);
-  assert.match(lines[37] || "", /^Form-PLUS: \d+ \/ \d+ \/ \d+ [↗↘→] \| avg \d+\.\d \| sum \d+$/);
-  assert.match(lines[38] || "", /^Strength: \d+ \/ \d+ \/ \d+ [↗↘→] \| avg \d+\.\d \| sum \d+$/);
-  assert.match(lines[39] || "", /^Coverage: tech 6\/10 \| W10~ W5✓ W3✓$/);
-  assert.match(lines[40] || "", /^Quality: rel 0\.60\/1\.00\/1\.00 \| score 0\.60\/0\.60\/1\.00 \| opp 1\.00\/1\.00\/1\.00 \| q=0\.82$/);
-  assert.equal(lines[41], "==================");
+  assert.equal(lines[32], "Amanda Anisimova:");
+  assert.match(lines[33] || "", /^Stability: \d+ \/ \d+ \/ \d+ [↗↘→] \| avg \d+\.\d \| sum \d+$/);
+  assert.match(lines[34] || "", /^Form-TECH: \d+ \/ \d+ \/ \d+ [↗↘→] \| avg \d+\.\d \| sum \d+$/);
+  assert.match(lines[35] || "", /^Form-PLUS: \d+ \/ \d+ \/ \d+ [↗↘→] \| avg \d+\.\d \| sum \d+$/);
+  assert.match(lines[36] || "", /^Strength: \d+ \/ \d+ \/ \d+ [↗↘→] \| avg \d+\.\d \| sum \d+$/);
+  assert.equal(lines[37], "==================");
 
   assert.doesNotMatch(text, /YTD SIGNAL/);
   assert.doesNotMatch(text, /\bYTD:/);
@@ -351,19 +347,26 @@ test("formatShortPredictionMessage keeps placeholders and still hides PCLASS", (
   assert.match(text, /Form-TECH: - \/ - \/ - \| avg - \| sum -/);
   assert.match(text, /Form-PLUS: - \/ - \/ - \| avg - \| sum -/);
   assert.match(text, /Strength: - \/ - \/ - \| avg - \| sum -/);
-  assert.match(text, /Coverage: tech 0\/10 \| W10x W5x W3x/);
-  assert.match(text, /Quality: rel -\/-\/- \| score -\/-\/- \| opp -\/-\/- \| q=-/);
+  assert.doesNotMatch(text, /Coverage:/);
+  assert.doesNotMatch(text, /Quality:/);
 });
 
 test("formatShortPredictionMessage renders Telegram HTML link when requested", () => {
   const text = formatShortPredictionMessage(basePrediction, { linkMode: "telegram_html_link" });
   const lines = text.split("\n");
 
+  assert.equal(lines[1], "<b>TENNIS SIGNAL</b>");
+  assert.equal(lines[3], "<b>Mirra Andreeva vs Amanda Anisimova</b>");
   assert.match(
     lines[4] || "",
     /^<a href="https:\/\/www\.flashscore\.com\.ua\/match\/example\/#\/match-summary\?mid=abcd1234">ссылка на игру<\/a>$/,
   );
-  assert.doesNotMatch(lines[4] || "", /^Ссылка на игру:/);
+  assert.equal(lines[5], "<b>Date:</b> 19.02.2026 21:55");
+  assert.equal(lines[12], "<b>Winner:</b> Mirra Andreeva");
+  assert.equal(lines[14], "<b>Methods:</b> 5");
+  assert.equal(lines[18], "<b>SHORT SUMMARY</b>");
+  assert.equal(lines[26], "<b>PLAYER STATE (10/5/3)</b>");
+  assert.equal(lines[27], "<b>Mirra Andreeva:</b>");
 });
 
 test("formatShortPredictionMessage uses LIVE date for live matches", () => {

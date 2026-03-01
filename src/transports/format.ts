@@ -13,6 +13,7 @@ export function formatShortPredictionMessage(
   options: FormatShortPredictionMessageOptions = {},
 ): string {
   const linkMode = options.linkMode ?? "plain_text_url";
+  const isHtml = linkMode === "telegram_html_link";
   const names = resolvePlayerNames(prediction);
   const probs = prediction.modelSummary?.dirt?.modelProbabilities;
   const novaEdge = prediction.modelSummary?.novaEdge;
@@ -39,37 +40,42 @@ export function formatShortPredictionMessage(
 
   const lines = [
     ...(showConsensusCheckmarks ? ["✅✅✅"] : []),
-    "TENNIS SIGNAL",
+    formatSectionTitle("TENNIS SIGNAL", isHtml),
     SEPARATOR,
-    `${names.playerA} vs ${names.playerB}`,
+    formatMatchTitle(names.playerA, names.playerB, isHtml),
     formatMatchLinkLine(prediction.matchUrl, linkMode),
-    `Date: ${formatDateFromSource(prediction)}`,
+    formatLabeledLine("Date", formatDateFromSource(prediction), isHtml),
     SEPARATOR,
     `Logistic: ${formatPercentPair(probs?.logRegP1)}`,
     `Markov: ${formatPercentPair(probs?.markovP1)}`,
     `Bradley-Terry: ${formatPercentPair(probs?.bradleyP1)}`,
     `PCA: ${formatPercentPair(probs?.pcaP1)}`,
     SEPARATOR,
-    `Winner: ${prediction.predictedWinner}`,
-    ...(oddsLine ? [oddsLine] : []),
-    `Methods: ${methodsSummary.methods}`,
-    formatAgreementLine(methodsSummary),
-    formatConfidenceLine(prediction.confidence),
+    formatLabeledLine("Winner", prediction.predictedWinner, isHtml),
+    ...(oddsLine ? [formatPrefixedLine(oddsLine, "Odds", isHtml)] : []),
+    formatLabeledLine("Methods", String(methodsSummary.methods), isHtml),
+    formatPrefixedLine(formatAgreementLine(methodsSummary), "Agreement", isHtml),
+    formatPrefixedLine(formatConfidenceLine(prediction.confidence), "Confidence", isHtml),
     SEPARATOR,
-    "SHORT SUMMARY",
-    `HISTORY-5: ${formatMethodSummary(
-      prediction.predictedWinner,
-      formatPercentPair(probs?.finalP1),
-    )}`,
-    `NOVA: ${formatMethodSummary(novaEdge?.winner, formatNovaEdgePair(novaEdge?.p1, novaEdge?.p2))}`,
-    `STATE: ${formatMethodSummary(stateWinner, statePair)}`,
-    formatStateReasonLine(stateDecision),
-    formatStateDiagLine(stateDecision),
-    formatNovaFilterLabelLine(prediction),
+    formatSectionTitle("SHORT SUMMARY", isHtml),
+    formatLabeledLine(
+      "HISTORY-5",
+      formatMethodSummary(prediction.predictedWinner, formatPercentPair(probs?.finalP1)),
+      isHtml,
+    ),
+    formatLabeledLine(
+      "NOVA",
+      formatMethodSummary(novaEdge?.winner, formatNovaEdgePair(novaEdge?.p1, novaEdge?.p2)),
+      isHtml,
+    ),
+    formatLabeledLine("STATE", formatMethodSummary(stateWinner, statePair), isHtml),
+    formatLabeledLine("STATE REASON", formatStateReasonValue(stateDecision), isHtml),
+    formatLabeledLine("STATE DIAG", formatStateDiagValue(stateDecision), isHtml),
+    formatLabeledLine("NOVA FILTER", formatNovaFilterLabelValue(prediction), isHtml),
     SEPARATOR,
-    "PLAYER STATE (10/5/3)",
-    ...formatPlayerStateLines(names.playerA, playerState?.playerA),
-    ...formatPlayerStateLines(names.playerB, playerState?.playerB),
+    formatSectionTitle("PLAYER STATE (10/5/3)", isHtml),
+    ...formatPlayerStateLines(names.playerA, playerState?.playerA, isHtml),
+    ...formatPlayerStateLines(names.playerB, playerState?.playerB, isHtml),
     SEPARATOR,
   ];
 
@@ -164,15 +170,15 @@ function computeNovaFilterLabel(prediction: PredictionResult): "HIGH" | "NORMAL"
   return "NORMAL";
 }
 
-function formatNovaFilterLabelLine(prediction: PredictionResult): string {
+function formatNovaFilterLabelValue(prediction: PredictionResult): string {
   const label = computeNovaFilterLabel(prediction);
   if (label === "HIGH") {
-    return "NOVA FILTER: 🟢 HIGH";
+    return "🟢 HIGH";
   }
   if (label === "SKIP") {
-    return "NOVA FILTER: 🔴 SKIP";
+    return "🔴 SKIP";
   }
-  return "NOVA FILTER: 🟡 NORMAL";
+  return "🟡 NORMAL";
 }
 
 type PlayerStateDisplay = NonNullable<
@@ -184,15 +190,17 @@ type StateDecisionDisplay = NonNullable<
   NonNullable<PredictionResult["modelSummary"]>["stateDecision"]
 >;
 
-function formatPlayerStateLines(playerName: string, state: PlayerStateDisplay | undefined): string[] {
+function formatPlayerStateLines(
+  playerName: string,
+  state: PlayerStateDisplay | undefined,
+  isHtml: boolean,
+): string[] {
   return [
-    `${playerName}:`,
+    formatPlayerStateName(playerName, isHtml),
     `Stability: ${formatStateSeries(state?.stability)}`,
     `Form-TECH: ${formatStateSeries(state?.formTech)}`,
     `Form-PLUS: ${formatStateSeries(state?.formPlus)}`,
     `Strength: ${formatStateSeries(state?.strength)}`,
-    `Coverage: ${formatStateCoverage(state)}`,
-    `Quality: ${formatStateQuality(state)}`,
   ];
 }
 
@@ -254,69 +262,55 @@ function formatTrendArrow(w10: number | undefined, w3: number | undefined): stri
   return "→";
 }
 
-function formatStateCoverage(state: PlayerStateDisplay | undefined): string {
-  const nTech = Number.isFinite(state?.nTech) ? Math.max(0, Math.trunc(state?.nTech || 0)) : 0;
-  const markerW10 = formatWindowMarker("W10", state?.hasW10, state?.degradedW10);
-  const markerW5 = formatWindowMarker("W5", state?.hasW5, state?.degradedW5);
-  const markerW3 = formatWindowMarker("W3", state?.hasW3, state?.degradedW3);
-  return `tech ${nTech}/10 | ${markerW10} ${markerW5} ${markerW3}`;
-}
-
-function formatStateQuality(state: PlayerStateDisplay | undefined): string {
-  const rel = formatQualitySeries(state?.quality?.windowReliability);
-  const score = formatQualitySeries(state?.quality?.scoreCoverage);
-  const opp = formatQualitySeries(state?.quality?.oppCoverage);
-  const composite = formatQualityValue(state?.quality?.composite);
-  return `rel ${rel} | score ${score} | opp ${opp} | q=${composite}`;
-}
-
-function formatQualitySeries(
-  series: { w10?: number; w5?: number; w3?: number } | undefined,
-): string {
-  const w10 = formatQualityValue(series?.w10);
-  const w5 = formatQualityValue(series?.w5);
-  const w3 = formatQualityValue(series?.w3);
-  return `${w10}/${w5}/${w3}`;
-}
-
-function formatQualityValue(value: number | undefined): string {
-  if (!isFiniteNumber(value)) {
-    return "-";
-  }
-  return clamp(value, 0, 1).toFixed(2);
-}
-
-function formatWindowMarker(
-  label: string,
-  hasWindow: boolean | undefined,
-  degraded: boolean | undefined,
-): string {
-  if (hasWindow !== true) {
-    return `${label}x`;
-  }
-  if (degraded === true) {
-    return `${label}~`;
-  }
-  return `${label}✓`;
-}
-
-function formatStateReasonLine(stateDecision: StateDecisionDisplay | undefined): string {
+function formatStateReasonValue(stateDecision: StateDecisionDisplay | undefined): string {
   const tags = stateDecision?.reasonTags || [];
   if (!tags.length) {
-    return "STATE REASON: -";
+    return "-";
   }
-  return `STATE REASON: ${tags.slice(0, 2).map(formatStateReasonTag).join(" + ")}`;
+  return tags.slice(0, 2).map(formatStateReasonTag).join(" + ");
 }
 
-function formatStateDiagLine(stateDecision: StateDecisionDisplay | undefined): string {
+function formatStateDiagValue(stateDecision: StateDecisionDisplay | undefined): string {
   if (!stateDecision) {
-    return "STATE DIAG: -";
+    return "-";
   }
   const edge = formatSignedDiagValue(stateDecision.effectiveDiff ?? stateDecision.rawDiff);
   const conflict = formatDiagValue(stateDecision.conflictIndex);
   const rel = formatDiagValue(stateDecision.reliability);
   const votes = `${stateDecision.votes.playerA}:${stateDecision.votes.playerB}`;
-  return `STATE DIAG: EDGE ${edge} | CONFLICT ${conflict} | VOTES ${votes} | REL ${rel}`;
+  return `EDGE ${edge} | CONFLICT ${conflict} | VOTES ${votes} | REL ${rel}`;
+}
+
+function formatSectionTitle(title: string, isHtml: boolean): string {
+  return isHtml ? `<b>${escapeHtmlText(title)}</b>` : title;
+}
+
+function formatMatchTitle(playerA: string, playerB: string, isHtml: boolean): string {
+  const text = `${playerA} vs ${playerB}`;
+  return isHtml ? `<b>${escapeHtmlText(text)}</b>` : text;
+}
+
+function formatLabeledLine(label: string, value: string, isHtml: boolean): string {
+  if (!isHtml) {
+    return `${label}: ${value}`;
+  }
+  return `<b>${escapeHtmlText(label)}:</b> ${escapeHtmlText(value)}`;
+}
+
+function formatPrefixedLine(line: string, label: string, isHtml: boolean): string {
+  if (!isHtml) {
+    return line;
+  }
+  const prefix = `${label}: `;
+  const value = line.startsWith(prefix) ? line.slice(prefix.length) : line;
+  return formatLabeledLine(label, value, true);
+}
+
+function formatPlayerStateName(playerName: string, isHtml: boolean): string {
+  if (!isHtml) {
+    return `${playerName}:`;
+  }
+  return `<b>${escapeHtmlText(playerName)}:</b>`;
 }
 
 function formatSignedDiagValue(value: number | undefined): string {
@@ -587,9 +581,12 @@ function normalizeName(value: string | undefined): string {
 }
 
 function escapeHtmlAttr(value: string): string {
+  return escapeHtmlText(value).replace(/"/g, "&quot;");
+}
+
+function escapeHtmlText(value: string): string {
   return value
     .replace(/&/g, "&amp;")
-    .replace(/"/g, "&quot;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;");
 }

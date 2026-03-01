@@ -29,12 +29,11 @@ The runtime builds predictions from strict history-only `Tech Statistics` (`stab
 - Summary: `Winner`, `Odds`, `Methods`, `Agreement`, `Confidence`
 - Short summary: `HISTORY-5`, `NOVA`, `STATE`, `STATE REASON`, `STATE DIAG`, `NOVA FILTER`
 - Player state block: `PLAYER STATE (10/5/3)` for each player
-- Player state metrics: `Stability`, `Form-TECH`, `Form-PLUS`, `Strength`, `Coverage`, `Quality`
+- Player state metrics: `Stability`, `Form-TECH`, `Form-PLUS`, `Strength`
 - Metric lines include `w10 / w5 / w3`, trend arrow, and inline `avg`/`sum` across available windows
-- `Coverage` = completeness (`tech n/10` and availability markers `W10/W5/W3`)
-- `Quality` = signal quality by windows (`windowReliability`, `scoreCoverage`, `oppCoverage`, composite `q`)
 - `STATE DIAG` = compact pair diagnostics (`EDGE`, `CONFLICT`, `VOTES`, `REL`)
 - `STATE`/`STATE REASON`/`STATE DIAG` are informational only and do not change main `Winner`/`Confidence`
+- Telegram uses clean HTML formatting (`parse_mode=HTML`) with automatic plain-text fallback if HTML is rejected
 - No `YTD SIGNAL`
 - No `PCLASS` lines
 
